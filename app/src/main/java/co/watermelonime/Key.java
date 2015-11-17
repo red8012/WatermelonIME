@@ -1,6 +1,5 @@
 package co.watermelonime;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.text.StaticLayout;
@@ -10,30 +9,26 @@ public class Key extends View {
     public StaticLayout textLayout;
     public float dx, dy;
 
-    public Key(Context context, StaticLayout textLayout) {
-        super(context);
+    public Key(StaticLayout textLayout) {
+        super(C.mainService);
         this.textLayout = textLayout;
-        setBackgroundColor(Color.GREEN);
+        setBackgroundColor(Color.rgb(67, 84, 90));
         dx = textLayout.getWidth() / 2;
-        dy = 0;
+        dy = (C.u * 9 - textLayout.getHeight())/2;
     }
 
     @Override
     protected void onMeasure(int widthSpec, int heightSpec) {
-        setMeasuredDimension(100, 100);
+        setMeasuredDimension(C.u * 10, C.u * 9);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-//        super.onDraw(canvas);
-
         if (textLayout != null) {
-//            canvas.save();
+            canvas.save();
             canvas.translate(dx, dy);
-            Timer.t(101);
             textLayout.draw(canvas);
-            Timer.t(101, "onDraw");
-//            canvas.restore();
+            canvas.restore();
         }
     }
 }

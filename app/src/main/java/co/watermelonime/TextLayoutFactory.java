@@ -17,6 +17,7 @@ public class TextLayoutFactory {
         textPaint.setTextSize(size);
         textPaint.setTypeface(typeface);
         textPaint.setColor(color);
+        textPaint.setAntiAlias(true);
     }
 
     public StaticLayout make(String text) {
