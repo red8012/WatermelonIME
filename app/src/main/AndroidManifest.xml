@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="co.watermelonime" >
+    package="co.watermelonime">
 
-    <uses-sdk android:minSdkVersion="19"
-        android:targetSdkVersion="23"/>
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <service
             android:name=".MainService"
@@ -22,7 +20,7 @@
 
             <meta-data
                 android:name="android.view.im"
-                android:resource="@xml/method"/>
+                android:resource="@xml/method" />
         </service>
     </application>
 

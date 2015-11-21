@@ -7,8 +7,8 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 
 public class TextLayoutFactory {
-    final TextPaint textPaint;
     final int width;
+    public TextPaint textPaint;
 
     public TextLayoutFactory(float size, Typeface typeface, int color, int width) {
         this.width = width;

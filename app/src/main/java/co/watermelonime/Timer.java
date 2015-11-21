@@ -11,7 +11,7 @@ public class Timer {
 			return null;
 		} else {
 			double elapsed = (time - map.get(id)) / 1000000.0;
-			String s = String.format("Timer: %.3f (", elapsed);
+			String s = String.format("Timer: %.3f ms (", elapsed);
 			System.out.print(s);
 			for (String ss : message)
 				System.out.print(ss);

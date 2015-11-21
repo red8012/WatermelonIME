@@ -2,9 +2,6 @@ package co.watermelonime;
 import java.util.HashMap;
 
 public class Constants {
-	final static String kagi1 = "615PA3yNM5vP1R3rA3799i53np",
-			kagi2 = "33",
-			kagi3 = "MnwWIqK";
 	public static final int ZHUYIN = 0, PINYIN = 1;
 	public static final int separator[][][] = {
 			{{1}},
@@ -33,7 +30,6 @@ public class Constants {
 			"B", "F", "J", "N", "R", "V",
 			"C", "G", "K", "O", "S", "W",
 			"D", "H", "L", "T"};
-
 	public static final String kb2[][] = {
 			{
 					"　ㄧㄨ\nㄚㄚㄚ", "ㄞ", "ㄢ", "ㄧㄨㄩ\nㄢㄢㄢ", "ㄧㄨ\nㄞㄞ", "ㄧ",
@@ -59,9 +55,8 @@ public class Constants {
 	public static final String kb2code[] = {
 			"a", "e", "i", "m", "q", "u",
 			"b", "f", "j", "n", "r", "v",
-			"c", "g", "k", "o", "s", "w",
+			"c", "g", "k", "o", "s", "keyboardWidth",
 			"d", "h", "l", "p", "t"};
-
 	public static final int[][] keysToChange = {
 			{4, 10, 12, 15, 17, 19, 22}, // 0
 			{4, 8, 15, 17},
@@ -110,7 +105,6 @@ public class Constants {
 			{},
 			{"─", "：", "、", "；", "？", "。", "！", "‧", "，"}
 	};
-
 	public static final String[][] vowelToChange = {
 			{"u", "a", "f", "a", "v", "d", "p"},
 			{"1", "i", "2", "3"},
@@ -121,13 +115,13 @@ public class Constants {
 			{"e", "e", null, "e", null, null},
 			{"a", "a", "a", "a", "e", null},
 			{null, "e", null, null, "c", null},
-			{null, "m", "u", null, null, "r", "w", "d", null, null, null, null},
+			{null, "m", "u", null, null, "r", "keyboardWidth", "d", null, null, null, null},
 			{"g", null, null, null, null},
 			{"u", "e", "p", null, null, null, null},
 			{"e", "e", "a", "a"},
 			{"u"},
 			{"6", "r", "b", "7", "j"},
-			{null, "m", null, null, null, "o", "w", "d", "o", "o", "p", "p"},
+			{null, "m", null, null, null, "o", "keyboardWidth", "d", "o", "o", "p", "p"},
 			{"u", "u", null, "u", "u"},
 			{"r", "b", null, "u", null, null, null},
 			{"f", "『", "』", "\"", "「", "」", "+", "&", "（", "）", "=", "…"},
@@ -135,222 +129,12 @@ public class Constants {
 			{},
 			{null, null, null, null, null, null, null, null, null}
 	};
-
 	public static final String[][] colemak = {
 			{"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"},
-			{"q", "w", "f", "p", "g", "j", "l", "u", "y", ";"},
+			{"q", "keyboardWidth", "f", "p", "g", "j", "l", "u", "y", ";"},
 			{"a", "r", "s", "t", "d", "h", "n", "e", "i", "o"},
 			{"z", "x", "c", "v", "b", "k", "m", ",", ".", "/"},
 	};
-
-	public static HashMap<String, String> toAlt = new HashMap<>();
-
-	static {
-		toAlt.put("1", "ə");
-		toAlt.put("2", "ĳ");
-		toAlt.put("3", "ł");
-		toAlt.put("4", "ŋ");
-		toAlt.put("5", "ø");
-		toAlt.put("6", "ơ");
-		toAlt.put("7", "þ");
-		toAlt.put("8", "æ");
-		toAlt.put("9", "œ");
-		toAlt.put("0", "ß");
-
-		toAlt.put("q", "€"); // empty
-		toAlt.put("w", "¢"); // empty
-		toAlt.put("f", "φ");
-		toAlt.put("p", "π");
-		toAlt.put("g", "γ");
-		toAlt.put("j", "ξ");
-		toAlt.put("l", "λ");
-		toAlt.put("u", "θ");
-		toAlt.put("y", "υ");
-		toAlt.put(";", "¥"); // empty
-
-		toAlt.put("a", "α");
-		toAlt.put("r", "ρ");
-		toAlt.put("s", "σ");
-		toAlt.put("t", "τ");
-		toAlt.put("d", "δ");
-		toAlt.put("h", "η");
-		toAlt.put("n", "ν");
-		toAlt.put("e", "ε");
-		toAlt.put("i", "ι");
-		toAlt.put("o", "ο");
-
-		toAlt.put("z", "ζ");
-		toAlt.put("x", "χ");
-		toAlt.put("c", "ψ");
-		toAlt.put("v", "ω");
-		toAlt.put("b", "β");
-		toAlt.put("k", "κ");
-		toAlt.put("m", "μ");
-		toAlt.put(",", "≤");
-		toAlt.put(".", "≥");
-		toAlt.put("/", "÷"); // empty
-	}
-
-	public static HashMap<String, String> toGrave = new HashMap<>();
-
-	static { // àèìǹ òùẁỳ
-		toGrave.put("a", "à");
-		toGrave.put("e", "è");
-		toGrave.put("i", "ì");
-		toGrave.put("n", "ǹ");
-		toGrave.put("o", "ò");
-		toGrave.put("u", "ù");
-		toGrave.put("w", "ẁ");
-		toGrave.put("y", "ỳ");
-	}
-
-	public static HashMap<String, String> toAcute = new HashMap<>();
-
-	static { // áćéǵíḱĺńóṕŕśúẃýź
-		toAcute.put("a", "á");
-		toAcute.put("c", "ć");
-		toAcute.put("e", "é");
-		toAcute.put("g", "ǵ");
-		toAcute.put("i", "í");
-		toAcute.put("k", "ḱ");
-		toAcute.put("l", "ĺ");
-		toAcute.put("n", "ń");
-		toAcute.put("o", "ó");
-		toAcute.put("p", "ṕ");
-		toAcute.put("r", "ŕ");
-		toAcute.put("s", "ś");
-		toAcute.put("u", "ú");
-		toAcute.put("w", "ẃ");
-		toAcute.put("y", "ý");
-		toAcute.put("z", "ź");
-		toAcute.put("8", "ǽ");
-	}
-
-	public static HashMap<String, String> toHead = new HashMap<>();
-
-	static { // âĉḓêĝĥîĵḽṋôŝṱûŵŷẑ
-		toHead.put("a", "â");
-		toHead.put("c", "ĉ");
-//		toHead.put("d", "ḓ");
-		toHead.put("e", "ê");
-		toHead.put("g", "ĝ");
-		toHead.put("h", "ĥ");
-		toHead.put("i", "î");
-		toHead.put("j", "ĵ");
-//		toHead.put("l", "ḽ");
-//		toHead.put("n", "ṋ");
-		toHead.put("o", "ô");
-		toHead.put("s", "ŝ");
-//		toHead.put("t", "ṱ");
-		toHead.put("u", "û");
-		toHead.put("w", "ŵ");
-		toHead.put("y", "ŷ");
-		toHead.put("z", "ẑ");
-	}
-
-	public static HashMap<String, String> toCaron = new HashMap<>();
-
-	static { // ǎčďěǧȟǐǰǩľňǒřšťǔž
-//		toCaron.put("a", "ǎ");
-		toCaron.put("c", "č");
-		toCaron.put("d", "ď");
-		toCaron.put("e", "ě");
-		toCaron.put("g", "ǧ");
-		toCaron.put("h", "ȟ");
-//		toCaron.put("i", "ǐ");
-		toCaron.put("j", "ǰ");
-		toCaron.put("k", "ǩ");
-		toCaron.put("l", "ľ");
-		toCaron.put("n", "ň");
-//		toCaron.put("o", "ǒ");
-		toCaron.put("r", "ř");
-		toCaron.put("s", "š");
-		toCaron.put("t", "ť");
-//		toCaron.put("u", "ǔ");
-		toCaron.put("z", "ž");
-	}
-
-	public static HashMap<String, String> toTilde = new HashMap<>();
-
-	static { // ãḛĩñõũ åů
-		toTilde.put("a", "ã");
-//		toTilde.put("e", "ḛ");
-		toTilde.put("i", "ĩ");
-		toTilde.put("n", "ñ");
-		toTilde.put("o", "õ");
-		toTilde.put("u", "ũ");
-		toTilde.put("1", "å");
-		toTilde.put("8", "ů");
-	}
-
-	public static HashMap<String, String> toUmlaut = new HashMap<>();
-
-	static { // äëïöẗüẅẍÿ
-		toUmlaut.put("a", "ä");
-		toUmlaut.put("e", "ë");
-//		toUmlaut.put("h", "ḧ");
-		toUmlaut.put("i", "ï");
-		toUmlaut.put("o", "ö");
-//		toUmlaut.put("t", "ẗ");
-		toUmlaut.put("u", "ü");
-		toUmlaut.put("w", "ẅ");
-//		toUmlaut.put("x", "ẍ");
-		toUmlaut.put("y", "ÿ");
-		toUmlaut.put("s", "ß");
-		toUmlaut.put("q", "œ");
-	}
-
-	public static HashMap<String, String> toBar = new HashMap<>();
-
-	static { // āḇḏēḡẖīḵḻṉōṟūȳẕ āēīōūȳ  ⱥƀȼđɇǥħɨɉꝁłøᵽɍŧɏƶ
-		toBar.put("a", "ā");
-		toBar.put("e", "ē");
-		toBar.put("i", "ī");
-		toBar.put("o", "ō");
-		toBar.put("u", "ū");
-//		toBar.put("6", "ȳ");
-
-//		toBar.put("a", "ⱥ");
-//		toBar.put("b", "ƀ");
-//		toBar.put("c", "ȼ");
-		toBar.put("d", "đ");
-//		toBar.put("e", "ɇ");
-//		toBar.put("g", "ǥ");
-		toBar.put("h", "ħ");
-		toBar.put("i", "ɨ");
-//		toBar.put("j", "ɉ");
-//		toBar.put("k", "ꝁ");
-		toBar.put("l", "ł");
-//		toBar.put("o", "ø");
-//		toBar.put("p", "ᵽ");
-//		toBar.put("r", "ɍ");
-		toBar.put("t", "ŧ");
-//		toBar.put("y", "ɏ");
-//		toBar.put("z", "ƶ");
-	}
-
-	public static HashMap<String, String> toHook = new HashMap<>();
-
-	static { // ąçęģįķļņǫşţų ąęįǫų çḑȩģḩķļņŗşţ
-		toHook.put("a", "ą");
-		toHook.put("e", "ę");
-		toHook.put("i", "į");
-		toHook.put("o", "ǫ");
-		toHook.put("u", "ų");
-
-		toHook.put("c", "ç");
-//		toHook.put("d", "ḑ");
-//		toHook.put("e", "ȩ");
-		toHook.put("g", "ģ");
-//		toHook.put("h", "ḩ");
-		toHook.put("k", "ķ");
-		toHook.put("l", "ļ");
-		toHook.put("n", "ņ");
-		toHook.put("r", "ŗ");
-		toHook.put("s", "ş");
-		toHook.put("t", "ţ");
-	}
-
 	public static final String number[] = {
 			"$", "¥", "€", "<", ">", "#",
 			"7", "8", "9", "(", ")", "%",
@@ -369,9 +153,6 @@ public class Constants {
 			"肆", "伍", "陸", "萬", "億", "兆",
 			"壹", "貳", "參", "度", "圓", "號",
 			"零", "點", "負", "⬆"};
-
-	// emoji
-
 	final public static String[] simpleFace = {
 			":)", ":-)", "^_^", ">_<", "0.0", "@_@", "╰_╯", "〒_〒", "╯﹏╰", ":D", ":P", ":("
 	};
@@ -418,13 +199,10 @@ public class Constants {
 			"⇑", "⇓", "⇐", "⇒", "⇖", "⇘", "⇗", "⇙", "↺", "↻",
 			"⇧", "⇩", "⇦", "⇨", "↶", "↷"
 	};
-
 	public static final String faceAndPeople =
 			"😋 😜 😝 😠 😩 😲 😞 😵 😰 😒 😍 😤 😘 😚 😷 😳 😃 😅 😆 😁 😂 😊 ☺ 😄 😢 😭 😨 😣 😡 😌 😖 😔 😱 😪 😏 😓 😥 😫 😉 😺 😸 😹 😽 😻 😿 😾 😼 🙀 💡 💢 💣 💤 💥 💦 💧 💨 💩 💪 💫 💬 👤 👦 👧 👨 👩 👪 👫 👮 👯 👰 👱 👲 👳 👴 👵 👶 👷 👸 👹 👺 👻 👼 👽 👾 👿 💀 💁 💂 💃 🙅 🙆 🙇 🙋 🙍 🙎 👀 👂 👃 👄 👅 🙌 🙏 ✊ ✋ ✌ 👊 👍 ☝ 👆 👇 👈 👉 👋 👏 👌 👎 👐 ";
-
 	public static final String animalAndPlants =
 			"🍀 🌷 🌱 🍁 🌸 🌹 🍂 🍃 🌺 🌻 🌴 🌵 🌾 🌽 🍄 🌰 🌼 🌿 🍒 🍌 🍎 🍊 🍓 🍉 🍅 🍆 🍈 🍍 🍇 🍑 🍏 🐌 🐍 🐎 🐔 🐗 🐫 🐘 🐨 🐒 🐑 🐙 🐚 🐛 🐜 🐝 🐞 🐠 🐡 🐢 🐤 🐥 🐦 🐣 🐧 🐩 🐟 🐬 🐭 🐯 🐱 🐳 🐴 🐵 🐶 🐷 🐻 🐹 🐺 🐮 🐰 🐸 🐾 🐲 🐼 🐽 🙈 🙊 🙉";
-
 	public static final String foodAndClothing =
 "🍔 🍙 🍰 🍜 🍞 🍳 🍦 🍟 🍡 🍘 🍚 🍝 🍛 🍢 🍣 🍱 🍲 🍧 🍖 🍥 🍠 🍕 🍗 🍨 🍩 🍪 🍫 🍬 🍭 🍮 🍯 🍤 🍴 ☕ 🍸 🍺 🍵 🍶 🍷 🍻 🍹 👞 👟 👠 👡 👢 👣 👓 👕 👖 👑 👔 👒 👗 👘 👙 👚 👛 👜 👝 💄 ";
 	public static final String placeAndVehicle =
@@ -435,5 +213,209 @@ public class Constants {
 "💰 💲 💳 💴 💵 💸 🔥 🔦 🔧 🔨 🔩 🔪 🔫 🔮 🔯 🔰 🔱 📟 ☎ 📞 📱 📲 📝 📠 ✉ 📨 📩 📪 📫 📮 📰 📢 📣 📡 📤 📥 📦 📧 ✒ 💺 💻 ✏ 📎 💼 💽 💾 💿 📀 ✂ 📍 📃 📄 📅 📁 📂 📓 📖 📔 📕 📗 📘 📙 📚 📛 📜 📋 📆 📊 📈 📉 📇 📌 📒 📏 📐 📑 📷 📹 📺 📻 📼 💋 💌 💍 💎 📶 📳 📴 ";
 	public static final String marks =
 			"☀ ☁ ☔ ⛄ ⚡ 🌀 🌁 🌂 🌃 🌄 🌅 🌆 🌇 🌈 ❄ ⛅ 🌉 🌊 🌋 🌌 🌏 🌑 🌔 🌓 🌙 🌕 🌛 🌟 🌠 🕐 🕑 🕒 🕓 🕔 🕕 🕖 🕗 🕘 🕙 🕚 🕛 ⌚ ⌛ ⏰ ⏳ ♈ ♉ ♊ ♋ ♌ ♍ ♎ ♏ ♐ ♑ ♒ ♓ ⛎ 🔊 🔋 🔌 🔍 🔎 🔒 🔓 🔏 🔐 🔑 🔔 ☑ 🔘 🔖 🔗 🅰 🅱 🆎 🅾 🆑 🆒 🆓 🆔 🆕 🆖 🆗 🆘 🆙 🆚 🈁 🈂 🈲 🈳 🈴 🈵 🈶 🈚 🈷 🈸 🈹 🈯 🈺 ㊙ ㊗ 🉐 🉑 ♥ ♠ ♦ ♣ 🚫 ✔ ➕ ➖ ✖ ➗ 💠 ✨ ✴ ✳ ";
+	final static String kagi1 = "615PA3yNM5vP1R3rA3799i53np",
+			kagi2 = "33",
+			kagi3 = "MnwWIqK";
+	public static HashMap<String, String> toAlt = new HashMap<>();
+	public static HashMap<String, String> toGrave = new HashMap<>();
+	public static HashMap<String, String> toAcute = new HashMap<>();
+	public static HashMap<String, String> toHead = new HashMap<>();
+	public static HashMap<String, String> toCaron = new HashMap<>();
+	public static HashMap<String, String> toTilde = new HashMap<>();
+
+	// emoji
+	public static HashMap<String, String> toUmlaut = new HashMap<>();
+	public static HashMap<String, String> toBar = new HashMap<>();
+	public static HashMap<String, String> toHook = new HashMap<>();
+
+	static {
+		toAlt.put("1", "ə");
+		toAlt.put("2", "ĳ");
+		toAlt.put("3", "ł");
+		toAlt.put("4", "ŋ");
+		toAlt.put("5", "ø");
+		toAlt.put("6", "ơ");
+		toAlt.put("7", "þ");
+		toAlt.put("8", "æ");
+		toAlt.put("9", "œ");
+		toAlt.put("0", "ß");
+
+		toAlt.put("q", "€"); // empty
+		toAlt.put("keyboardWidth", "¢"); // empty
+		toAlt.put("f", "φ");
+		toAlt.put("p", "π");
+		toAlt.put("g", "γ");
+		toAlt.put("j", "ξ");
+		toAlt.put("l", "λ");
+		toAlt.put("u", "θ");
+		toAlt.put("y", "υ");
+		toAlt.put(";", "¥"); // empty
+
+		toAlt.put("a", "α");
+		toAlt.put("r", "ρ");
+		toAlt.put("s", "σ");
+		toAlt.put("t", "τ");
+		toAlt.put("d", "δ");
+		toAlt.put("h", "η");
+		toAlt.put("n", "ν");
+		toAlt.put("e", "ε");
+		toAlt.put("i", "ι");
+		toAlt.put("o", "ο");
+
+		toAlt.put("z", "ζ");
+		toAlt.put("x", "χ");
+		toAlt.put("c", "ψ");
+		toAlt.put("v", "ω");
+		toAlt.put("b", "β");
+		toAlt.put("k", "κ");
+		toAlt.put("m", "μ");
+		toAlt.put(",", "≤");
+		toAlt.put(".", "≥");
+		toAlt.put("/", "÷"); // empty
+	}
+
+	static { // àèìǹ òùẁỳ
+		toGrave.put("a", "à");
+		toGrave.put("e", "è");
+		toGrave.put("i", "ì");
+		toGrave.put("n", "ǹ");
+		toGrave.put("o", "ò");
+		toGrave.put("u", "ù");
+		toGrave.put("keyboardWidth", "ẁ");
+		toGrave.put("y", "ỳ");
+	}
+
+	static { // áćéǵíḱĺńóṕŕśúẃýź
+		toAcute.put("a", "á");
+		toAcute.put("c", "ć");
+		toAcute.put("e", "é");
+		toAcute.put("g", "ǵ");
+		toAcute.put("i", "í");
+		toAcute.put("k", "ḱ");
+		toAcute.put("l", "ĺ");
+		toAcute.put("n", "ń");
+		toAcute.put("o", "ó");
+		toAcute.put("p", "ṕ");
+		toAcute.put("r", "ŕ");
+		toAcute.put("s", "ś");
+		toAcute.put("u", "ú");
+		toAcute.put("keyboardWidth", "ẃ");
+		toAcute.put("y", "ý");
+		toAcute.put("z", "ź");
+		toAcute.put("8", "ǽ");
+	}
+
+	static { // âĉḓêĝĥîĵḽṋôŝṱûŵŷẑ
+		toHead.put("a", "â");
+		toHead.put("c", "ĉ");
+//		toHead.put("d", "ḓ");
+		toHead.put("e", "ê");
+		toHead.put("g", "ĝ");
+		toHead.put("h", "ĥ");
+		toHead.put("i", "î");
+		toHead.put("j", "ĵ");
+//		toHead.put("l", "ḽ");
+//		toHead.put("n", "ṋ");
+		toHead.put("o", "ô");
+		toHead.put("s", "ŝ");
+//		toHead.put("t", "ṱ");
+		toHead.put("u", "û");
+		toHead.put("keyboardWidth", "ŵ");
+		toHead.put("y", "ŷ");
+		toHead.put("z", "ẑ");
+	}
+
+	static { // ǎčďěǧȟǐǰǩľňǒřšťǔž
+//		toCaron.put("a", "ǎ");
+		toCaron.put("c", "č");
+		toCaron.put("d", "ď");
+		toCaron.put("e", "ě");
+		toCaron.put("g", "ǧ");
+		toCaron.put("h", "ȟ");
+//		toCaron.put("i", "ǐ");
+		toCaron.put("j", "ǰ");
+		toCaron.put("k", "ǩ");
+		toCaron.put("l", "ľ");
+		toCaron.put("n", "ň");
+//		toCaron.put("o", "ǒ");
+		toCaron.put("r", "ř");
+		toCaron.put("s", "š");
+		toCaron.put("t", "ť");
+//		toCaron.put("u", "ǔ");
+		toCaron.put("z", "ž");
+	}
+
+	static { // ãḛĩñõũ åů
+		toTilde.put("a", "ã");
+//		toTilde.put("e", "ḛ");
+		toTilde.put("i", "ĩ");
+		toTilde.put("n", "ñ");
+		toTilde.put("o", "õ");
+		toTilde.put("u", "ũ");
+		toTilde.put("1", "å");
+		toTilde.put("8", "ů");
+	}
+
+	static { // äëïöẗüẅẍÿ
+		toUmlaut.put("a", "ä");
+		toUmlaut.put("e", "ë");
+//		toUmlaut.put("h", "ḧ");
+		toUmlaut.put("i", "ï");
+		toUmlaut.put("o", "ö");
+//		toUmlaut.put("t", "ẗ");
+		toUmlaut.put("u", "ü");
+		toUmlaut.put("keyboardWidth", "ẅ");
+//		toUmlaut.put("x", "ẍ");
+		toUmlaut.put("y", "ÿ");
+		toUmlaut.put("s", "ß");
+		toUmlaut.put("q", "œ");
+	}
+
+	static { // āḇḏēḡẖīḵḻṉōṟūȳẕ āēīōūȳ  ⱥƀȼđɇǥħɨɉꝁłøᵽɍŧɏƶ
+		toBar.put("a", "ā");
+		toBar.put("e", "ē");
+		toBar.put("i", "ī");
+		toBar.put("o", "ō");
+		toBar.put("u", "ū");
+//		toBar.put("6", "ȳ");
+
+//		toBar.put("a", "ⱥ");
+//		toBar.put("b", "ƀ");
+//		toBar.put("c", "ȼ");
+		toBar.put("d", "đ");
+//		toBar.put("e", "ɇ");
+//		toBar.put("g", "ǥ");
+		toBar.put("h", "ħ");
+		toBar.put("i", "ɨ");
+//		toBar.put("j", "ɉ");
+//		toBar.put("k", "ꝁ");
+		toBar.put("l", "ł");
+//		toBar.put("o", "ø");
+//		toBar.put("p", "ᵽ");
+//		toBar.put("r", "ɍ");
+		toBar.put("t", "ŧ");
+//		toBar.put("y", "ɏ");
+//		toBar.put("z", "ƶ");
+	}
+
+	static { // ąçęģįķļņǫşţų ąęįǫų çḑȩģḩķļņŗşţ
+		toHook.put("a", "ą");
+		toHook.put("e", "ę");
+		toHook.put("i", "į");
+		toHook.put("o", "ǫ");
+		toHook.put("u", "ų");
+
+		toHook.put("c", "ç");
+//		toHook.put("d", "ḑ");
+//		toHook.put("e", "ȩ");
+		toHook.put("g", "ģ");
+//		toHook.put("h", "ḩ");
+		toHook.put("k", "ķ");
+		toHook.put("l", "ļ");
+		toHook.put("n", "ņ");
+		toHook.put("r", "ŗ");
+		toHook.put("s", "ş");
+		toHook.put("t", "ţ");
+	}
 }
 
