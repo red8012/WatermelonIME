@@ -11,7 +11,9 @@ import android.view.WindowManager;
 import java.util.concurrent.Executors;
 
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
+import co.watermelonime.InputView.Chinese.Keyboard.Common;
 import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
+import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
 
 public class MainService extends InputMethodService {
     long initializationTimer;
@@ -20,7 +22,7 @@ public class MainService extends InputMethodService {
         initializationTimer = System.nanoTime();
         C.mainService = this;
         Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_DISPLAY);
-        C.threadPool = Executors.newFixedThreadPool(4);
+        C.threadPool = Executors.newFixedThreadPool(2);
     }
 
     public boolean onEvaluateFullscreenMode() {
@@ -41,42 +43,25 @@ public class MainService extends InputMethodService {
 
     @Override
     public View onCreateInputView() {
-        C.sourceSans = Typeface.createFromAsset(getAssets(), "normal.otf");
-//        System.gc();
-
-//        Timer.t(0);
-////        for (int i = 0; i < 10; i++) {
-//        Button b = new Button(this);
-//        b.setBackgroundColor(Color.RED);
-//        b.setText("龜");
-//        b.setTypeface(C.sourceSans);
-//        b.setOnClickListener(v -> System.out.println("gut"));
-////        }
-//        Timer.t(0, "init button");
-
-
-//        Timer.t(1);
-//        TextLayoutFactory textLayoutFactory =
-//                new TextLayoutFactory(100f, C.sourceSans, Color.WHITE, C.u*10);
-//        Timer.t(1, "init TextLayoutFactory");
-//        Timer.t(2);
-//        StaticLayout layout = textLayoutFactory.make("龜");
-//        Timer.t(2, "make staticLayout");
-//
-//        Timer.t(3);
-//        Key key = new Key(layout);
-//
-//        Timer.t(3, "init Key");
-
+        if (C.sourceSans == null) {
+            Timer.t(0);
+            C.sourceSans = Typeface.createFromAsset(getAssets(), "normal.otf");
+            Timer.t(0, "Load fonts");
+        }
 
         Timer.t(1);
+        Common.initialize();
         Consonants.buildKeys();
-        Timer.t(1, "Build keys");
+        Timer.t(1, "Build consonants");
+
+        Timer.t(3);
+        Vowels.buildKeysAsync();
+        Timer.t(3, "Build vowels");
+
         Timer.t(2);
         C.chineseKeyboard = new ChineseKeyboard();
-        for (int i = 0; i < 24; i++)
-            ChineseKeyboard.keys[i] = Consonants.keys.get(i);
         Timer.t(2, "Build keyboard");
+
         System.out.println("Service startup takes " +
                 String.valueOf((System.nanoTime() - initializationTimer) / 1e6) + " ms");
         return C.chineseKeyboard;

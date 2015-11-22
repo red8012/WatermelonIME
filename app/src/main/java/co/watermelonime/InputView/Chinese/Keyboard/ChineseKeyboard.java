@@ -1,21 +1,29 @@
 package co.watermelonime.InputView.Chinese.Keyboard;
 
-import android.graphics.Color;
 import android.util.Log;
 import android.view.ViewGroup;
 
 import co.watermelonime.C;
 import co.watermelonime.ChineseKey;
+import co.watermelonime.Timer;
 
 public class ChineseKeyboard extends ViewGroup {
-    public static ChineseKey[] keys = new ChineseKey[24];
 
     public ChineseKeyboard() {
         super(C.mainService);
-        setBackgroundColor(Color.BLACK);
-        for (ChineseKey k : Consonants.keys)
-            if (k != null)
-                addView(k);
+        setBackgroundColor(C.COLOR_DISABLED);
+        setCurrentKeys(Consonants.keys);
+    }
+
+    public void setCurrentKeys(ChineseKey[] k) {
+        Timer.t(5);
+        removeAllViews();
+        for (ChineseKey i : k)
+            if (i != null)
+                addView(i);
+            else Log.e("setCurrentKeys", "null");
+        requestLayout();
+        Timer.t(5, "set current keys + request layout");
     }
 
     @Override
@@ -30,12 +38,14 @@ public class ChineseKeyboard extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if (!changed) return;
         Log.w("ChineseKeyboard", "onLayout");
         r = l + C.chineseKeyWidth;
-        for (ChineseKey k : keys) {
+        final int end = getChildCount();
+        for (int i = 0; i < end; ++i) {
+            ChineseKey k = (ChineseKey) getChildAt(i);
             if (k != null)
                 k.layout(r - C.chineseKeyWidth, t, r, t + C.chineseKeyWidth);
+
             r += C.chineseKeyWidth;
             if (r > C.keyboardWidth) {
                 r = C.chineseKeyWidth;

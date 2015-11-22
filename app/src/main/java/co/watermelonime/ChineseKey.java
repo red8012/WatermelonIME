@@ -8,7 +8,7 @@ import android.text.StaticLayout;
 import android.view.View;
 
 public class ChineseKey extends View {
-
+    public int consonantId = 0;
     public StaticLayout mainText, subText;
     public Drawable image;
     public float dx, dy, dxSub, dySub;
@@ -27,14 +27,7 @@ public class ChineseKey extends View {
             dxSub = subText.getWidth() / 2;
             dySub = (C.u * 8 - subText.getHeight());
         }
-
-        if (backgroundColor == C.COLOR_NORMAL)
-            setBackgroundColor(backgroundColor);
-        else {
-            paint = new Paint();
-            paint.setColor(backgroundColor);
-            rect = new RectF(0f, 0f, C.chineseKeyWidth, C.chineseKeyHeight);
-        }
+        setBackgroundColor(backgroundColor);
     }
 
     public ChineseKey(int resource, int backgroundColor) {
@@ -43,13 +36,7 @@ public class ChineseKey extends View {
         image.setBounds(0, 0, C.u * 13 / 2, C.u * 13 / 2);
         dx = C.u * 3 / 2;
         dy = C.u;
-        if (backgroundColor == C.COLOR_NORMAL)
-            setBackgroundColor(backgroundColor);
-        else {
-            paint = new Paint();
-            paint.setColor(backgroundColor);
-            rect = new RectF(0f, 0f, C.chineseKeyWidth, C.chineseKeyHeight);
-        }
+        setBackgroundColor(backgroundColor);
     }
 
     @Override
