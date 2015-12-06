@@ -44,7 +44,7 @@ public class ChineseKeyboard extends ViewGroup {
         for (int i = 0; i < end; ++i) {
             ChineseKey k = (ChineseKey) getChildAt(i);
             if (k != null)
-                k.layout(r - C.chineseKeyWidth, t, r, t + C.chineseKeyWidth);
+                k.layout(r - C.chineseKeyWidth, t, r, t + C.chineseKeyHeight);
 
             r += C.chineseKeyWidth;
             if (r > C.keyboardWidth) {
