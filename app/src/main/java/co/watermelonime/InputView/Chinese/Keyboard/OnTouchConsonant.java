@@ -4,7 +4,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import co.watermelonime.C;
-import co.watermelonime.ChineseKey;
 
 public class OnTouchConsonant implements View.OnTouchListener {
     @Override

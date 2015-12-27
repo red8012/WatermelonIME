@@ -1,4 +1,4 @@
-package co.watermelonime;
+package co.watermelonime.Common;
 import java.util.HashMap;
 
 public class Timer {

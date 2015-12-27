@@ -1,24 +1,27 @@
-package co.watermelonime;
+package co.watermelonime.InputView.Chinese.Keyboard;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.text.StaticLayout;
+import android.text.Layout;
 import android.view.View;
+
+import co.watermelonime.C;
 
 public class ChineseKey extends View {
     public int consonantId = 0;
-    public StaticLayout mainText, subText;
+    public Layout mainText, subText;
     public Drawable image;
     public float dx, dy, dxSub, dySub;
     RectF rect;
     Paint paint;
 
-    public ChineseKey(StaticLayout mainText, StaticLayout subText, int backgroundColor) {
+    public ChineseKey(final Layout mainText, final Layout subText, int backgroundColor) {
         super(C.mainService);
         this.mainText = mainText;
         this.subText = subText;
+//        setLayerType(LAYER_TYPE_HARDWARE, null);
 
         dx = mainText.getWidth() / 2;
         dy = (C.u * 9 - mainText.getHeight()) / 2;
@@ -39,13 +42,15 @@ public class ChineseKey extends View {
         setBackgroundColor(backgroundColor);
     }
 
-    @Override
-    protected void onMeasure(int widthSpec, int heightSpec) {
-        setMeasuredDimension(C.chineseKeyWidth, C.chineseKeyHeight);
-    }
+//    @Override
+//    protected void onMeasure(int widthSpec, int heightSpec) {
+//        Log.i("ChineseKey", "onMeasure");
+//        setMeasuredDimension(C.chineseKeyWidth, C.chineseKeyHeight);
+//    }
 
     @Override
     protected void onDraw(Canvas canvas) {
+//        Log.i("ChineseKey", "onDraw");
         if (paint != null) {
             canvas.drawRoundRect(rect, C.u, C.u, paint);
         }

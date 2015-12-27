@@ -3,9 +3,9 @@ package co.watermelonime.InputView.Chinese.Keyboard;
 import android.os.Process;
 
 import co.watermelonime.C;
-import co.watermelonime.ChineseKey;
-import co.watermelonime.TextLayoutFactory;
-import co.watermelonime.Timer;
+import co.watermelonime.Common.TextLayoutFactory;
+import co.watermelonime.Common.Timer;
+import co.watermelonime.InputView.Chinese.Common;
 
 public class Vowels {
     public static ChineseKey[] enabledKeys = new ChineseKey[24];

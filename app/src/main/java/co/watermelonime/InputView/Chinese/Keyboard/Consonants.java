@@ -3,7 +3,7 @@ package co.watermelonime.InputView.Chinese.Keyboard;
 import java.util.ArrayList;
 
 import co.watermelonime.C;
-import co.watermelonime.ChineseKey;
+import co.watermelonime.InputView.Chinese.Common;
 import co.watermelonime.R;
 
 public class Consonants {
@@ -17,14 +17,14 @@ public class Consonants {
                     null, C.COLOR_NORMAL));
 
         keys.add(18, new ChineseKey(C.frFont.make("ㄈ"),
-                C.smallFont.make("符號"), C.COLOR_NORMAL));
+                C.smallFont.make("符號 2"), C.COLOR_NORMAL));
         ChineseKey key = new ChineseKey(R.drawable.enter, C.COLOR_FUNCTION);
         key.dy += C.u / 4;
         keys.add(key);
         keys.add(new ChineseKey(C.midFont.make("ㄧㄨㄩ"),
                 C.smallFont.make("...其他"), C.COLOR_NORMAL));
         keys.add(new ChineseKey(C.frFont.make("ㄖ"),
-                C.smallFont.make("符號"),
+                C.smallFont.make("符號 1"),
                 C.COLOR_NORMAL));
         keys.add(Common.backspace);
 

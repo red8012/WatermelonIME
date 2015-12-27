@@ -4,31 +4,37 @@ import android.util.Log;
 import android.view.ViewGroup;
 
 import co.watermelonime.C;
-import co.watermelonime.ChineseKey;
-import co.watermelonime.Timer;
+import co.watermelonime.Common.Timer;
 
 public class ChineseKeyboard extends ViewGroup {
+    static int width, height;
 
     public ChineseKeyboard() {
         super(C.mainService);
-        setBackgroundColor(C.COLOR_DISABLED);
+        width = C.u * 60;
+        height = C.u * 36;
+        setMeasuredDimension(width, height);
         setCurrentKeys(Consonants.keys);
     }
 
     public void setCurrentKeys(ChineseKey[] k) {
         Timer.t(5);
+        Log.i("ChineseKeyboad", "set current keys");
         removeAllViews();
         for (ChineseKey i : k)
             if (i != null)
                 addView(i);
             else Log.e("setCurrentKeys", "null");
-        requestLayout();
+//        requestLayout(); // Useless???
+//        invalidate(); // Useless
+//        Why do I need this???
+        onLayout(true, 0, 0, 0, 0);
         Timer.t(5, "set current keys + request layout");
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(C.u * 60, C.u * 36);
+        setMeasuredDimension(width, height);
     }
 
     @Override
@@ -36,9 +42,12 @@ public class ChineseKeyboard extends ViewGroup {
         return false;
     }
 
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.w("ChineseKeyboard", "onLayout");
+        Log.i("ChineseKeyboard", "onLayout");
+        l = 0;
+        t = 0;
         r = l + C.chineseKeyWidth;
         final int end = getChildCount();
         for (int i = 0; i < end; ++i) {
@@ -52,5 +61,27 @@ public class ChineseKeyboard extends ViewGroup {
                 t += C.chineseKeyHeight;
             }
         }
+    }
+
+    public void hide() {
+//        setLayerType(LAYER_TYPE_HARDWARE, null);
+        animate().translationY(height).setDuration(300).setInterpolator(C.decelerate);
+//                .setListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                setLayerType(LAYER_TYPE_NONE, null);
+//            }
+//        });
+    }
+
+    public void show() {
+//        setLayerType(LAYER_TYPE_HARDWARE, null);
+        animate().translationY(0f).setDuration(300).setInterpolator(C.decelerate);
+//                .setListener(new AnimatorListenerAdapter() {
+//                    @Override
+//                    public void onAnimationEnd(Animator animation) {
+//                        setLayerType(LAYER_TYPE_NONE, null);
+//                    }
+//                });
     }
 }

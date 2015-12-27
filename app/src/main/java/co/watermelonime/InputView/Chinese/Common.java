@@ -1,11 +1,12 @@
-package co.watermelonime.InputView.Chinese.Keyboard;
+package co.watermelonime.InputView.Chinese;
 
 import android.graphics.Color;
 
 import co.watermelonime.C;
-import co.watermelonime.ChineseKey;
+import co.watermelonime.Common.TextLayoutFactory;
+import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
+import co.watermelonime.InputView.Chinese.Keyboard.ChineseKey;
 import co.watermelonime.R;
-import co.watermelonime.TextLayoutFactory;
 
 public class Common {
     public static final int[][] keysToChange = {
@@ -56,20 +57,23 @@ public class Common {
             {},
             {"─", "：", "、", "；", "？", "。", "！", "‧", "，"}
     };
-    final static String[] consonantStrings = {
+    final public static String[] consonantStrings = {
             "ㄅ", "ㄉ", "ㄍ", "ㄐ", "ㄓ", "ㄗ",
             "ㄆ", "ㄊ", "ㄎ", "ㄑ", "ㄔ", "ㄘ",
             "ㄇ", "ㄋ", "ㄏ", "ㄒ", "ㄕ", "ㄙ",
             "ㄌ"};
-    final static String[] vowelStrings = {
+    final public static String[] vowelStrings = {
             "　ㄧㄨ\nㄚㄚㄚ", "ㄞ", "ㄢ", "ㄧㄨㄩ\nㄢㄢㄢ", "ㄧㄨ\nㄞㄞ", "ㄧ",
             "　ㄧㄨ\nㄛㄛㄛ", "ㄟ", "ㄣ", "ㄧㄨㄩ\nㄣㄣㄣ", "ㄨㄩ\nㄟㄝ", "ㄨ",
             "ㄜㄝ", "ㄠ", "ㄤ", "ㄧㄨ\nㄤㄤ", "ㄧ\nㄠ", "ㄩ",
             "ㄧ\nㄝ", "ㄡ", "ㄥㄦ", "ㄧㄨㄩ\nㄥㄥㄥ", "ㄧ\nㄡ"};
-    static ChineseKey backspace;
+    static public ChineseKey backspace;
+
     public static void initialize() {
         C.chineseKeyWidth = C.u * 10;
         C.chineseKeyHeight = C.u * 9;
+        C.candidateButtonHeight = C.u * 6;
+        C.candidateFontSize = C.u * 7 / 2;
 
         C.bigFont = new TextLayoutFactory(C.u * 6.5f, C.sourceSans, Color.WHITE, C.u * 10);
         C.frFont = new TextLayoutFactory(C.u * 5, C.sourceSans, Color.WHITE, C.u * 10);
@@ -79,6 +83,11 @@ public class Common {
         C.bigDisabledFont = new TextLayoutFactory(C.u * 6.5f, C.sourceSans, Color.DKGRAY, C.u * 10);
         C.midDisabledFont = new TextLayoutFactory(C.u * 3, C.sourceSans, Color.DKGRAY, C.u * 10);
 
+        C.candidateFont = new TextLayoutFactory(C.candidateFontSize, C.sourceSans, Color.WHITE, C.u);
+
         backspace = new ChineseKey(R.drawable.backspace, C.COLOR_FUNCTION);
+
+        CandidateButton.separatorPaint.setColor(0xFF666666);
+        CandidateButton.separatorPaint.setStrokeWidth(C.u / 4f);
     }
 }

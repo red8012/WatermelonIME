@@ -1,4 +1,4 @@
-package co.watermelonime;
+package co.watermelonime.Common;
 
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -20,7 +20,12 @@ public class TextLayoutFactory {
         textPaint.setAntiAlias(true);
     }
 
-    public StaticLayout make(String text) {
+    public Layout make(String text) {
+        return new StaticLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
+                1.0f, 0.0f, false);
+    }
+
+    public Layout make(String text, int width) {
         return new StaticLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
                 1.0f, 0.0f, false);
     }
