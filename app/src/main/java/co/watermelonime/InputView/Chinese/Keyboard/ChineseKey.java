@@ -8,6 +8,7 @@ import android.text.Layout;
 import android.view.View;
 
 import co.watermelonime.C;
+import co.watermelonime.Common.Size;
 
 public class ChineseKey extends View {
     public int consonantId = 0;
@@ -21,7 +22,6 @@ public class ChineseKey extends View {
         super(C.mainService);
         this.mainText = mainText;
         this.subText = subText;
-//        setLayerType(LAYER_TYPE_HARDWARE, null);
 
         dx = mainText.getWidth() / 2;
         dy = (C.u * 9 - mainText.getHeight()) / 2;
@@ -31,6 +31,7 @@ public class ChineseKey extends View {
             dySub = (C.u * 8 - subText.getHeight());
         }
         setBackgroundColor(backgroundColor);
+        setMeasuredDimension(Size.WKey, Size.HKey);
     }
 
     public ChineseKey(int resource, int backgroundColor) {
@@ -40,13 +41,9 @@ public class ChineseKey extends View {
         dx = C.u * 3 / 2;
         dy = C.u;
         setBackgroundColor(backgroundColor);
+        setMeasuredDimension(Size.WKey, Size.HKey);
     }
 
-//    @Override
-//    protected void onMeasure(int widthSpec, int heightSpec) {
-//        Log.i("ChineseKey", "onMeasure");
-//        setMeasuredDimension(C.chineseKeyWidth, C.chineseKeyHeight);
-//    }
 
     @Override
     protected void onDraw(Canvas canvas) {

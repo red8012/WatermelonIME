@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 
+import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
@@ -19,6 +20,7 @@ import co.watermelonime.InputView.Chinese.Common;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
+import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
 
 public class MainService extends InputMethodService {
     long initializationTimer;
@@ -39,6 +41,8 @@ public class MainService extends InputMethodService {
         C.keyboardWidth = C.isLandscape ? (C.screenWidth / 2) : C.screenWidth;
         C.candidateWidth = C.keyboardWidth;
         C.u = C.keyboardWidth / 60;
+
+        Size.calculate(size);
         return false;
     }
 
@@ -95,6 +99,11 @@ public class MainService extends InputMethodService {
         C.candidateView.setCandidate(list, CandidateButton.TOP);
         C.candidateView.setCandidate(list2, CandidateButton.BOTTOM);
         Timer.t(4, "Build CandidateView");
+
+        Timer.t(325);
+        C.sentenceView = new SentenceView();
+        Timer.t(325, "Build SentenceView");
+
 
         Timer.t(5);
         C.chineseInputView = new ChineseInputView();

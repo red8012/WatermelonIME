@@ -10,13 +10,13 @@ import co.watermelonime.C;
 public class CandidateButton extends View {
     public static final Paint separatorPaint = new Paint();
     public static final int BOTTOM = -1, TOP = 1;
+    static OnTouchListener onTouchListener = new OnTouchCandidate();
     public float dx, dy;
     int paddingTopBottom = 0;
     int length, width;
     String text;
     Layout textLayout;
     boolean needSeparator = true;
-    OnTouchListener onTouchListener = new OnTouchCandidate();
 
     public CandidateButton() {
         super(C.mainService);
@@ -57,6 +57,6 @@ public class CandidateButton extends View {
         textLayout.draw(canvas);
         canvas.restore();
         if (needSeparator)
-            canvas.drawLine(width, dy, width, dy + C.u * 7 / 2, separatorPaint);
+            canvas.drawLine(width, dy - C.u / 2, width, dy + C.u * 4, separatorPaint);
     }
 }
