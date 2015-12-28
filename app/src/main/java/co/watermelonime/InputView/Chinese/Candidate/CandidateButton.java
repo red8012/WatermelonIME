@@ -6,6 +6,8 @@ import android.text.Layout;
 import android.view.View;
 
 import co.watermelonime.C;
+import co.watermelonime.Common.Font;
+import co.watermelonime.Common.Size;
 
 public class CandidateButton extends View {
     public static final Paint separatorPaint = new Paint();
@@ -26,8 +28,8 @@ public class CandidateButton extends View {
     public static int calculateMinWidth(String s) {
         int len = s.length();
         if (len < 2)
-            return C.candidateFontSize * len + C.u * 4;
-        else return C.candidateFontSize * len + C.u * 2;
+            return (int) (Size.FCandidate * len + Size.u * 3);
+        else return (int) (Size.FCandidate * len + Size.u * 2);
     }
 
     public void setText(String s, int padding, boolean separator, int paddingTopBottom) {
@@ -35,13 +37,13 @@ public class CandidateButton extends View {
         width = calculateMinWidth(s) + padding;
         this.paddingTopBottom = paddingTopBottom;
         needSeparator = separator;
-        setMeasuredDimension(width, C.candidateButtonHeight + (paddingTopBottom == 0 ? 0 : C.u / 2));
+        setMeasuredDimension(width, (int) (Size.HCandidateRow + (paddingTopBottom == 0 ? 0 : Size.u / 2)));
         if (s == null) textLayout = null;
         else {
-            textLayout = C.candidateFont.make(text, width);
+            textLayout = Font.candidate.make(text, width);
             dx = width / 2;
-            dy = (C.candidateButtonHeight - textLayout.getHeight()) / 2 +
-                    (paddingTopBottom == TOP ? C.u / 2 : 0);
+            dy = (Size.HCandidateRow - textLayout.getHeight()) / 2 +
+                    (paddingTopBottom == TOP ? Size.u / 2 : 0);
         }
     }
 
@@ -56,7 +58,10 @@ public class CandidateButton extends View {
         canvas.translate(dx, dy);
         textLayout.draw(canvas);
         canvas.restore();
-        if (needSeparator)
-            canvas.drawLine(width, dy - C.u / 2, width, dy + C.u * 4, separatorPaint);
+        if (needSeparator) {
+            float center = dy + Size.FCandidate / 2;
+            canvas.drawLine(width, center - Size.HSeparator / 2,
+                    width, center + Size.HSeparator / 2, separatorPaint);
+        }
     }
 }

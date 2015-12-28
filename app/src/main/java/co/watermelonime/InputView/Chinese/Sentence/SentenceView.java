@@ -5,16 +5,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import co.watermelonime.C;
+import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Size;
 
 public class SentenceView extends ViewGroup {
 
-    public static int width, height;
+//    public static int width, height;
     public SentenceButton[] sentenceButton = new SentenceButton[9];
 
     public SentenceView() {
         super(C.mainService);
-        setBackgroundColor(C.COLOR_SENTENCE);
+        setBackgroundColor(Colour.SENTENCE);
         String s = "床前明月光疑是地上霜";
         for (int i = 0; i < 9; i++) {
             SentenceButton sb = new SentenceButton();

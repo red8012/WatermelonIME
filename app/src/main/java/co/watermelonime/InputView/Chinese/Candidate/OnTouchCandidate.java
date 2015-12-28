@@ -4,6 +4,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import co.watermelonime.C;
+import co.watermelonime.Common.Colour;
 
 public class OnTouchCandidate implements View.OnTouchListener {
     static boolean hidden = false;
@@ -12,14 +13,14 @@ public class OnTouchCandidate implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                v.setBackgroundColor(C.COLOR_CANDIDATE_SELECTED);
+                v.setBackgroundColor(Colour.CANDIDATE_SELECTED);
                 if (hidden) C.chineseKeyboard.show();
                 else
                     C.chineseKeyboard.hide();
                 hidden = !hidden;
                 break;
             case MotionEvent.ACTION_UP:
-                v.setBackgroundColor(C.COLOR_CANDIDATE);
+                v.setBackgroundColor(Colour.CANDIDATE);
         }
         return true;
     }

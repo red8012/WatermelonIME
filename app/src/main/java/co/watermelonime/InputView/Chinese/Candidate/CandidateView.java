@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import co.watermelonime.C;
-import co.watermelonime.Common.Printer;
+import co.watermelonime.Common.Colour;
+import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
 
 public class CandidateView extends ViewGroup {
@@ -15,7 +16,7 @@ public class CandidateView extends ViewGroup {
 
     public CandidateView() {
         super(C.mainService);
-        setBackgroundColor(C.COLOR_CANDIDATE);
+        setBackgroundColor(Colour.CANDIDATE);
     }
 
     static CandidateButton getCandidateButton() {
@@ -44,10 +45,10 @@ public class CandidateView extends ViewGroup {
         int i = 0;
         for (; i < end; i++) {
             int w = CandidateButton.calculateMinWidth(list.get(i));
-            if (totalWidth + w > C.candidateWidth) break;
+            if (totalWidth + w > Size.WCandidateView) break;
             totalWidth += w;
         }
-        int padding = (C.candidateWidth - totalWidth - 1) / (i);
+        int padding = (Size.WCandidateView - totalWidth - 1) / (i);
         for (String s : list) {
             if (i-- == 0) break;
             CandidateButton c = getCandidateButton();
@@ -60,7 +61,7 @@ public class CandidateView extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         Log.i("CandidateView", "onMeasure");
-        setMeasuredDimension(C.u * 60, C.u * 49);
+        setMeasuredDimension(Size.WCandidateView, Size.HCandidateView);
     }
 
     @Override
@@ -73,12 +74,11 @@ public class CandidateView extends ViewGroup {
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
             int w = v.getMeasuredWidth(), h = v.getMeasuredHeight();
-            Printer.p("layout w", w);
-            if (l + w > C.keyboardWidth + C.u) {
+            if (l + w > Size.WKeyboard + Size.u) {
                 l = 0;
                 t += v.getMeasuredHeight();
             }
-            if (w > C.keyboardWidth) {
+            if (w > Size.WKeyboard) {
                 v.layout(l, t, l + w, t + h);
                 l = 0;
                 t += h;

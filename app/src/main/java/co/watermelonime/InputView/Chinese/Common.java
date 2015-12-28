@@ -1,12 +1,9 @@
 package co.watermelonime.InputView.Chinese;
 
-import android.graphics.Color;
-
-import co.watermelonime.C;
-import co.watermelonime.Common.TextLayoutFactory;
+import co.watermelonime.Common.Colour;
+import co.watermelonime.Common.Size;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKey;
-import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
 import co.watermelonime.R;
 
 public class Common {
@@ -71,28 +68,9 @@ public class Common {
     static public ChineseKey backspace;
 
     public static void initialize() {
-        C.chineseKeyWidth = C.u * 10;
-        C.chineseKeyHeight = C.u * 9;
-        C.candidateButtonHeight = C.u * 6;
-        C.sentenceFontSize = C.u * 4;
-        C.candidateFontSize = C.u * 7 / 2;
-        SentenceView.width = C.u * 7;
-        SentenceView.height = C.u * 49;
-
-        C.bigFont = new TextLayoutFactory(C.u * 6.5f, C.sourceSans, Color.WHITE, C.u * 10);
-        C.frFont = new TextLayoutFactory(C.u * 5, C.sourceSans, Color.WHITE, C.u * 10);
-        C.midFont = new TextLayoutFactory(C.u * 3, C.sourceSans, Color.WHITE, C.u * 10);
-        C.smallFont = new TextLayoutFactory(C.u * 2, C.sourceSans, Color.WHITE, C.u * 10);
-
-        C.bigDisabledFont = new TextLayoutFactory(C.u * 6.5f, C.sourceSans, Color.DKGRAY, C.u * 10);
-        C.midDisabledFont = new TextLayoutFactory(C.u * 3, C.sourceSans, Color.DKGRAY, C.u * 10);
-
-        C.sentenceFont = new TextLayoutFactory(C.sentenceFontSize, C.sourceSans, Color.WHITE, C.u);
-        C.candidateFont = new TextLayoutFactory(C.candidateFontSize, C.sourceSans, Color.WHITE, C.u);
-
-        backspace = new ChineseKey(R.drawable.backspace, C.COLOR_FUNCTION);
+        backspace = new ChineseKey(R.drawable.backspace, Colour.FUNCTION);
 
         CandidateButton.separatorPaint.setColor(0xFF666666);
-        CandidateButton.separatorPaint.setStrokeWidth(C.u / 4f);
+        CandidateButton.separatorPaint.setStrokeWidth(Size.WSeparator);
     }
 }

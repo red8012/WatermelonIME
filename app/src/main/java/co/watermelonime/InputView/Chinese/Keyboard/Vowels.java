@@ -3,6 +3,8 @@ package co.watermelonime.InputView.Chinese.Keyboard;
 import android.os.Process;
 
 import co.watermelonime.C;
+import co.watermelonime.Common.Colour;
+import co.watermelonime.Common.Font;
 import co.watermelonime.Common.TextLayoutFactory;
 import co.watermelonime.Common.Timer;
 import co.watermelonime.InputView.Chinese.Common;
@@ -27,11 +29,11 @@ public class Vowels {
         for (int i = 0; i < 23; ++i) {
             String s = Common.vowelStrings[i];
             TextLayoutFactory
-                    te = s.length() > 1 ? C.midFont : C.bigFont,
-                    td = s.length() > 1 ? C.midDisabledFont : C.bigDisabledFont;
-            enabledKeys[i] = new ChineseKey(te.make(s), null, C.COLOR_NORMAL);
+                    te = s.length() > 1 ? Font.mid : Font.big,
+                    td = s.length() > 1 ? Font.midDisabled : Font.bigDisabled;
+            enabledKeys[i] = new ChineseKey(te.make(s), null, Colour.NORMAL);
             enabledKeys[i].setOnTouchListener(onTouchVowel);
-            disabledKeys[i] = new ChineseKey(td.make(s), null, C.COLOR_DISABLED);
+            disabledKeys[i] = new ChineseKey(td.make(s), null, Colour.DISABLED);
         }
         enabledKeys[23] = Common.backspace;
         disabledKeys[23] = Common.backspace;
@@ -49,7 +51,7 @@ public class Vowels {
                     keyArray[i][keyToChange] = disabledKeys[keyToChange];
                 } else {
                     final ChineseKey k = new ChineseKey(
-                            C.bigFont.make(textToChange), null, C.COLOR_CHARACTER);
+                            Font.big.make(textToChange), null, Colour.CHARACTER);
                     k.setOnTouchListener(onTouchVowel);
                     keyArray[i][keyToChange] = k;
                 }

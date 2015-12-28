@@ -1,8 +1,6 @@
 package co.watermelonime.InputView.Chinese.Keyboard;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.text.Layout;
 import android.view.View;
@@ -15,8 +13,8 @@ public class ChineseKey extends View {
     public Layout mainText, subText;
     public Drawable image;
     public float dx, dy, dxSub, dySub;
-    RectF rect;
-    Paint paint;
+//    RectF rect;
+//    Paint paint;
 
     public ChineseKey(final Layout mainText, final Layout subText, int backgroundColor) {
         super(C.mainService);
@@ -24,11 +22,11 @@ public class ChineseKey extends View {
         this.subText = subText;
 
         dx = mainText.getWidth() / 2;
-        dy = (C.u * 9 - mainText.getHeight()) / 2;
+        dy = (Size.u * 9 - mainText.getHeight()) / 2;
         if (subText != null) {
             dy -= subText.getHeight() / 2;
             dxSub = subText.getWidth() / 2;
-            dySub = (C.u * 8 - subText.getHeight());
+            dySub = (Size.u * 8 - subText.getHeight());
         }
         setBackgroundColor(backgroundColor);
         setMeasuredDimension(Size.WKey, Size.HKey);
@@ -37,9 +35,9 @@ public class ChineseKey extends View {
     public ChineseKey(int resource, int backgroundColor) {
         super(C.mainService);
         image = C.mainService.getResources().getDrawable(resource);
-        image.setBounds(0, 0, C.u * 13 / 2, C.u * 13 / 2);
-        dx = C.u * 3 / 2;
-        dy = C.u;
+        image.setBounds(0, 0, Size.keyIcon, Size.keyIcon);
+        dx = Size.u * 3 / 2;
+        dy = Size.u;
         setBackgroundColor(backgroundColor);
         setMeasuredDimension(Size.WKey, Size.HKey);
     }
@@ -48,9 +46,9 @@ public class ChineseKey extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 //        Log.i("ChineseKey", "onDraw");
-        if (paint != null) {
-            canvas.drawRoundRect(rect, C.u, C.u, paint);
-        }
+//        if (paint != null) {
+//            canvas.drawRoundRect(rect, C.u, C.u, paint);
+//        }
         if (mainText != null) {
             canvas.save();
             canvas.translate(dx, dy);

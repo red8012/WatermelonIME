@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 
 import co.watermelonime.C;
+import co.watermelonime.Common.Font;
+import co.watermelonime.Common.Size;
 
 public class SentenceButton  extends View {
     public float dx, dy;
@@ -19,12 +21,11 @@ public class SentenceButton  extends View {
 
     public void setText(String s) {
         text = s;
-//        setMeasuredDimension(C.sentenceView.width, C.u * 5);
         if (s == null) textLayout = null;
         else {
-            textLayout = C.sentenceFont.make(text, SentenceView.width);
-            dx = SentenceView.width / 2;
-            dy = (C.u * 5 - textLayout.getHeight()) / 2;
+            textLayout = Font.sentence.make(text, Size.WSentenceView);
+            dx = Size.WSentenceView / 2;
+            dy = (Size.HSentenceButton - textLayout.getHeight()) / 2;
         }
 
     }
@@ -32,7 +33,7 @@ public class SentenceButton  extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         Log.i("SentenceButton", "onMeasure");
-        setMeasuredDimension(SentenceView.width, C.u * 5);
+        setMeasuredDimension(Size.WSentenceView, Size.HSentenceButton);
     }
 
     @Override

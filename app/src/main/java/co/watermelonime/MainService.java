@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 
+import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
@@ -35,12 +36,12 @@ public class MainService extends InputMethodService {
     public boolean onEvaluateFullscreenMode() {
         Point size = new Point();
         ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(size);
-        C.screenWidth = size.x;
-        C.screenHeight = size.y;
-        C.isLandscape = size.x > size.y;
-        C.keyboardWidth = C.isLandscape ? (C.screenWidth / 2) : C.screenWidth;
-        C.candidateWidth = C.keyboardWidth;
-        C.u = C.keyboardWidth / 60;
+//        C.screenWidth = size.x;
+//        C.screenHeight = size.y;
+//        C.isLandscape = size.x > size.y;
+//        C.keyboardWidth = C.isLandscape ? (C.screenWidth / 2) : C.screenWidth;
+//        C.candidateWidth = C.keyboardWidth;
+//        C.u = C.keyboardWidth / 60;
 
         Size.calculate(size);
         return false;
@@ -53,11 +54,12 @@ public class MainService extends InputMethodService {
 
     @Override
     public View onCreateInputView() {
-        if (C.sourceSans == null) {
+        if (C.sans == null) {
             Timer.t(0);
-            C.sourceSans = Typeface.createFromAsset(getAssets(), "normal.otf");
+            C.sans = Typeface.createFromAsset(getAssets(), "normal.otf");
             Timer.t(0, "Load fonts");
         }
+        Font.init();
 
         Timer.t(1);
         Common.initialize();
