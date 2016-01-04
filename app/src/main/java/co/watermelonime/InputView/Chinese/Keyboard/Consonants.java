@@ -6,11 +6,13 @@ import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Font;
 import co.watermelonime.InputView.Chinese.Common;
 import co.watermelonime.R;
+import hugo.weaving.DebugLog;
 
 public class Consonants {
     public static ChineseKey[] keys = new ChineseKey[24];
 
     @SuppressWarnings("ObjectAllocationInLoop")
+    @DebugLog
     public static void buildKeys() {
         ArrayList<ChineseKey> keys = new ArrayList<>(24);
         for (int i = 0; i < 19; i++)

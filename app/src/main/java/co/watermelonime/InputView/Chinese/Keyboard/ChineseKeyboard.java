@@ -8,7 +8,6 @@ import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
 
 public class ChineseKeyboard extends ViewGroup {
-
     public ChineseKeyboard() {
         super(C.mainService);
         setMeasuredDimension(Size.WKeyboard, Size.HKeyboard);
@@ -17,7 +16,6 @@ public class ChineseKeyboard extends ViewGroup {
 
     public void setCurrentKeys(ChineseKey[] k) {
         Timer.t(5);
-        Log.i("ChineseKeyboad", "set current keys");
         removeAllViews();
         for (ChineseKey i : k)
             if (i != null)
@@ -62,10 +60,10 @@ public class ChineseKeyboard extends ViewGroup {
     }
 
     public void hide() {
-        animate().translationY(Size.HKeyboard).setDuration(300).setInterpolator(C.decelerate);
+        animate().translationY(Size.HKeyboard).setDuration(250).setInterpolator(C.decelerate);
     }
 
     public void show() {
-        animate().translationY(0f).setDuration(300).setInterpolator(C.decelerate);
+        animate().translationY(0f).setDuration(250).setInterpolator(C.decelerate);
     }
 }

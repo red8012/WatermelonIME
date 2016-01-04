@@ -23,6 +23,8 @@ import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
 
+//import net.sqlcipher.*;
+
 public class MainService extends InputMethodService {
     long initializationTimer;
 
@@ -36,13 +38,6 @@ public class MainService extends InputMethodService {
     public boolean onEvaluateFullscreenMode() {
         Point size = new Point();
         ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(size);
-//        C.screenWidth = size.x;
-//        C.screenHeight = size.y;
-//        C.isLandscape = size.x > size.y;
-//        C.keyboardWidth = C.isLandscape ? (C.screenWidth / 2) : C.screenWidth;
-//        C.candidateWidth = C.keyboardWidth;
-//        C.u = C.keyboardWidth / 60;
-
         Size.calculate(size);
         return false;
     }
@@ -66,13 +61,13 @@ public class MainService extends InputMethodService {
         Consonants.buildKeys();
         Timer.t(1, "Build consonants");
 
-        Timer.t(3);
+//        Timer.t(3);
         Vowels.buildKeysAsync();
-        Timer.t(3, "Build vowels");
+//        Timer.t(3, "Build vowels");
 
-        Timer.t(2);
+//        Timer.t(2);
         C.chineseKeyboard = new ChineseKeyboard();
-        Timer.t(2, "Build keyboard");
+//        Timer.t(2, "Build keyboard");
 
         Timer.t(4);
         C.candidateView = new CandidateView();
@@ -111,15 +106,10 @@ public class MainService extends InputMethodService {
         C.chineseInputView = new ChineseInputView();
         Timer.t(5, "Build ChineseInputView");
 
-
-//        C.chineseKeyboard.setCurrentKeys(Consonants.keys);
-//        C.chineseInputView.postDelayed(() -> {
-//            C.chineseKeyboard.setCurrentKeys(Consonants.keys);
-//        }, 500);
-
         System.out.println("Service startup takes " +
                 String.valueOf((System.nanoTime() - initializationTimer) / 1e6) + " ms");
 //        return C.chineseKeyboard;
+//        SQLiteDatabase.openDatabase()
         return C.chineseInputView;
     }
 }

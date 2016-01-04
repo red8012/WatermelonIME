@@ -13,8 +13,6 @@ public class ChineseKey extends View {
     public Layout mainText, subText;
     public Drawable image;
     public float dx, dy, dxSub, dySub;
-//    RectF rect;
-//    Paint paint;
 
     public ChineseKey(final Layout mainText, final Layout subText, int backgroundColor) {
         super(C.mainService);
@@ -45,10 +43,6 @@ public class ChineseKey extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-//        Log.i("ChineseKey", "onDraw");
-//        if (paint != null) {
-//            canvas.drawRoundRect(rect, C.u, C.u, paint);
-//        }
         if (mainText != null) {
             canvas.save();
             canvas.translate(dx, dy);

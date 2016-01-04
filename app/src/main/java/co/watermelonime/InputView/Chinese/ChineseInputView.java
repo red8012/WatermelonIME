@@ -7,10 +7,8 @@ import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 
 public class ChineseInputView extends ViewGroup {
-
     public ChineseInputView() {
         super(C.mainService);
-//        setLayerType(LAYER_TYPE_HARDWARE, null);
         addView(C.sentenceView);
         addView(C.candidateView);
         addView(C.chineseKeyboard);

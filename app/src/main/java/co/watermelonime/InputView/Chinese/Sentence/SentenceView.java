@@ -10,7 +10,7 @@ import co.watermelonime.Common.Size;
 
 public class SentenceView extends ViewGroup {
 
-//    public static int width, height;
+    //    public static int width, height;
     public SentenceButton[] sentenceButton = new SentenceButton[9];
 
     public SentenceView() {
