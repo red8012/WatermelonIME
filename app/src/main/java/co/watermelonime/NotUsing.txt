@@ -1,7 +1,0 @@
-        if (backgroundColor == C.COLOR_NORMAL || backgroundColor == C.COLOR_DISABLED)
-            setBackgroundColor(backgroundColor);
-        else {
-            paint = new Paint();
-            paint.setColor(backgroundColor);
-            rect = new RectF(0f, C.u / 2f, C.chineseKeyWidth, C.chineseKeyHeight);
-        }

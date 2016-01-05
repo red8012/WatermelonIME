@@ -17,5 +17,7 @@ public class Colour {
             DISABLED = Color.BLACK,
             textKeyboard = Color.WHITE,
             textSentence = Color.WHITE,
-            textCandidate = Color.BLACK;
+            textCandidate = Color.BLACK,
+            reached = Color.rgb(140, 200, 70),
+            unreached = Color.rgb(70, 70, 70);
 }

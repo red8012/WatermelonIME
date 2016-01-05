@@ -22,6 +22,7 @@ import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
+import co.watermelonime.InputView.Waiting;
 
 //import net.sqlcipher.*;
 
@@ -108,8 +109,10 @@ public class MainService extends InputMethodService {
 
         System.out.println("Service startup takes " +
                 String.valueOf((System.nanoTime() - initializationTimer) / 1e6) + " ms");
-//        return C.chineseKeyboard;
-//        SQLiteDatabase.openDatabase()
+
+        Waiting waiting = new Waiting();
+        waiting.start();
+//        return waiting;
         return C.chineseInputView;
     }
 }

@@ -33,6 +33,26 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+//    def versionPropsFile = file('version.properties')
+//
+//    if (versionPropsFile.canRead()) {
+//        def Properties versionProps = new Properties()
+//        versionProps.load(new FileInputStream(versionPropsFile))
+//        def code = versionProps['VERSION_CODE'].toInteger() + 1
+//
+//        versionProps['VERSION_CODE']=code.toString()
+//        versionProps.store(versionPropsFile.newWriter(), null)
+//
+//        defaultConfig {
+//            versionCode code
+//            applicationId "co.watermelonime"
+//            minSdkVersion 19
+//            targetSdkVersion 23
+//            versionName "1.0"
+//        }
+//    }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -49,4 +69,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     apply plugin: 'com.jakewharton.hugo'
     compile(name: 'android-database-sqlcipher-3.3.1-2', ext:'aar')
+    compile 'com.daimajia.numberprogressbar:library:1.2@aar'
 }
