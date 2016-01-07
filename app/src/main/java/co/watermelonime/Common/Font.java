@@ -3,13 +3,11 @@ package co.watermelonime.Common;
 import android.graphics.Color;
 
 import co.watermelonime.C;
-import hugo.weaving.DebugLog;
 
 public class Font {
     public static TextLayoutFactory big, fr, mid, small, bigDisabled, midDisabled,
             sentence, candidate;
 
-    @DebugLog
     public static void init() {
         big = new TextLayoutFactory(Size.FBig, C.sans, Colour.textKeyboard, Size.WKey);
         fr = new TextLayoutFactory(Size.FFr, C.sans, Colour.textKeyboard, Size.WKey);

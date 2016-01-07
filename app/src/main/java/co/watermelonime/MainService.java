@@ -4,16 +4,19 @@ import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.inputmethodservice.InputMethodService;
+import android.os.Handler;
 import android.os.Process;
 import android.view.View;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
+import co.watermelonime.Core.DB;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
@@ -22,18 +25,36 @@ import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
-import co.watermelonime.InputView.Waiting;
+import co.watermelonime.InputView.WaitingView;
 
 //import net.sqlcipher.*;
 
 public class MainService extends InputMethodService {
-    long initializationTimer;
+    public static final Handler handler = new Handler();
+    static long initializationTimer;
 
     public MainService() {
         initializationTimer = System.nanoTime();
         C.mainService = this;
         Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_DISPLAY);
         C.threadPool = Executors.newFixedThreadPool(2);
+    }
+
+    public static View getStartupView() {
+        try {
+            // check DB availability
+            DB.init();
+//            Cursor c = DB.dictionary.rawQuery(
+//                    "select zi, priority from solo where pinyin = 'Aa' order by priority desc",
+//                    null);
+//            c.moveToNext();
+//            c.getString(0);
+        } catch (Exception e) {
+            C.waitingView = new WaitingView();
+            DBCopy.start();
+            return C.waitingView;
+        }
+        return C.chineseInputView;
     }
 
     public boolean onEvaluateFullscreenMode() {
@@ -50,6 +71,8 @@ public class MainService extends InputMethodService {
 
     @Override
     public View onCreateInputView() {
+        Future<View> inputViewFuture = C.threadPool.submit(() -> getStartupView());
+
         if (C.sans == null) {
             Timer.t(0);
             C.sans = Typeface.createFromAsset(getAssets(), "normal.otf");
@@ -110,9 +133,16 @@ public class MainService extends InputMethodService {
         System.out.println("Service startup takes " +
                 String.valueOf((System.nanoTime() - initializationTimer) / 1e6) + " ms");
 
-        Waiting waiting = new Waiting();
-        waiting.start();
-//        return waiting;
-        return C.chineseInputView;
+        View v = null;
+        try {
+            v = inputViewFuture.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Service startup (includes getting future) takes " +
+                String.valueOf((System.nanoTime() - initializationTimer) / 1e6) + " ms");
+
+        if (v == null) return C.chineseInputView;
+        else return v;
     }
 }

@@ -10,6 +10,7 @@ import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
+import co.watermelonime.InputView.WaitingView;
 
 public class C {
     public final static TimeInterpolator
@@ -17,6 +18,9 @@ public class C {
     public static MainService mainService;
     public static ExecutorService threadPool;
     public static Typeface sans;
+
+    public static WaitingView waitingView;
+    public static boolean shouldDisplayInputView = false;
 
     public static boolean isLandscape;
     public static SentenceView sentenceView;
