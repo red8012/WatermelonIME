@@ -31,8 +31,10 @@ public class Vowels {
             TextLayoutFactory
                     te = s.length() > 1 ? Font.mid : Font.big,
                     td = s.length() > 1 ? Font.midDisabled : Font.bigDisabled;
-            enabledKeys[i] = new ChineseKey(te.make(s), null, Colour.NORMAL);
-            enabledKeys[i].setOnTouchListener(onTouchVowel);
+            ChineseKey key = new ChineseKey(te.make(s), null, Colour.NORMAL);
+            enabledKeys[i] = key;
+            key.id = i;
+            key.setOnTouchListener(onTouchVowel);
             disabledKeys[i] = new ChineseKey(td.make(s), null, Colour.DISABLED);
         }
         enabledKeys[23] = Common.backspace;

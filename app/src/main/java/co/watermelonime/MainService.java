@@ -8,8 +8,9 @@ import android.os.Handler;
 import android.os.Process;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 
-import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
@@ -17,7 +18,6 @@ import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
 import co.watermelonime.Core.DB;
-import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 import co.watermelonime.InputView.Chinese.Common;
@@ -32,6 +32,7 @@ import co.watermelonime.InputView.WaitingView;
 public class MainService extends InputMethodService {
     public static final Handler handler = new Handler();
     static long initializationTimer;
+    static InputConnection inputConnection;
 
     public MainService() {
         initializationTimer = System.nanoTime();
@@ -95,30 +96,30 @@ public class MainService extends InputMethodService {
 
         Timer.t(4);
         C.candidateView = new CandidateView();
-        ArrayList<String> list = new ArrayList<>();
-        list.add("中文輸入法測");
-        list.add("文");
-        list.add("輸入法");
-        list.add("試");
-        list.add("中文輸入法測試");
-        list.add("輸入法試");
-        list.add("輸法試");
-        list.add("試");
-        list.add("1234");
-        list.add("abcd");
-        ArrayList<String> list2 = new ArrayList<>();
-        list2.add("中");
-        list2.add("文");
-        list2.add("輸");
-        list2.add("入");
-        list2.add("法");
-        list2.add("試");
-        list2.add("中");
-        list2.add("文");
-        list2.add("輸");
-        list2.add("入");
-        C.candidateView.setCandidate(list, CandidateButton.TOP);
-        C.candidateView.setCandidate(list2, CandidateButton.BOTTOM);
+//        ArrayList<String> list = new ArrayList<>();
+//        list.add("中文輸入法測");
+//        list.add("文");
+//        list.add("輸入法");
+//        list.add("試");
+//        list.add("中文輸入法測試");
+//        list.add("輸入法試");
+//        list.add("輸法試");
+//        list.add("試");
+//        list.add("1234");
+//        list.add("abcd");
+//        ArrayList<String> list2 = new ArrayList<>();
+//        list2.add("中");
+//        list2.add("文");
+//        list2.add("輸");
+//        list2.add("入");
+//        list2.add("法");
+//        list2.add("試");
+//        list2.add("中");
+//        list2.add("文");
+//        list2.add("輸");
+//        list2.add("入");
+//        C.candidateView.setCandidate(list, CandidateButton.TOP);
+//        C.candidateView.setCandidate(list2, CandidateButton.BOTTOM);
         Timer.t(4, "Build CandidateView");
 
         Timer.t(325);
@@ -145,4 +146,10 @@ public class MainService extends InputMethodService {
         if (v == null) return C.chineseInputView;
         else return v;
     }
+
+    @Override
+    public void onStartInput(EditorInfo editorInfo, boolean restarting) {
+        inputConnection = getCurrentInputConnection();
+    }
+
 }

@@ -30,7 +30,7 @@ public class CandidateView extends ViewGroup {
         candidateButtonPool.add(c);
     }
 
-    public void removeAllCandidates() {
+    public void clearCandidates() {
         int end = getChildCount();
         for (int i = 0; i < end; i++) {
             releaseCandidateButton((CandidateButton) getChildAt(i));
@@ -42,6 +42,7 @@ public class CandidateView extends ViewGroup {
         Timer.t(8);
         int totalWidth = 0;
         int end = list.size();
+        if (end == 0) return; // ? why this happens?
         int i = 0;
         for (; i < end; i++) {
             int w = CandidateButton.calculateMinWidth(list.get(i));
@@ -54,7 +55,9 @@ public class CandidateView extends ViewGroup {
             CandidateButton c = getCandidateButton();
             c.setText(s, padding, i > 0, type);
             addView(c);
+            System.out.println(s);
         }
+        onLayout(true, 0, 0, Size.WCandidateView, Size.HCandidateView);
         Timer.t(8, "set left candidate");
     }
 

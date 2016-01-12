@@ -9,7 +9,7 @@ import co.watermelonime.C;
 import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 
-public class SentenceButton  extends View {
+public class SentenceButton extends View {
     public float dx, dy;
     String text;
     Layout textLayout;

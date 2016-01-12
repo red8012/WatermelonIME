@@ -41,7 +41,7 @@ public class ChineseKeyboard extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.i("ChineseKeyboard", "onLayout");
+//        Log.i("ChineseKeyboard", "onLayout");
         l = 0;
         t = 0;
         r = l + Size.WKey;

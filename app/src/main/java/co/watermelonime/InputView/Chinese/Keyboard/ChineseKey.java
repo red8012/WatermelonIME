@@ -9,15 +9,17 @@ import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 
 public class ChineseKey extends View {
-    public int consonantId = 0;
+    public int id = -1;
     public Layout mainText, subText;
     public Drawable image;
     public float dx, dy, dxSub, dySub;
+//    public String keyCode;
 
     public ChineseKey(final Layout mainText, final Layout subText, int backgroundColor) {
         super(C.mainService);
         this.mainText = mainText;
         this.subText = subText;
+//        this.keyCode = keyCode;
 
         dx = mainText.getWidth() / 2;
         dy = (Size.u * 9 - mainText.getHeight()) / 2;

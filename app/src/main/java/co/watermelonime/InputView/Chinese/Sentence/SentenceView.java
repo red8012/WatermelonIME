@@ -7,21 +7,37 @@ import android.view.ViewGroup;
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Size;
+import co.watermelonime.Core.Engine;
 
 public class SentenceView extends ViewGroup {
 
     //    public static int width, height;
-    public SentenceButton[] sentenceButton = new SentenceButton[9];
+    public SentenceButton[] sentenceButtons = new SentenceButton[9];
 
     public SentenceView() {
         super(C.mainService);
         setBackgroundColor(Colour.SENTENCE);
-        String s = "床前明月光疑是地上霜";
+//        String s = "床前明月光疑是地上霜";
         for (int i = 0; i < 9; i++) {
             SentenceButton sb = new SentenceButton();
-            sb.setText(s.substring(i, i + 1));
+            sentenceButtons[i] = sb;
+//            sb.setText(s.substring(i, i + 1));
             addView(sb);
         }
+    }
+
+    public void display() {
+        StringBuffer sentence = Engine.getSentenceBuffer();
+        final int length = sentence.length();
+        for (int i = 0; i < length; i++) sentenceButtons[i].setText(sentence.substring(i, i + 1));
+        for (int i = length; i < 9; i++) sentenceButtons[i].setText(null);
+        invalidate();
+    }
+
+    public void consonantPreview(String text) {
+        final int length = Engine.getLength();
+        sentenceButtons[length].setText(text);
+        sentenceButtons[length].invalidate();
     }
 
     @Override

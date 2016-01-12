@@ -22,9 +22,18 @@ public class C {
     public static WaitingView waitingView;
     public static boolean shouldDisplayInputView = false;
 
-    public static boolean isLandscape;
+    public static boolean isLandscape, debug = true;
     public static SentenceView sentenceView;
     public static CandidateView candidateView;
     public static ChineseKeyboard chineseKeyboard;
     public static ChineseInputView chineseInputView;
+
+    public static void commit(String text) {
+        if (MainService.inputConnection != null)
+            try {
+                MainService.inputConnection.commitText(text, 1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }
 }

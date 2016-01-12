@@ -18,6 +18,11 @@ public class DB {
                 SQLiteDatabase.OPEN_READONLY|SQLiteDatabase.NO_LOCALIZED_COLLATORS
         );
 
+//        should remove
+//        Database.connect();
+        Database.dictionary = dictionary;
+
+
 //        dictionary.setMaxSqlCacheSize(SQLiteDatabase.MAX_SQL_CACHE_SIZE);
 //        dictionary.execSQL("PRAGMA synchronous = OFF;");
 //        dictionary.execSQL("PRAGMA temp_store = MEMORY;");
