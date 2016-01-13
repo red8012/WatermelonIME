@@ -27,6 +27,7 @@ public class OnTouchVowel implements View.OnTouchListener {
                 String keyCode = code[id];
                 Engine.addVowel(keyCode, "?");
                 Engine.thread1.execute(Runnables.onAdd);
+                C.candidateView.clearCandidates();
                 System.out.println("OnTouchVowel: " + keyCode);
         }
         return true;

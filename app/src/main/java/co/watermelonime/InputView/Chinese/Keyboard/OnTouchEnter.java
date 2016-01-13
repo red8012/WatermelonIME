@@ -1,5 +1,6 @@
 package co.watermelonime.InputView.Chinese.Keyboard;
 
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -11,10 +12,15 @@ public class OnTouchEnter implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                C.commit(Engine.getSentence());
-                Engine.clear();
-                C.sentenceView.display();
                 System.out.println("OnTouchEnter");
+                if (Engine.isEmpty()) {
+                    C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_ENTER);
+                } else {
+                    C.commit(Engine.getSentence());
+                    Engine.clear();
+                    C.sentenceView.display();
+                    C.candidateView.clearCandidates();
+                }
         }
         return true;
     }

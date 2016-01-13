@@ -57,25 +57,7 @@ public class Runnables {
             C.candidateView.setCandidate(arrayList, CandidateButton.BOTTOM);
         }
     };
-    public static final Runnable displayCandidate = new Runnable() {
-        @Override
-        public void run() {
-            it1 = Engine.candidateLeft.iterator();
-            ArrayList<String> arrayList = new ArrayList<>(); //Todo: remove this
-            for (int i = 0; i < 8; i++)
-                if (it1.hasNext()) arrayList.add(it1.next());
-                else break;
-            C.candidateView.clearCandidates();
-            C.candidateView.setCandidate(arrayList, CandidateButton.TOP);
-
-            arrayList.clear();
-            it2 = Engine.candidateRight.iterator();
-            for (int i = 0; i < 8; i++)
-                if (it2.hasNext()) arrayList.add(it2.next());
-                else break;
-            C.candidateView.setCandidate(arrayList, CandidateButton.BOTTOM);
-        }
-    };    public static final Runnable onAdd = new Runnable() {
+    public static final Runnable onAdd = new Runnable() {
         @Override
         public void run() {
             final int length = Engine.getLength();
@@ -98,7 +80,7 @@ public class Runnables {
         }
     };
 
-    static void makeSeparator() {
+    public static void makeSeparator() {
         boolean found;
         int counter, length = Engine.getLength();
         System.out.println("makeSeparator length: " + length);
@@ -126,7 +108,7 @@ public class Runnables {
         Engine.print("No matched separator");
     }
 
-    static void makeSentence() {
+    public static void makeSentence() {
         StringBuffer sb = new StringBuffer();
         int counter = 0;
         for (int i : Engine.separatorAnswer) { // Todo: this may be null

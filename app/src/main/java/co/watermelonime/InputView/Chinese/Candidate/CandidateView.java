@@ -38,7 +38,7 @@ public class CandidateView extends ViewGroup {
         removeAllViews();
     }
 
-    public void setCandidate(ArrayList<String> list, int type) {
+    public void setCandidate(ArrayList<String> list, int type) { //Todo: can be static
         Timer.t(8);
         int totalWidth = 0;
         int end = list.size();
@@ -55,7 +55,7 @@ public class CandidateView extends ViewGroup {
             CandidateButton c = getCandidateButton();
             c.setText(s, padding, i > 0, type);
             addView(c);
-            System.out.println(s);
+//            System.out.println(s);
         }
         onLayout(true, 0, 0, Size.WCandidateView, Size.HCandidateView);
         Timer.t(8, "set left candidate");

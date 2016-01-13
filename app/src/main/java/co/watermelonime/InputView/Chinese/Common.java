@@ -1,10 +1,7 @@
 package co.watermelonime.InputView.Chinese;
 
-import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Size;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
-import co.watermelonime.InputView.Chinese.Keyboard.ChineseKey;
-import co.watermelonime.R;
 
 public class Common {
     public static final int[][] keysToChange = {
@@ -50,7 +47,7 @@ public class Common {
             {null, "先", null, null, null, "想", "須", "些", "向", "像", "型", "性"},
             {"是", "時", null, "使", "事"},
             {"雖", "所", null, "似", null, null, null},
-            {"非", "『", "』", "\"", "「", "」", "+", "&", "（", "）", "=", "…"},
+            {null, "『", "』", "\"", "「", "」", "+", "&", "（", "）", "=", "…"},
             {"啦", "了"},
             {},
             {"─", "：", "、", "；", "？", "。", "！", "‧", "，"}
@@ -65,10 +62,10 @@ public class Common {
             "　ㄧㄨ\nㄛㄛㄛ", "ㄟ", "ㄣ", "ㄧㄨㄩ\nㄣㄣㄣ", "ㄨㄩ\nㄟㄝ", "ㄨ",
             "ㄜㄝ", "ㄠ", "ㄤ", "ㄧㄨ\nㄤㄤ", "ㄧ\nㄠ", "ㄩ",
             "ㄧ\nㄝ", "ㄡ", "ㄥㄦ", "ㄧㄨㄩ\nㄥㄥㄥ", "ㄧ\nㄡ"};
-    static public ChineseKey backspace;
+//    static public ChineseKey backspace;
 
     public static void initialize() {
-        backspace = new ChineseKey(R.drawable.backspace, Colour.FUNCTION);
+//        backspace = new ChineseKey(R.drawable.backspace, Colour.FUNCTION);
 
         CandidateButton.separatorPaint.setColor(0xFF666666);
         CandidateButton.separatorPaint.setStrokeWidth(Size.WSeparator);

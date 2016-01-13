@@ -9,6 +9,7 @@ import co.watermelonime.R;
 
 public class Consonants {
     public static ChineseKey[] keys = new ChineseKey[24];
+    public static ChineseKey enter, backspace;
 
     @SuppressWarnings("ObjectAllocationInLoop")
     public static void buildKeys() {
@@ -20,16 +21,19 @@ public class Consonants {
         keys.add(18, new ChineseKey(Font.fr.make("ㄈ"),
                 Font.small.make("符號 2"), Colour.NORMAL));
 
-        ChineseKey key = new ChineseKey(R.drawable.enter, Colour.FUNCTION);
-        key.setOnTouchListener(new OnTouchEnter());
-        keys.add(key);
+        enter = new ChineseKey(R.drawable.enter, Colour.FUNCTION);
+        enter.setOnTouchListener(new OnTouchEnter());
+        keys.add(enter);
 
         keys.add(new ChineseKey(Font.mid.make("ㄧㄨㄩ"),
                 Font.small.make("...其他"), Colour.NORMAL));
         keys.add(new ChineseKey(Font.fr.make("ㄖ"),
                 Font.small.make("符號 1"),
                 Colour.NORMAL));
-        keys.add(Common.backspace);
+
+        backspace = new ChineseKey(R.drawable.backspace, Colour.FUNCTION);
+        backspace.setOnTouchListener(new OnTouchDel());
+        keys.add(backspace);
 
         Consonants.keys = keys.toArray(Consonants.keys);
     }
