@@ -18,7 +18,7 @@ public class OnTouchConsonant implements View.OnTouchListener {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 ChineseKey key = (ChineseKey) v;
-                int id = key.id;
+                int id = key.action;
                 C.chineseKeyboard.setCurrentKeys(Vowels.keyArray[id]);
                 String keyCode = code[id];
                 if (Engine.getLength() == 9) C.commit(Engine.pop());

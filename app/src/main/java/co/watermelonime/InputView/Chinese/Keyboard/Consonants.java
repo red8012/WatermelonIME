@@ -41,11 +41,11 @@ public class Consonants {
     public static void addListeners() {
         OnTouchConsonant onTouchConsonant = new OnTouchConsonant();
         for (int i = 0; i < 20; i++) {
-            Consonants.keys[i].id = i;
+            Consonants.keys[i].action = i;
             Consonants.keys[i].setOnTouchListener(onTouchConsonant);
         }
         for (int i = 21; i < 23; i++) {
-            Consonants.keys[i].id = i - 1;
+            Consonants.keys[i].action = i - 1;
             Consonants.keys[i].setOnTouchListener(onTouchConsonant);
         }
     }

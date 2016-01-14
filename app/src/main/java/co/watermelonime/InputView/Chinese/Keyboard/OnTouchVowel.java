@@ -8,27 +8,29 @@ import co.watermelonime.Core.Engine;
 import co.watermelonime.Core.Runnables;
 
 public class OnTouchVowel implements View.OnTouchListener {
-    public static final String code[] = {
-            "a", "e", "i", "m", "q", "u",
-            "b", "f", "j", "n", "r", "v",
-            "c", "g", "k", "o", "s", "w",
-            "d", "h", "l", "p", "t"};
+
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 ChineseKey key = (ChineseKey) v;
-                int id = key.id;
-                if (id < 0) {
-                    return true;
+                if (key.action == ChineseKey.CONSONANT) {
+                    C.chineseKeyboard.setCurrentKeys(Consonants.keys);
+                    String keyCode = key.input;
+                    Engine.addVowel(keyCode, "?");
+                    Engine.thread1.execute(Runnables.onAdd);
+                    C.candidateView.clearCandidates();
+                    System.out.println("OnTouchVowel: " + keyCode);
                 }
-                C.chineseKeyboard.setCurrentKeys(Consonants.keys);
-                String keyCode = code[id];
-                Engine.addVowel(keyCode, "?");
-                Engine.thread1.execute(Runnables.onAdd);
-                C.candidateView.clearCandidates();
-                System.out.println("OnTouchVowel: " + keyCode);
+//                else if (key.action == ChineseKey.CHARACTER) {
+//                    C.chineseKeyboard.setCurrentKeys(Consonants.keys);
+//                    String keyCode = key.input;
+//                    Engine.addVowel(keyCode, key.character);
+//                    Engine.thread1.execute(Runnables.onAdd);
+//                    C.candidateView.clearCandidates();
+//                    System.out.println("OnTouchVowel: " + keyCode);
+//                }
         }
         return true;
     }
