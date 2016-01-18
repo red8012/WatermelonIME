@@ -24,6 +24,7 @@ import co.watermelonime.InputView.Chinese.Common;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
+import co.watermelonime.InputView.Chinese.Sentence.FunctionKeys;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
 import co.watermelonime.InputView.WaitingView;
 
@@ -96,33 +97,10 @@ public class MainService extends InputMethodService {
 
         Timer.t(4);
         C.candidateView = new CandidateView();
-//        ArrayList<String> list = new ArrayList<>();
-//        list.add("中文輸入法測");
-//        list.add("文");
-//        list.add("輸入法");
-//        list.add("試");
-//        list.add("中文輸入法測試");
-//        list.add("輸入法試");
-//        list.add("輸法試");
-//        list.add("試");
-//        list.add("1234");
-//        list.add("abcd");
-//        ArrayList<String> list2 = new ArrayList<>();
-//        list2.add("中");
-//        list2.add("文");
-//        list2.add("輸");
-//        list2.add("入");
-//        list2.add("法");
-//        list2.add("試");
-//        list2.add("中");
-//        list2.add("文");
-//        list2.add("輸");
-//        list2.add("入");
-//        C.candidateView.setCandidate(list, CandidateButton.TOP);
-//        C.candidateView.setCandidate(list2, CandidateButton.BOTTOM);
         Timer.t(4, "Build CandidateView");
 
         Timer.t(325);
+        FunctionKeys.init();
         C.sentenceView = new SentenceView();
         Timer.t(325, "Build SentenceView");
 
