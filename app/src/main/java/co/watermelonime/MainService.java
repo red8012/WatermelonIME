@@ -26,6 +26,7 @@ import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
 import co.watermelonime.InputView.Chinese.Sentence.FunctionKeys;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
+import co.watermelonime.InputView.Emoji.Emoji;
 import co.watermelonime.InputView.WaitingView;
 
 //import net.sqlcipher.*;
@@ -102,6 +103,7 @@ public class MainService extends InputMethodService {
         Timer.t(325);
         FunctionKeys.init();
         C.sentenceView = new SentenceView();
+        C.emoji = new Emoji();
         Timer.t(325, "Build SentenceView");
 
 

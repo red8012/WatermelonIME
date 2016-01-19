@@ -8,7 +8,7 @@ import co.watermelonime.Common.Colour;
 public class Emoji extends ViewGroup {
     public Emoji() {
         super(C.mainService);
-        setBackgroundColor(Colour.FUNCTION);
+        setBackgroundColor(Colour.CHARACTER);
     }
 
     @Override
