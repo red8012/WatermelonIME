@@ -11,7 +11,7 @@ import co.watermelonime.Common.Size;
 public class ChineseKey extends View {
     public static final int CONSONANT = -1, CHARACTER = -2, PUNCTUATION = -3;
     public int action = -1; // positive vowel keyboard num or the three types above
-    public String input, character;
+    public char pinyin, character;
     public Layout mainText, subText;
     public Drawable image;
     public float dx, dy, dxSub, dySub;

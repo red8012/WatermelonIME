@@ -39,22 +39,33 @@ public class Runnables {
     };
     static Iterator<String> it1, it2;
     public static final Runnable displayCandidate = new Runnable() {
+        final ArrayList<String> arrayList = new ArrayList<>(10);
+
         @Override
         public void run() {
-            it1 = Engine.candidateLeft.iterator();
-            ArrayList<String> arrayList = new ArrayList<>(); //Todo: remove this
+            if (Engine.getLength() == 1) { // candidate should fill both when only character typed
+                it1 = Engine.candidateRight.iterator();
+                it2 = it1;
+            } else {
+                it1 = Engine.candidateLeft.iterator();
+                it2 = Engine.candidateRight.iterator();
+            }
+
+            C.candidateView.clearCandidates();
+
+            arrayList.clear();
             for (int i = 0; i < 8; i++)
                 if (it1.hasNext()) arrayList.add(it1.next());
                 else break;
-            C.candidateView.clearCandidates();
             C.candidateView.setCandidate(arrayList, CandidateButton.TOP);
 
+
             arrayList.clear();
-            it2 = Engine.candidateRight.iterator();
             for (int i = 0; i < 8; i++)
                 if (it2.hasNext()) arrayList.add(it2.next());
                 else break;
             C.candidateView.setCandidate(arrayList, CandidateButton.BOTTOM);
+
         }
     };
     public static final Runnable onAdd = new Runnable() {

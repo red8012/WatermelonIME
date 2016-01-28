@@ -42,6 +42,7 @@ public class SentenceView extends ViewGroup {
         System.out.println("display sentence");
         if (Engine.isEmpty()) {
             children = FunctionKeys.keys;
+            for (int i = 0; i < 9; i++) sentenceButtons[i].setText(null);
             removeAllViews();
             for (SentenceButton i : children)
                 addView(i);

@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 import co.watermelonime.Core.DB;
+import co.watermelonime.InputView.WaitingView;
 
 public class DBCopy {
 
@@ -24,11 +25,10 @@ public class DBCopy {
                 int len;
                 while ((len = in.read(buffer)) != -1) {
                     out.write(buffer, 0, len);
-                    C.waitingView.increment(1);
+                    WaitingView.me.increment(1);
                 }
                 in.close();
                 out.close();
-                C.shouldDisplayInputView = true;
                 MainService.handler.post(() -> {
                     DB.init();
                     C.mainService.setInputView(C.chineseInputView);

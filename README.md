@@ -2,10 +2,13 @@
 
 ### TODO
 
-1. character lock
-2. candidate select
-3. zh, ch, sh, r, zi, ci , si
-4. reorganize dict
+1. [done] character lock
+2. [done] punctuation
+3. [done] candidate select
+4. dict select
+5. zh, ch, sh, r, zi, ci , si, wui
+6. [done] candidate should fill both line when only one character typed
+7. reorganize dict (s1, s2, s3, …)
 
 ### Performance TODO
 
@@ -21,3 +24,4 @@
 10. PRAGMA mmap_size=268435456;
 11. ATTACH DATABASE ':memory:' AS aux1;
 12. raw query bind variable
+13. set thread priority

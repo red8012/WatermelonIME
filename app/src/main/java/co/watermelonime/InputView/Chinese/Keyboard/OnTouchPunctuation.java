@@ -7,11 +7,11 @@ import co.watermelonime.C;
 import co.watermelonime.Core.Engine;
 
 public class OnTouchPunctuation implements View.OnTouchListener {
-    String punctuation;
+//    String punctuation;
 
-    public OnTouchPunctuation(String p) {
-        punctuation = p;
-    }
+//    public OnTouchPunctuation(String p) {
+//        punctuation = p;
+//    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -21,7 +21,7 @@ public class OnTouchPunctuation implements View.OnTouchListener {
             Engine.clear();
             C.sentenceView.display();
             C.candidateView.clearCandidates();
-            C.commit(punctuation);
+            C.commit(String.valueOf(((ChineseKey)v).character));
         }
         return true;
     }

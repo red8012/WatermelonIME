@@ -53,9 +53,9 @@ public class MainService extends InputMethodService {
 //            c.moveToNext();
 //            c.getString(0);
         } catch (Exception e) {
-            C.waitingView = new WaitingView();
+            WaitingView.me = new WaitingView();
             DBCopy.start();
-            return C.waitingView;
+            return WaitingView.me;
         }
         return C.chineseInputView;
     }
@@ -76,9 +76,9 @@ public class MainService extends InputMethodService {
     public View onCreateInputView() {
         Future<View> inputViewFuture = C.threadPool.submit(() -> getStartupView());
 
-        if (C.sans == null) {
+        if (Font.sans == null) {
             Timer.t(0);
-            C.sans = Typeface.createFromAsset(getAssets(), "normal.otf");
+            Font.sans = Typeface.createFromAsset(getAssets(), "normal.otf");
             Timer.t(0, "Load fonts");
         }
         Font.init();

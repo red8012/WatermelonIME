@@ -14,6 +14,7 @@ import co.watermelonime.Common.Size;
 
 public class WaitingView extends ViewGroup {
     public static NumberProgressBar progressBar;
+    public static WaitingView me;
     Layout text;
 
     public WaitingView() {

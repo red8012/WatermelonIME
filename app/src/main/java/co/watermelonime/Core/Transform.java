@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 /**
  * Created by ray on 2016/1/9.
- * This class is ported from the old repo and should be rewrote for better performance.
+ * This class is ported from the old repo and should be rewritten for better performance.
  * BENCHMARK REQUIRED!!!!!!!!!!!!!
  */
 public class Transform {

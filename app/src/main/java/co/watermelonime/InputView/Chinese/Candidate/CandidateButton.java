@@ -12,9 +12,10 @@ import co.watermelonime.Common.Size;
 public class CandidateButton extends View {
     public static final Paint separatorPaint = new Paint();
     public static final int BOTTOM = -1, TOP = 1;
-    static OnTouchListener onTouchListener = new OnTouchCandidate();
+//    static OnTouchListener onTouchListener = new OnTouchCandidate();
+    static final OnClickCandidate onClickCandidate = new OnClickCandidate();
     public float dx, dy;
-    int paddingTopBottom = 0;
+    int type = 0;
     int length, width;
     String text;
     Layout textLayout;
@@ -22,7 +23,8 @@ public class CandidateButton extends View {
 
     public CandidateButton() {
         super(C.mainService);
-        setOnTouchListener(onTouchListener);
+//        setOnTouchListener(onTouchListener);
+        setOnClickListener(onClickCandidate);
     }
 
     public static int calculateMinWidth(String s) {
@@ -35,7 +37,7 @@ public class CandidateButton extends View {
     public void setText(String s, int padding, boolean separator, int paddingTopBottom) {
         text = s;
         width = calculateMinWidth(s) + padding;
-        this.paddingTopBottom = paddingTopBottom;
+        this.type = paddingTopBottom;
         needSeparator = separator;
         setMeasuredDimension(width, (int) (Size.HCandidateRow + (paddingTopBottom == 0 ? 0 : Size.u / 2)));
         if (s == null) textLayout = null;

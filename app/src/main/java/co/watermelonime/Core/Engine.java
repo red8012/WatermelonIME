@@ -23,7 +23,7 @@ public class Engine {
     static LinkedList<String>[][] queryResultL = initQueryResult(); // [length][start at][i]  // learning
     static LinkedList<String>[][] queryResultD = initQueryResult(); // [length][start at][i]  // dictionary
     static StringBuffer pinyin = new StringBuffer(32),
-            ziLock = new StringBuffer(32),   // after dict select or direct zi input
+            ziLock = new StringBuffer(32),   // after dict select or direct zi pinyin
             ziOrig = new StringBuffer(32),   // before dict select
             sentence = new StringBuffer(32);
     static int separatorAnswer[];
@@ -53,6 +53,8 @@ public class Engine {
         ziLock = new StringBuffer(32);
         ziOrig = new StringBuffer(32);
         sentence = new StringBuffer(32);
+        candidateLeft.clear();
+        candidateRight.clear();
         Engine.clearQueryResult();
         System.gc();
     }
