@@ -4,10 +4,14 @@ import java.util.ArrayList;
 
 import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Font;
-import co.watermelonime.InputView.Chinese.Common;
 import co.watermelonime.R;
 
 public class Consonants {
+    final public static String[] displayTexts = {
+            "ㄅ", "ㄉ", "ㄍ", "ㄐ", "ㄓ", "ㄗ",
+            "ㄆ", "ㄊ", "ㄎ", "ㄑ", "ㄔ", "ㄘ",
+            "ㄇ", "ㄋ", "ㄏ", "ㄒ", "ㄕ", "ㄙ",
+            "ㄌ"};
     public static ChineseKey[] keys = new ChineseKey[24];
     public static ChineseKey enter, backspace;
 
@@ -15,7 +19,7 @@ public class Consonants {
     public static void buildKeys() {
         ArrayList<ChineseKey> keys = new ArrayList<>(24);
         for (int i = 0; i < 19; i++)
-            keys.add(new ChineseKey(Font.big.make(Common.consonantStrings[i]),
+            keys.add(new ChineseKey(Font.big.make(displayTexts[i]),
                     null, Colour.NORMAL));
 
         keys.add(18, new ChineseKey(Font.fr.make("ㄈ"),

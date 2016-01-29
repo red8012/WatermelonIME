@@ -9,6 +9,7 @@ import co.watermelonime.Common.Timer;
 
 public class ChineseKeyboard extends ViewGroup {
     public static ChineseKey[] currentKeys;
+    public static boolean visible = true;
 
     public ChineseKeyboard() {
         super(C.mainService);
@@ -63,10 +64,14 @@ public class ChineseKeyboard extends ViewGroup {
     }
 
     public void hide() {
+        if (!visible) return;
+        visible = false;
         animate().translationY(Size.HKeyboard).setDuration(250).setInterpolator(C.decelerate);
     }
 
     public void show() {
+        if (visible) return;
+        visible = true;
         animate().translationY(0f).setDuration(250).setInterpolator(C.decelerate);
     }
 }

@@ -6,7 +6,7 @@ import android.graphics.Typeface;
 public class Font {
     public static TextLayoutFactory
             big, fr, mid, small, bigDisabled, midDisabled,
-            sentence, candidate;
+            sentence, sentenceSelected, candidate;
     public static Typeface sans;
 
     public static void init() {
@@ -19,6 +19,7 @@ public class Font {
         midDisabled = new TextLayoutFactory(Size.FMid, sans, Color.DKGRAY, Size.WKey);
 
         sentence = new TextLayoutFactory(Size.FSentence, sans, Colour.textSentence, Size.WSentenceView);
+        sentenceSelected = new TextLayoutFactory(Size.FSentence, sans, Colour.textCandidate, Size.WSentenceView);
         candidate = new TextLayoutFactory(Size.FCandidate, sans, Colour.textCandidate, 0);
     }
 }

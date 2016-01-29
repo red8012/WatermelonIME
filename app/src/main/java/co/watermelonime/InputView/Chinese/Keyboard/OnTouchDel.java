@@ -37,7 +37,7 @@ public class OnTouchDel implements OnTouchListener {
             C.sentenceView.display();
             C.chineseKeyboard.setCurrentKeys(Consonants.keys);
             if (Engine.isEmpty()) {
-            } // Todo: display nav
+            } // Todo: displayTexts nav
             else Runnables.displayCandidate.run();
             return true;
         }

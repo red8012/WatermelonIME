@@ -79,23 +79,23 @@ public class Database {
         return c;
     }
 
-    public static Cursor query() {
-        final int length = Engine.getLength(), pinyinLength = Engine.pinyin.length();
+    public static Cursor query(String pinyin, String ziLock) {
+        final int length = Engine.getLength(), pinyinLength = pinyin.length();
         if (C.debug && pinyinLength % 2 != 0) Engine.print("Bad query1");
         final StringBuilder builder = new StringBuilder(2048);
 
         String table = length > 4 ? tableNames[0] : tableNames[length];
         builder.append(s1).append(table).append(s2)
-                .append(Transform.makeGlob(Transform.replaceVowel(Engine.pinyin.toString())))
-                .append(s3).append(Engine.ziLock);
+                .append(Transform.makeGlob(Transform.replaceVowel(pinyin.toString())))
+                .append(s3).append(ziLock);
 
         for (int i = 1; i < length; i++) {
             final int l = length - i;
             table = l > 4 ? tableNames[0] : tableNames[l];
             builder.append(s4).append(s1).append(table).append(s2)
                     .append(Transform.makeGlob(Transform.replaceVowel(
-                            Engine.pinyin.substring(i + i, pinyinLength))))
-                    .append(s3).append(Engine.ziLock.substring(i, length));
+                            pinyin.substring(i + i, pinyinLength))))
+                    .append(s3).append(ziLock.substring(i, length));
         }
         builder.append(s5);
         final String queryString = builder.toString();

@@ -1,25 +1,36 @@
 package co.watermelonime.InputView.Chinese.Sentence;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 
 import co.watermelonime.C;
+import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 
 public class SentenceButton extends View {
+    static final OnTouchListener onTouchListener = new OnTouchSentenceButton();
+    static final Paint rectPaint = new Paint();
+    public static int selectedIndex = -1; // -1 means nothing selected
+    static RectF rect;
     public float dx, dy;
+    public int index; // the i-th sentence button
     String text;
-    Layout textLayout;
-    OnTouchListener onTouchListener;
+    Layout textLayout, originalTextLayout;
 
-    public SentenceButton() {
+    public SentenceButton(int index) {
         super(C.mainService);
+        setOnTouchListener(onTouchListener);
+        this.index = index;
+        rectPaint.setColor(Colour.CANDIDATE);
+        rect = new RectF(Size.u / 2, 0, Size.WSentenceView, Size.HSentenceButton);
     }
 
-    public void setText(String s) {
+    public void setText(final String s) {
         text = s;
         if (s == null) textLayout = null;
         else {
@@ -27,7 +38,6 @@ public class SentenceButton extends View {
             dx = Size.WSentenceView / 2;
             dy = (Size.HSentenceButton - textLayout.getHeight()) / 2;
         }
-
     }
 
     @Override
@@ -39,6 +49,11 @@ public class SentenceButton extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         if (textLayout == null) return;
+        if (selectedIndex == index) {
+            canvas.drawRoundRect(rect, Size.u, Size.u, rectPaint);
+            canvas.drawRect(Size.WSentenceView - Size.u, 0,
+                    Size.WSentenceView, Size.HSentenceButton, rectPaint);
+        }
         canvas.save();
         canvas.translate(dx, dy);
         textLayout.draw(canvas);

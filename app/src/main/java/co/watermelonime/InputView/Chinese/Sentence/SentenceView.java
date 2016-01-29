@@ -6,26 +6,44 @@ import android.view.ViewGroup;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
+import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Printer;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Core.Engine;
 
 public class SentenceView extends ViewGroup {
-    public SentenceButton[] sentenceButtons = new SentenceButton[9];
+    public static SentenceButton[] sentenceButtons = new SentenceButton[9];
     public SentenceButton[] children;
-//    public static boolean showFunctions = false;
 
     public SentenceView() {
         super(C.mainService);
         setBackgroundColor(Colour.SENTENCE);
         for (int i = 0; i < 9; i++) {
-            SentenceButton sb = new SentenceButton();
+            SentenceButton sb = new SentenceButton(i);
             sentenceButtons[i] = sb;
-//            addView(sb);
         }
         children = FunctionKeys.keys;
         for (SentenceButton i : children)
             addView(i);
+    }
+
+    public static void setSelected(int index) {
+        if (SentenceButton.selectedIndex == index) {
+            SentenceButton sb = sentenceButtons[SentenceButton.selectedIndex];
+            SentenceButton.selectedIndex = -1;
+            sb.textLayout = sb.originalTextLayout;
+            sb.invalidate();
+            return;
+        } else if (SentenceButton.selectedIndex >= 0) {
+            SentenceButton sb = sentenceButtons[SentenceButton.selectedIndex];
+            if (sb.originalTextLayout != null) sb.textLayout = sb.originalTextLayout;
+            sb.invalidate();
+        }
+        SentenceButton.selectedIndex = index;
+        SentenceButton sb = sentenceButtons[index];
+        sb.originalTextLayout = sb.textLayout;
+        sb.textLayout = Font.sentenceSelected.make(sb.text);
+        sb.invalidate();
     }
 
     public void addSentenceButtons() {
@@ -39,7 +57,7 @@ public class SentenceView extends ViewGroup {
     }
 
     public void display() {
-        System.out.println("display sentence");
+        System.out.println("displayTexts sentence");
         if (Engine.isEmpty()) {
             children = FunctionKeys.keys;
             for (int i = 0; i < 9; i++) sentenceButtons[i].setText(null);
@@ -58,7 +76,7 @@ public class SentenceView extends ViewGroup {
     }
 
     public void consonantPreview(String text) {
-        System.out.println("display consonant preview");
+        System.out.println("displayTexts consonant preview");
         addSentenceButtons();
         final int length = Engine.getLength();
         sentenceButtons[length].setText(text);

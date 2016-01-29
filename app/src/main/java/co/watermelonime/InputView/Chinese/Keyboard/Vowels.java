@@ -7,9 +7,13 @@ import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Font;
 import co.watermelonime.Common.TextLayoutFactory;
 import co.watermelonime.Common.Timer;
-import co.watermelonime.InputView.Chinese.Common;
 
 public class Vowels {
+    final public static String[] displayTexts = {
+            "　ㄧㄨ\nㄚㄚㄚ", "ㄞ", "ㄢ", "ㄧㄨㄩ\nㄢㄢㄢ", "ㄧㄨ\nㄞㄞ", "ㄧ",
+            "　ㄧㄨ\nㄛㄛㄛ", "ㄟ", "ㄣ", "ㄧㄨㄩ\nㄣㄣㄣ", "ㄨ\nㄟ", "ㄨ",
+            "ㄜㄝ", "ㄠ", "ㄤ", "ㄧㄨ\nㄤㄤ", "ㄧ\nㄠ", "ㄩ",
+            "ㄧㄩ\nㄝㄝ", "ㄡ", "ㄥㄦ", "ㄧㄨㄩ\nㄥㄥㄥ", "ㄧ\nㄡ"};
     public static final char code[] = {
             'a', 'e', 'i', 'm', 'q', 'u',
             'b', 'f', 'j', 'n', 'r', 'v',
@@ -87,12 +91,11 @@ public class Vowels {
             {},
             {'─', '：', '、', '；', '？', '。', '！', '‧', '，'}
     };
-    
-    final static int[] kb18punctuation = {3, 4, 5, 9, 10, 12, 13, 15, 17, 18, 22};
-    final static int[] kb21punctuation = {0, 1, 4, 7, 15, 16, 17, 18, 22};
-    public static ChineseKey[] enabledKeys = new ChineseKey[24];
-    public static ChineseKey[] disabledKeys = new ChineseKey[24];
-    public static ChineseKey[][] keyArray = new ChineseKey[23][24];
+    public static final int[] noVowel = {4, 5, 10, 11, 16, 17, 21};
+
+    public static final ChineseKey[] enabledKeys = new ChineseKey[24];
+    public static final ChineseKey[] disabledKeys = new ChineseKey[24];
+    public static final ChineseKey[][] keyArray = new ChineseKey[23][24];
     public static ChineseKey backspace;
 
     public static void buildKeysAsync() {
@@ -109,7 +112,7 @@ public class Vowels {
         OnTouchVowel onTouchVowel = new OnTouchVowel();
         OnTouchPunctuation onTouchPunctuation = new OnTouchPunctuation();
         for (int i = 0; i < 23; ++i) {
-            String s = Common.vowelStrings[i];
+            String s = displayTexts[i];
             TextLayoutFactory
                     te = s.length() > 1 ? Font.mid : Font.big,
                     td = s.length() > 1 ? Font.midDisabled : Font.bigDisabled;
@@ -130,8 +133,8 @@ public class Vowels {
             for (int i = 0; i < 24; i++)
                 keyArray[kb][i] = enabledKeys[i];
 
-            for (int i = Common.keysToChange[kb].length - 1; i >= 0; --i) {
-                final int keyToChange = Common.keysToChange[kb][i];
+            for (int i = Vowels.keysToChange[kb].length - 1; i >= 0; --i) {
+                final int keyToChange = Vowels.keysToChange[kb][i];
                 final char textToChange = Vowels.textToChange[kb][i];
                 final char vowelToChange = Vowels.vowelToChange[kb][i];
 
@@ -154,6 +157,19 @@ public class Vowels {
                     keyArray[kb][keyToChange] = k;
                 }
             }
+        }
+
+        try {
+            for (int kb : noVowel) {
+                final ChineseKey k = new ChineseKey(
+                        kb == 21 ? Font.big.make("ㄖ") : Consonants.keys[kb].mainText,
+                        null, Colour.NORMAL);
+                k.pinyin = 'u';
+                k.setOnTouchListener(onTouchVowel);
+                keyArray[kb][5] = k;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -1,5 +1,7 @@
 package co.watermelonime.Core;
 
+import net.sqlcipher.Cursor;
+
 import co.watermelonime.C;
 
 public class OldController implements EngineController {
@@ -14,8 +16,24 @@ public class OldController implements EngineController {
             if (Engine.getLength() == 9) C.commit(Engine.pop());
             Engine.addConsonant(String.valueOf(pinyin));
         } else {
-            Engine.addVowel(String.valueOf(pinyin), String.valueOf(characterLock));
-            Engine.thread1.execute(Runnables.onAdd);
+            Engine.thread1.submit(() -> {
+                Engine.addVowel(String.valueOf(pinyin), String.valueOf(characterLock));
+
+                final int length = Engine.getLength();
+                final Cursor c = Database.query(Engine.pinyin.toString(), Engine.ziLock.toString());
+                while (c.moveToNext()) {
+                    final int l = c.getInt(0), start = length - l;
+                    Engine.queryResultD[l][start].addLast(c.getString(1));
+                }
+                c.close();
+
+                Engine.makeCandidateLeft(length);
+                Engine.makeCandidateRight(length);
+                C.candidateView.post(Runnables.displayCandidate);
+                Runnables.makeSeparator();
+                Runnables.makeSentence();
+                C.sentenceView.post(Runnables.displaySentence);
+            });
         }
     }
 

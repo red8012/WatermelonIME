@@ -8,7 +8,7 @@ public class FunctionKeys {
     public static SentenceButton emoji;
 
     public static void init() {
-        emoji = new SentenceButton();
+        emoji = new SentenceButton(-2);
         emoji.setText("\uD83D\uDE19");
         emoji.setOnClickListener((v) -> {
             if (ChineseInputView.mode==ChineseInputView.CHINESE)

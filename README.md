@@ -6,9 +6,10 @@
 2. [done] punctuation
 3. [done] candidate select
 4. dict select
-5. zh, ch, sh, r, zi, ci , si, wui
+5. [done] zh, ch, sh, r, zi, ci , si, wui
 6. [done] candidate should fill both line when only one character typed
 7. reorganize dict (s1, s2, s3, …)
+8. [done] crash when typing fast
 
 ### Performance TODO
 

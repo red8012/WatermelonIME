@@ -37,6 +37,25 @@ public class Runnables {
 //                C.candidateRight.add(it2.next());
         }
     };
+    public static final Runnable onAdd = new Runnable() {
+        @Override
+        public void run() {
+            final int length = Engine.getLength();
+            final Cursor c = Database.query(Engine.pinyin.toString(), Engine.ziLock.toString());
+            while (c.moveToNext()) {
+                final int l = c.getInt(0), start = length - l;
+                Engine.queryResultD[l][start].addLast(c.getString(1));
+            }
+            c.close();
+
+            Engine.makeCandidateLeft(length);
+            Engine.makeCandidateRight(length);
+            C.candidateView.post(displayCandidate);
+            makeSeparator();
+            makeSentence();
+            C.sentenceView.post(displaySentence);
+        }
+    };
     static Iterator<String> it1, it2;
     public static final Runnable displayCandidate = new Runnable() {
         final ArrayList<String> arrayList = new ArrayList<>(10);
@@ -66,28 +85,6 @@ public class Runnables {
                 else break;
             C.candidateView.setCandidate(arrayList, CandidateButton.BOTTOM);
 
-        }
-    };
-    public static final Runnable onAdd = new Runnable() {
-        @Override
-        public void run() {
-            final int length = Engine.getLength();
-            final Cursor c = Database.query();
-            while (c.moveToNext()) {
-                final int l = c.getInt(0), start = length - l;
-                Engine.queryResultD[l][start].addLast(c.getString(1));
-            }
-            c.close();
-
-            Engine.makeCandidateLeft(length);
-            Engine.makeCandidateRight(length);
-            C.candidateView.post(displayCandidate);
-//            String timer = Timer.t(768, "total time");
-            makeSeparator();
-            makeSentence();
-            C.sentenceView.post(displaySentence);
-//            C.candidateRight.post(displayCandidateInvisible);
-//            C.consonantKeyboard.debug(timer.split(" ")[1].split("\\.")[0]);
         }
     };
 
