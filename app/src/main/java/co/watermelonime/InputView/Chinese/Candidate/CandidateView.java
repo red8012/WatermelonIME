@@ -1,8 +1,10 @@
 package co.watermelonime.InputView.Chinese.Candidate;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import java.util.ArrayList;
 
@@ -13,10 +15,14 @@ import co.watermelonime.Common.Timer;
 
 public class CandidateView extends ViewGroup {
     static ArrayList<CandidateButton> candidateButtonPool = new ArrayList<>(128);
+    static ScrollView scrollView;
+    static boolean isDictionaryMode = false;
 
     public CandidateView() {
         super(C.mainService);
         setBackgroundColor(Colour.CANDIDATE);
+        scrollView = new ScrollView(C.mainService);
+        scrollView.setBackgroundColor(Color.BLUE);
     }
 
     static CandidateButton getCandidateButton() {
@@ -61,6 +67,15 @@ public class CandidateView extends ViewGroup {
         Timer.t(8, "set left candidate");
     }
 
+    public void openDictionary() {
+        isDictionaryMode = true;
+        onLayout(true, 0, 0, Size.WCandidateView, Size.HCandidateView);
+    }
+
+    public void closeDictionary() {
+        isDictionaryMode = false;
+        onLayout(true, 0, 0, Size.WCandidateView, Size.HCandidateView);
+    }
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         Log.i("CandidateView", "onMeasure");
@@ -70,6 +85,11 @@ public class CandidateView extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         Log.i("CandidateView", "onLayout");
+        if (isDictionaryMode) {
+            scrollView.layout(0, 0, Size.WCandidateView, Size.HCandidateView);
+            return;
+        }
+
         final int end = getChildCount();
         l = 0;
         t = 0;
@@ -89,7 +109,6 @@ public class CandidateView extends ViewGroup {
                 v.layout(l, t, l + w, t + h);
                 l += w;
             }
-
         }
     }
 }

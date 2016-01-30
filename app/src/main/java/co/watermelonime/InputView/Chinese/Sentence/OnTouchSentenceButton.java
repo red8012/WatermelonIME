@@ -14,10 +14,14 @@ public class OnTouchSentenceButton implements View.OnTouchListener {
                 final int index = ((SentenceButton) v).index;
                 if (Engine.getLength() <= index) return true;
                 SentenceView.setSelected(index);
+
                 if (SentenceButton.selectedIndex < 0) {
+                    C.candidateView.closeDictionary();
                     C.chineseKeyboard.show();
                 } else {
+                    C.candidateView.openDictionary();
                     C.chineseKeyboard.hide();
+                    C.e.getDict(index);
                 }
                 break;
         }

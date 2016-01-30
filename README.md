@@ -10,6 +10,7 @@
 6. [done] candidate should fill both line when only one character typed
 7. reorganize dict (s1, s2, s3, …)
 8. [done] crash when typing fast
+9. hide first candidate right
 
 ### Performance TODO
 

@@ -24,7 +24,8 @@ public class SentenceButton extends View {
 
     public SentenceButton(int index) {
         super(C.mainService);
-        setOnTouchListener(onTouchListener);
+        if (index >= 0)
+            setOnTouchListener(onTouchListener);
         this.index = index;
         rectPaint.setColor(Colour.CANDIDATE);
         rect = new RectF(Size.u / 2, 0, Size.WSentenceView, Size.HSentenceButton);

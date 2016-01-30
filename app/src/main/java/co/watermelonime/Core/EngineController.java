@@ -48,4 +48,6 @@ public interface EngineController {
      */
     void clear();
 
+
+    void getDict(final int index);
 }
