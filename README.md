@@ -11,6 +11,8 @@
 7. reorganize dict (s1, s2, s3, …)
 8. [done] crash when typing fast
 9. hide first candidate right
+10. candidate first line height
+11. restore candidate when dict close
 
 ### Performance TODO
 

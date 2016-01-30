@@ -76,6 +76,7 @@ public class OldController implements EngineController {
             }
             cursor.close();
             C.candidateView.post(()->{
+                C.candidateView.clearCandidates();
                 for (String s : list) {
                     ArrayList<String> charList = new ArrayList<>(32);
                     for (int i = 0; i < s.length(); i++) {

@@ -1,10 +1,8 @@
 package co.watermelonime.InputView.Chinese.Candidate;
 
-import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 
 import java.util.ArrayList;
 
@@ -12,17 +10,15 @@ import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
+import co.watermelonime.InputView.Chinese.ChineseInputView;
 
 public class CandidateView extends ViewGroup {
     static ArrayList<CandidateButton> candidateButtonPool = new ArrayList<>(128);
-    static ScrollView scrollView;
     static boolean isDictionaryMode = false;
 
     public CandidateView() {
         super(C.mainService);
         setBackgroundColor(Colour.CANDIDATE);
-        scrollView = new ScrollView(C.mainService);
-        scrollView.setBackgroundColor(Color.BLUE);
     }
 
     static CandidateButton getCandidateButton() {
@@ -68,27 +64,36 @@ public class CandidateView extends ViewGroup {
     }
 
     public void openDictionary() {
+        System.out.println("open");
         isDictionaryMode = true;
-        onLayout(true, 0, 0, Size.WCandidateView, Size.HCandidateView);
+        setMeasuredDimension(Size.WCandidateView, Size.HCandidateView * 4);
+        C.chineseInputView.invalidate();
     }
 
     public void closeDictionary() {
         isDictionaryMode = false;
-        onLayout(true, 0, 0, Size.WCandidateView, Size.HCandidateView);
+        setMeasuredDimension(Size.WCandidateView, Size.HCandidateView);
+        ChineseInputView.scrollView.removeAllViews(); // why do I have to do this?
+        ChineseInputView.scrollView.addView(this);
+        C.chineseInputView.invalidate();
     }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         Log.i("CandidateView", "onMeasure");
-        setMeasuredDimension(Size.WCandidateView, Size.HCandidateView);
+        if (isDictionaryMode)
+            setMeasuredDimension(Size.WCandidateView, Size.HCandidateView * 4);
+        else
+            setMeasuredDimension(Size.WCandidateView, Size.HCandidateView);
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         Log.i("CandidateView", "onLayout");
-        if (isDictionaryMode) {
-            scrollView.layout(0, 0, Size.WCandidateView, Size.HCandidateView);
-            return;
-        }
+//        if (isDictionaryMode) {
+//            scrollView.layout(0, 0, Size.WCandidateView, Size.HCandidateView);
+//            return;
+//        }
 
         final int end = getChildCount();
         l = 0;

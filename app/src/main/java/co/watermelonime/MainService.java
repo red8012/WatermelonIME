@@ -19,6 +19,7 @@ import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
 import co.watermelonime.Core.DB;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
+import co.watermelonime.InputView.Chinese.Candidate.CandidateViewScroller;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 import co.watermelonime.InputView.Chinese.Common;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
@@ -98,6 +99,7 @@ public class MainService extends InputMethodService {
 
         Timer.t(4);
         C.candidateView = new CandidateView();
+        C.candidateViewScroller = new CandidateViewScroller();
         Timer.t(4, "Build CandidateView");
 
         Timer.t(325);
@@ -125,6 +127,15 @@ public class MainService extends InputMethodService {
 
         if (v == null) return C.chineseInputView;
         else return v;
+
+//        Button button = new Button(this);
+//        button.setBackgroundColor(Color.DKGRAY);
+//        button.setText("QWFPGJLUY");
+//
+//        ScrollView scrollView = new ScrollView(this);
+//        scrollView.setBackgroundColor(Color.CYAN);
+//        scrollView.addView(button);
+//        return ChineseInputView.scrollView;
     }
 
     @Override

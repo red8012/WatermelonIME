@@ -2,6 +2,7 @@ package co.watermelonime.InputView.Chinese;
 
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Size;
@@ -12,9 +13,13 @@ public class ChineseInputView extends ViewGroup {
             EMOJI = 1;
 
     public static int mode = CHINESE;
+    public static ScrollView scrollView;
 
     public ChineseInputView() {
         super(C.mainService);
+
+        scrollView = new ScrollView(C.mainService);
+        scrollView.addView(C.candidateView);
         changeInputMode(CHINESE);
     }
 
@@ -24,7 +29,7 @@ public class ChineseInputView extends ViewGroup {
         addView(C.sentenceView);
         switch (mode) {
             case CHINESE:
-                addView(C.candidateView);
+                addView(scrollView);
                 addView(C.chineseKeyboard);
                 break;
             case EMOJI:
@@ -37,13 +42,15 @@ public class ChineseInputView extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        Log.i("ChineseInputView", "onMeasure");
+        Log.i("ChineseInputView", "onMeasure");
+        scrollView.measure(MeasureSpec.makeMeasureSpec(Size.WCandidateView, MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(Size.HCandidateView, MeasureSpec.EXACTLY));
         setMeasuredDimension(Size.WInputView, Size.HInputView);
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if (!changed) return;
+//        if (!changed) return;
         Log.i("ChineseInputView", "onLayout");
         l = 0;
         t = 0;
@@ -51,7 +58,8 @@ public class ChineseInputView extends ViewGroup {
         l += Size.WSentenceView;
         switch (mode) {
             case CHINESE:
-                C.candidateView.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+//                C.candidateView.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+                scrollView.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
                 C.chineseKeyboard.layout(l, t + Size.HCandidateVisible, l + Size.WKeyboard, t + Size.HInputView);
                 break;
             case EMOJI:
