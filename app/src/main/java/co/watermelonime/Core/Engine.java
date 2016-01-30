@@ -53,8 +53,8 @@ public class Engine {
         ziLock = new StringBuffer(32);
         ziOrig = new StringBuffer(32);
         sentence = new StringBuffer(32);
-        candidateLeft.clear();
-        candidateRight.clear();
+        if (candidateLeft != null) candidateLeft.clear();
+        if (candidateRight != null) candidateRight.clear();
         Engine.clearQueryResult();
         System.gc();
     }
