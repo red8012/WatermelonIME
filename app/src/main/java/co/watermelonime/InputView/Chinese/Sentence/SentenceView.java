@@ -31,7 +31,8 @@ public class SentenceView extends ViewGroup {
         if (SentenceButton.selectedIndex == index) {
             SentenceButton sb = sentenceButtons[SentenceButton.selectedIndex];
             SentenceButton.selectedIndex = -1;
-            sb.textLayout = sb.originalTextLayout;
+//            sb.textLayout = sb.originalTextLayout;
+            sb.textLayout = Font.sentence.make(sb.text);
             sb.invalidate();
             return;
         } else if (SentenceButton.selectedIndex >= 0) {

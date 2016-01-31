@@ -5,6 +5,7 @@ import net.sqlcipher.Cursor;
 import java.util.ArrayList;
 
 import co.watermelonime.C;
+import co.watermelonime.InputView.Chinese.Candidate.DictController;
 
 public class OldController implements EngineController {
     @Override
@@ -75,15 +76,23 @@ public class OldController implements EngineController {
                 list.add(cursor.getString(1));
             }
             cursor.close();
-            C.candidateView.post(()->{
+            C.candidateView.post(() -> { // bad code
                 C.candidateView.clearCandidates();
-                for (String s : list) {
-                    ArrayList<String> charList = new ArrayList<>(32);
-                    for (int i = 0; i < s.length(); i++) {
-                        charList.add(String.valueOf(s.charAt(i)));
+                ArrayList<ArrayList<String>> totalList = new ArrayList<>();
+                ArrayList<String> charList = new ArrayList<>(32);
+                for (int j = 0; j < list.size(); j++) {
+                    String s = list.get(j);
+                    if (j % 2 == 0) {
+                        charList = new ArrayList<>(32);
+                        charList.add(s);
+                    } else {
+                        for (int i = 0; i < s.length(); i++)
+                            charList.add(String.valueOf(s.charAt(i)));
+//                        C.candidateView.setCandidate(charList, 0);
+                        totalList.add(charList);
                     }
-                    C.candidateView.setCandidate(charList, 0);
                 }
+                DictController.showDictionary(null, totalList);
             });
 
         });

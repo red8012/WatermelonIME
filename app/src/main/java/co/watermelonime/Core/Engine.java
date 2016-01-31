@@ -217,5 +217,10 @@ public class Engine {
     public static String pop() {
         return pop(separatorAnswer[0]);
     }
+
+    public static void setZiLock(int index, String zi) {
+        ziLock.setCharAt(index, zi.charAt(0));
+        sentence.setCharAt(index, zi.charAt(0));
+    }
 }
 

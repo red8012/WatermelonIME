@@ -12,7 +12,6 @@ import co.watermelonime.Common.Size;
 public class CandidateButton extends View {
     public static final Paint separatorPaint = new Paint();
     public static final int BOTTOM = -1, TOP = 1;
-//    static OnTouchListener onTouchListener = new OnTouchCandidate();
     static final OnClickCandidate onClickCandidate = new OnClickCandidate();
     public float dx, dy;
     int type = 0;
@@ -23,7 +22,6 @@ public class CandidateButton extends View {
 
     public CandidateButton() {
         super(C.mainService);
-//        setOnTouchListener(onTouchListener);
         setOnClickListener(onClickCandidate);
     }
 
@@ -47,10 +45,6 @@ public class CandidateButton extends View {
             dy = (Size.HCandidateRow - textLayout.getHeight()) / 2 +
                     (paddingTopBottom == TOP ? Size.u / 2 : 0);
         }
-    }
-
-    public void setText(String s, int padding, boolean separator) {
-        setText(s, padding, separator, 0);
     }
 
     @Override

@@ -57,7 +57,6 @@ public class CandidateView extends ViewGroup {
             CandidateButton c = getCandidateButton();
             c.setText(s, padding, i > 0, type);
             addView(c);
-//            System.out.println(s);
         }
         onLayout(true, 0, 0, Size.WCandidateView, Size.HCandidateView);
         Timer.t(8, "set left candidate");
@@ -91,7 +90,6 @@ public class CandidateView extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         Log.i("CandidateView", "onLayout");
 //        if (isDictionaryMode) {
-//            scrollView.layout(0, 0, Size.WCandidateView, Size.HCandidateView);
 //            return;
 //        }
 
@@ -102,6 +100,10 @@ public class CandidateView extends ViewGroup {
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
             int w = v.getMeasuredWidth(), h = v.getMeasuredHeight();
+            if (v.getClass() == DictTitle.class) {
+                if (l > 0) t += h;
+                l = 0;
+            }
             if (l + w > Size.WKeyboard + Size.u) {
                 l = 0;
                 t += v.getMeasuredHeight();

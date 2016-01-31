@@ -91,6 +91,7 @@ public class MainService extends InputMethodService {
 
 //        Timer.t(3);
         Vowels.buildKeysAsync();
+        ChineseInputView.initializeHiddenPartsAsync();
 //        Timer.t(3, "Build vowels");
 
 //        Timer.t(2);

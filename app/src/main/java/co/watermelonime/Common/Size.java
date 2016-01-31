@@ -16,6 +16,8 @@ public class Size {
             WInputView,
             WSentenceView,
             WCandidateView,
+            WDictButton,
+            WDictTitle,
             WSeparator,
             WKeyboard,
             WKey;
@@ -50,6 +52,8 @@ public class Size {
         HKey = HKeyboard / 4;
         WSentenceView = WScreen - WKeyboard;
         WCandidateView = WKeyboard;
+        WDictTitle = WCandidateView * 3 / 16;
+        WDictButton = (WCandidateView  - WDictTitle) / 7;
         HCandidateRow = WScreen / 10;
         HSeparator = HCandidateRow * 4 / 5;
         HCandidateVisible = HCandidateRow * 2 + WScreen / 60;

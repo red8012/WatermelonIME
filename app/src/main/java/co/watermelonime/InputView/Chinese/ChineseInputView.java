@@ -6,6 +6,8 @@ import android.widget.ScrollView;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Size;
+import co.watermelonime.InputView.Chinese.Candidate.DictButton;
+import co.watermelonime.InputView.Chinese.Candidate.DictTitle;
 
 public class ChineseInputView extends ViewGroup {
     public static final int
@@ -21,6 +23,14 @@ public class ChineseInputView extends ViewGroup {
         scrollView = new ScrollView(C.mainService);
         scrollView.addView(C.candidateView);
         changeInputMode(CHINESE);
+    }
+
+    public static void initializeHiddenPartsAsync() {
+        C.threadPool.submit(() -> {
+                    DictTitle.init();
+                    DictButton.init();
+                }
+        );
     }
 
     public void changeInputMode(final int mode) {
@@ -66,6 +76,5 @@ public class ChineseInputView extends ViewGroup {
                 C.emoji.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
                 break;
         }
-
     }
 }

@@ -25,5 +25,6 @@ public class Colour {
             textSentence = Color.WHITE,
             textCandidate = Color.BLACK,
             reached = Color.rgb(140, 200, 70),
-            unreached = Color.rgb(70, 70, 70);
+            unreached = Color.rgb(70, 70, 70),
+            DICT_TITLE = Color.rgb(87, 146, 116);
 }
