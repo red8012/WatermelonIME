@@ -27,6 +27,11 @@
 9. PRAGMA schema.locking_mode = EXCLUSIVE
 10. PRAGMA temp_store = 2 | MEMORY
 11. PRAGMA mmap_size=268435456;
-12. ATTACH DATABASE ':memory:' AS aux1;
+12. [done] ATTACH DATABASE ':memory:' AS aux1; —> 2.5 s can query during copy [OK] 30%~100% improvement
 13. raw query bind variable
 14. set thread priority
+
+``` 
+ATTACH DATABASE 'file::memory:?cache=shared' AS m KEY '';
+```
+

@@ -15,7 +15,8 @@ public class DB {
                 C.mainService.getDatabasePath("encrypted.db3").getAbsolutePath(),
                 "Dinis Cottage".toCharArray(),
                 null,
-                SQLiteDatabase.OPEN_READONLY|SQLiteDatabase.NO_LOCALIZED_COLLATORS
+                SQLiteDatabase.OPEN_READWRITE|SQLiteDatabase.NO_LOCALIZED_COLLATORS
+//                SQLiteDatabase.OPEN_READONLY|SQLiteDatabase.NO_LOCALIZED_COLLATORS
         );
 
 //        should remove

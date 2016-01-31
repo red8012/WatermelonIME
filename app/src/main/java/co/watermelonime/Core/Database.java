@@ -9,6 +9,7 @@ import co.watermelonime.C;
  * Created by ray on 2016/1/9.
  */
 public class Database {
+//    final static String[] tableNames = {"m.concerto", "m.solo", "m.duet", "m.trio", "m.quartet"};
     final static String[] tableNames = {"concerto", "solo", "duet", "trio", "quartet"};
     final static String s1 = "select length(zi), zi, priority from ",
             s2 = " where ",
@@ -22,7 +23,7 @@ public class Database {
         String key = "Dinis Cottage";
         dictionary = SQLiteDatabase.openDatabase(
                 C.mainService.getDatabasePath("encrypted.db3").getAbsolutePath(),
-                key, null, SQLiteDatabase.OPEN_READONLY
+                key, null, SQLiteDatabase.OPEN_READWRITE
         );
         dictionary.setMaxSqlCacheSize(SQLiteDatabase.MAX_SQL_CACHE_SIZE);
         dictionary.execSQL("PRAGMA synchronous = OFF;");
