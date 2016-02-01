@@ -16,19 +16,12 @@ public class OnClickDict implements View.OnClickListener {
         int index = SentenceButton.selectedIndex;
         Engine.setZiLock(index, text);
         C.sentenceView.display();
-        C.candidateView.closeDictionary();
+//        C.candidateView.closeDictionary();
+        DictController.closeDict();
         SentenceView.setSelected(index);
         C.chineseKeyboard.show();
 
-        int len = C.candidateView.getChildCount();
-        for (int i = 0; i < len; i++) {
-            View child = C.candidateView.getChildAt(i);
-            if (child.getClass()==DictButton.class)
-                ((DictButton)child).release();
-            else if (child.getClass()==DictTitle.class)
-                ((DictTitle)child).release();
-        }
-        C.candidateView.removeAllViews();
+        DictController.clearCandidate();
         Runnables.displayCandidate.run();
 
 

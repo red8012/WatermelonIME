@@ -4,7 +4,7 @@ import android.graphics.Point;
 
 public class Size {
     public static final float phi = 1.618034f;
-    public static int  keyIcon;
+    public static int keyIcon;
     public static float
             u,
             FSentence,
@@ -17,6 +17,7 @@ public class Size {
             WSentenceView,
             WCandidateView,
             WDictButton,
+            W2ndLayerDictButton,
             WDictTitle,
             WSeparator,
             WKeyboard,
@@ -54,6 +55,7 @@ public class Size {
         WCandidateView = WKeyboard;
         WDictTitle = WCandidateView * 3 / 16;
         WDictButton = (WCandidateView  - WDictTitle) / 7;
+        W2ndLayerDictButton = WCandidateView / 8;
         HCandidateRow = WScreen / 10;
         HSeparator = HCandidateRow * 4 / 5;
         HCandidateVisible = HCandidateRow * 2 + WScreen / 60;

@@ -10,6 +10,7 @@ import co.watermelonime.Common.Size;
 public class DictTitle extends CandidateButton {
     final static ArrayList<DictTitle> pool = new ArrayList<>(16);
     final static OnClickDictTitle onClickDictTitle = new OnClickDictTitle();
+    public int index;
 
     public DictTitle() {
         super();
@@ -21,12 +22,13 @@ public class DictTitle extends CandidateButton {
             pool.add(new DictTitle());
     }
 
-    public static DictTitle get(String s) {
+    public static DictTitle get(String s, int index) {
         DictTitle d;
         if (pool.isEmpty()) {
             d = new DictTitle();
         } else
             d = pool.remove(pool.size() - 1);
+        d.index = index;
         d.setText(s);
         return d;
     }

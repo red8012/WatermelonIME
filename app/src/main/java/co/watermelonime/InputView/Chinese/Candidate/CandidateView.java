@@ -10,7 +10,6 @@ import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
-import co.watermelonime.InputView.Chinese.ChineseInputView;
 
 public class CandidateView extends ViewGroup {
     static ArrayList<CandidateButton> candidateButtonPool = new ArrayList<>(128);
@@ -62,20 +61,20 @@ public class CandidateView extends ViewGroup {
         Timer.t(8, "set left candidate");
     }
 
-    public void openDictionary() {
-        System.out.println("open");
-        isDictionaryMode = true;
-        setMeasuredDimension(Size.WCandidateView, Size.HCandidateView * 4);
-        C.chineseInputView.invalidate();
-    }
+//    public void openDictionary() {
+//        System.out.println("open");
+//        isDictionaryMode = true;
+//        setMeasuredDimension(Size.WCandidateView, Size.HCandidateView * 4);
+//        C.chineseInputView.invalidate();
+//    }
 
-    public void closeDictionary() {
-        isDictionaryMode = false;
-        setMeasuredDimension(Size.WCandidateView, Size.HCandidateView);
-        ChineseInputView.scrollView.removeAllViews(); // why do I have to do this?
-        ChineseInputView.scrollView.addView(this);
-        C.chineseInputView.invalidate();
-    }
+//    public void closeDictionary() {
+//        isDictionaryMode = false;
+//        setMeasuredDimension(Size.WCandidateView, Size.HCandidateView);
+//        ChineseInputView.scrollView.removeAllViews(); // why do I have to do this?
+//        ChineseInputView.scrollView.addView(this);
+//        C.chineseInputView.invalidate();
+//    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {

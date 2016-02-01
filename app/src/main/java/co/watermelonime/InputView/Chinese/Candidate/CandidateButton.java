@@ -15,7 +15,7 @@ public class CandidateButton extends View {
     static final OnClickCandidate onClickCandidate = new OnClickCandidate();
     public float dx, dy;
     int type = 0;
-    int length, width;
+    int width;
     String text;
     Layout textLayout;
     boolean needSeparator = true;

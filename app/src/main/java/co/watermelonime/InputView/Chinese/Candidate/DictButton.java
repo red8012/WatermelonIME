@@ -1,7 +1,5 @@
 package co.watermelonime.InputView.Chinese.Candidate;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 public class DictButton extends CandidateButton {
@@ -19,14 +17,13 @@ public class DictButton extends CandidateButton {
             pool.add(new DictButton());
     }
 
-    public static DictButton get(String s) {
+    public static DictButton get() {
         DictButton d;
-        Log.w("DictButton", s);
         if (pool.isEmpty()) {
             d = new DictButton();
         } else
             d = pool.remove(pool.size() - 1);
-        d.setText(s, 0, true, 0);
+
         return d;
     }
 
