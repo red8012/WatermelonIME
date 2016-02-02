@@ -21,7 +21,6 @@ public class DictController {
             int len = line.size();
             if (len > 8) len = 8;
             for (int j = 1; j < len; j++) {
-//                C.candidateView.addView(DictButton.get(line.get(j)));
                 String text = line.get(j);
                 DictButton d = DictButton.get();
                 int padding = Size.WDictButton - CandidateButton.calculateMinWidth(text);
@@ -29,6 +28,9 @@ public class DictController {
                 C.candidateView.addView(d);
             }
         }
+        CandidateView.height = character.size() * Size.HCandidateRow;
+        if (CandidateView.height < Size.HCandidateView)
+            CandidateView.height = Size.HCandidateView;
     }
 
     public static void showLayer2Dictionary(int index) {
@@ -44,6 +46,9 @@ public class DictController {
             d.setText(text, padding, counter % 8 != 0, 0);
             C.candidateView.addView(d);
         }
+        CandidateView.height = (counter / 8 + 1) * Size.HCandidateRow;
+        if (CandidateView.height < Size.HCandidateView)
+            CandidateView.height = Size.HCandidateView;
     }
 
     public static void clearCandidate() {

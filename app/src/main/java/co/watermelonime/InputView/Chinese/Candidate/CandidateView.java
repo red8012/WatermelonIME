@@ -12,6 +12,7 @@ import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
 
 public class CandidateView extends ViewGroup {
+    public static int height = Size.HCandidateVisible;
     static ArrayList<CandidateButton> candidateButtonPool = new ArrayList<>(128);
     static boolean isDictionaryMode = false;
 
@@ -61,36 +62,19 @@ public class CandidateView extends ViewGroup {
         Timer.t(8, "set left candidate");
     }
 
-//    public void openDictionary() {
-//        System.out.println("open");
-//        isDictionaryMode = true;
-//        setMeasuredDimension(Size.WCandidateView, Size.HCandidateView * 4);
-//        C.chineseInputView.invalidate();
-//    }
-
-//    public void closeDictionary() {
-//        isDictionaryMode = false;
-//        setMeasuredDimension(Size.WCandidateView, Size.HCandidateView);
-//        ChineseInputView.scrollView.removeAllViews(); // why do I have to do this?
-//        ChineseInputView.scrollView.addView(this);
-//        C.chineseInputView.invalidate();
-//    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         Log.i("CandidateView", "onMeasure");
-        if (isDictionaryMode)
-            setMeasuredDimension(Size.WCandidateView, Size.HCandidateView * 4);
-        else
-            setMeasuredDimension(Size.WCandidateView, Size.HCandidateView);
+        if (!isDictionaryMode)
+            height = Size.HCandidateVisible;
+            setMeasuredDimension(Size.WCandidateView, height);
+//        else
+//            setMeasuredDimension(Size.WCandidateView, Size.HCandidateView);
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         Log.i("CandidateView", "onLayout");
-//        if (isDictionaryMode) {
-//            return;
-//        }
 
         final int end = getChildCount();
         l = 0;

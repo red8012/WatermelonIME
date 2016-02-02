@@ -11,9 +11,17 @@ public class DB {
     public static void init() {
         SQLiteDatabase.loadLibs(C.mainService);
 
+//        dictionary = SQLiteDatabase.openDatabase(
+//                C.mainService.getDatabasePath("encrypted.db3").getAbsolutePath(),
+//                "Dinis Cottage".toCharArray(),
+//                null,
+//                SQLiteDatabase.OPEN_READWRITE|SQLiteDatabase.NO_LOCALIZED_COLLATORS
+////                SQLiteDatabase.OPEN_READONLY|SQLiteDatabase.NO_LOCALIZED_COLLATORS
+//        );
+
         dictionary = SQLiteDatabase.openDatabase(
-                C.mainService.getDatabasePath("encrypted.db3").getAbsolutePath(),
-                "Dinis Cottage".toCharArray(),
+                C.mainService.getDatabasePath("db.db3").getAbsolutePath(),
+                "",
                 null,
                 SQLiteDatabase.OPEN_READWRITE|SQLiteDatabase.NO_LOCALIZED_COLLATORS
 //                SQLiteDatabase.OPEN_READONLY|SQLiteDatabase.NO_LOCALIZED_COLLATORS

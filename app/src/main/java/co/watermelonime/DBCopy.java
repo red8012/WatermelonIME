@@ -15,8 +15,10 @@ public class DBCopy {
         C.threadPool.submit(() -> {
             try {
                 final Context c = C.mainService;
-                InputStream in = c.getApplicationContext().getAssets().open("encrypted.db3");
-                File output = c.getDatabasePath("encrypted.db3");
+//                InputStream in = c.getApplicationContext().getAssets().open("encrypted.db3");
+//                File output = c.getDatabasePath("encrypted.db3");
+                InputStream in = c.getApplicationContext().getAssets().open("magician20130911.db3");
+                File output = c.getDatabasePath("db.db3");
                 output.mkdirs();
                 output.delete();
                 FileOutputStream out = new FileOutputStream(output);
