@@ -2,13 +2,14 @@ package co.watermelonime.InputView.Chinese.Sentence;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Timer;
+import co.watermelonime.Core.Benchmark;
 import co.watermelonime.Core.Database;
 import co.watermelonime.Core.Engine;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 
 public class FunctionKeys {
-    public static SentenceButton[] keys = new SentenceButton[1];
-    public static SentenceButton emoji, testMemory;
+    public static SentenceButton[] keys = new SentenceButton[2];
+    public static SentenceButton emoji, testMemory, benchmark;
 
     public static void init() {
         emoji = new SentenceButton(-2);
@@ -20,6 +21,13 @@ public class FunctionKeys {
 
             else if (ChineseInputView.mode == ChineseInputView.EMOJI)
                 C.chineseInputView.changeInputMode(ChineseInputView.CHINESE);
+        });
+
+        benchmark = new SentenceButton(-2);
+        benchmark.setText("B");
+        keys[1] = benchmark;
+        benchmark.setOnClickListener((v) -> {
+            C.threadPool.submit(()-> Benchmark.run());
         });
 
 
