@@ -69,12 +69,17 @@ public class SentenceView extends ViewGroup {
             StringBuffer sentence = Engine.getSentenceBuffer();
             final int length = sentence.length();
             for (int i = 0; i < length; i++) {
-                sentenceButtons[i].setText(sentence.substring(i, i + 1));
-                sentenceButtons[i].invalidate(); // Todo: don't invalidate when the text is the same
+                final String s = sentence.substring(i, i + 1);
+                final SentenceButton sb = sentenceButtons[i];
+                if (sb.text.equals(s)) continue;
+                sb.setText(s);
+                sb.invalidate();
             }
             for (int i = length; i < 9; i++) {
-                sentenceButtons[i].setText(null);
-                sentenceButtons[i].invalidate(); // Todo: don't invalidate when it is already null
+                final SentenceButton sb = sentenceButtons[i];
+                if (sb.text == null) continue;
+                sb.setText(null);
+                sb.invalidate();
             }
         }
     }

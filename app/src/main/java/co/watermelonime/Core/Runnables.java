@@ -91,7 +91,7 @@ public class Runnables {
     public static void makeSeparator() {
         boolean found;
         int counter, length = Engine.getLength();
-        System.out.println("makeSeparator length: " + length);
+//        System.out.println("makeSeparator length: " + length);
         try {
             for (int[] a : Constants.separator[length - 1]) {
                 found = true;
