@@ -54,6 +54,7 @@ public class MainService extends InputMethodService {
 //            c.moveToNext();
 //            c.getString(0);
         } catch (Exception e) {
+            e.printStackTrace();
             WaitingView.me = new WaitingView();
             DBCopy.start();
             return WaitingView.me;
