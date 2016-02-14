@@ -19,7 +19,7 @@ public class SentenceButton extends View {
     static RectF rect;
     public float dx, dy;
     public int index; // the i-th sentence button
-    String text;
+    public String text;
     Layout textLayout, originalTextLayout;
 
     public SentenceButton(int index) {

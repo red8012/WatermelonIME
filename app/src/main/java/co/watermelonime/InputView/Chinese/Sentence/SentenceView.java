@@ -58,7 +58,6 @@ public class SentenceView extends ViewGroup {
     }
 
     public void display() {
-        System.out.println("displayTexts sentence");
         if (Engine.isEmpty()) {
             children = FunctionKeys.keys;
             for (int i = 0; i < 9; i++) sentenceButtons[i].setText(null);
@@ -69,10 +68,14 @@ public class SentenceView extends ViewGroup {
             addSentenceButtons();
             StringBuffer sentence = Engine.getSentenceBuffer();
             final int length = sentence.length();
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < length; i++) {
                 sentenceButtons[i].setText(sentence.substring(i, i + 1));
-            for (int i = length; i < 9; i++) sentenceButtons[i].setText(null);
-            invalidate();
+                sentenceButtons[i].invalidate(); // Todo: don't invalidate when the text is the same
+            }
+            for (int i = length; i < 9; i++) {
+                sentenceButtons[i].setText(null);
+                sentenceButtons[i].invalidate(); // Todo: don't invalidate when it is already null
+            }
         }
     }
 
