@@ -52,7 +52,7 @@ public class ChineseInputView extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        Log.i("ChineseInputView", "onMeasure");
+//        Log.i("ChineseInputView", "onMeasure");
         scrollView.measure(MeasureSpec.makeMeasureSpec(Size.WCandidateView, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(Size.HCandidateView, MeasureSpec.EXACTLY));
         setMeasuredDimension(Size.WInputView, Size.HInputView);

@@ -2,7 +2,7 @@ package co.watermelonime.InputView.Chinese.Sentence;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Timer;
-import co.watermelonime.Core.Benchmark;
+import co.watermelonime.Core.Benchmark2;
 import co.watermelonime.Core.Database;
 import co.watermelonime.Core.Engine;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
@@ -27,7 +27,13 @@ public class FunctionKeys {
         benchmark.setText("B");
         keys[1] = benchmark;
         benchmark.setOnClickListener((v) -> {
-            C.threadPool.submit(()-> Benchmark.run());
+            C.threadPool.submit(() -> {
+                try {
+                    Benchmark2.run();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
         });
 
 

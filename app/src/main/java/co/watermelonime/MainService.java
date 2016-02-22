@@ -18,6 +18,7 @@ import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
 import co.watermelonime.Core.DB;
+import co.watermelonime.Core.Engine2;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateViewScroller;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
@@ -48,11 +49,7 @@ public class MainService extends InputMethodService {
         try {
             // check DB availability
             DB.init();
-//            Cursor c = DB.dictionary.rawQuery(
-//                    "select zi, priority from solo where pinyin = 'Aa' order by priority desc",
-//                    null);
-//            c.moveToNext();
-//            c.getString(0);
+            Engine2.init();
         } catch (Exception e) {
             e.printStackTrace();
             WaitingView.me = new WaitingView();

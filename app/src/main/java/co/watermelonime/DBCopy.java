@@ -17,17 +17,23 @@ public class DBCopy {
                 final Context c = C.mainService;
 //                InputStream in = c.getApplicationContext().getAssets().open("encrypted.db3");
 //                File output = c.getDatabasePath("encrypted.db3");
-                InputStream in = c.getApplicationContext().getAssets().open("magician20130911.db3");
-                File output = c.getDatabasePath("db.db3");
+
+//                InputStream in = c.getApplicationContext().getAssets().open("magician20130911.db3");
+//                File output = c.getDatabasePath("db.db3");
+
+                InputStream in = c.getApplicationContext().getAssets().open("v2.db");
+                File output = c.getDatabasePath("v2.db");
+
+
                 output.mkdirs();
                 output.delete();
                 FileOutputStream out = new FileOutputStream(output);
 
-                byte[] buffer = new byte[128 * 1024];
+                byte[] buffer = new byte[256 * 1024];
                 int len;
                 while ((len = in.read(buffer)) != -1) {
                     out.write(buffer, 0, len);
-                    WaitingView.me.increment(1);
+                    WaitingView.me.increment(1); // Todo: calculate correct percentage
                 }
                 in.close();
                 out.close();

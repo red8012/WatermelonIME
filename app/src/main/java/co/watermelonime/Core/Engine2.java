@@ -54,14 +54,17 @@ public class Engine2 {
 		dictionary.setMaxSqlCacheSize(SQLiteDatabase.MAX_SQL_CACHE_SIZE);
         dictionary.execSQL("PRAGMA synchronous = OFF;");
 		dictionary.execSQL("PRAGMA temp_store = MEMORY;");
-        dictionary.execSQL("PRAGMA mmap_size=16435456;");
-		Cursor c = dictionary.rawQuery("PRAGMA journal_mode = OFF;", null);
+        Cursor c = dictionary.rawQuery("PRAGMA mmap_size=16777216;", null);
+        c.moveToNext();
+        c.close();
+		c = dictionary.rawQuery("PRAGMA journal_mode = OFF;", null);
 		c.moveToNext();
 		c.close();
 		c = dictionary.rawQuery("PRAGMA locking_mode = EXCLUSIVE;", null);
 		c.moveToNext();
 		c.close();
 
+        Transform2.init();
 		for (int i = 1; i <= 9; i++)
 			queryResult[i] = new String[9 - i + 1][];
 		// warm up engine
@@ -147,7 +150,7 @@ public class Engine2 {
 			sql.append(qs[4]);
 			sql.append(length - i);
 			sql.append(qs[2]);
-			Transform2.expandQuery2(pinyin.substring(i + i, pinyinLength));
+			Transform2.expandQuery2(pinyin.substring(i + i, pinyinLength)); // todo: hot spot
 			sql.append(qs[3]);
 			sql.append(ziLock, i, length);
 		}
@@ -160,7 +163,8 @@ public class Engine2 {
 	public static void readQueryResult() {
 		int i = 1, end = getLength();
 		while (cursor.moveToNext()) {
-			String result = cursor.getString(1);
+//			String result = cursor.getString(1);
+			String result = cursor.getString(0); // 0 based
 //			System.out.println(result);
 			queryResult[i][end - i] = result == null ? null : result.split(",");
 			i++;
@@ -203,16 +207,17 @@ public class Engine2 {
 		}
 	}
 
-	public static void makeCandidateLeft(final int length) {
+	public static void makeCandidateLeft() {
 		candidateLeft.clear();
-		for (int i = length - 1; i > 0; i--)
+		for (int i = getLength() - 1; i > 0; i--)
 			if (queryResult[i][0] != null)
                 Collections.addAll(candidateLeft, queryResult[i][0]);
 	}
 
-	public static void makeCandidateRight(final int length) {
+	public static void makeCandidateRight() {
+        int length = getLength();
 		candidateRight.clear();
-		for (int i = length; i > 0; i--)
+		for (int i = getLength(); i > 0; i--)
 			if (queryResult[i][length - i] != null)
                 Collections.addAll(candidateRight, queryResult[i][length - i]);
 	}
@@ -241,9 +246,9 @@ public class Engine2 {
 				queryResult[i][j] = null;
 			}
 
-		final int len = getLength();
-		makeCandidateLeft(len);
-		makeCandidateRight(len);
+//		final int len = getLength();
+		makeCandidateLeft();
+		makeCandidateRight();
 		makeSeparator();
 		makeSentence();
 

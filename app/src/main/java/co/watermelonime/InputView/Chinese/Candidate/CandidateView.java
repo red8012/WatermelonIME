@@ -64,7 +64,7 @@ public class CandidateView extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        Log.i("CandidateView", "onMeasure");
+//        Log.i("CandidateView", "onMeasure");
         if (!isDictionaryMode)
             height = Size.HCandidateVisible;
             setMeasuredDimension(Size.WCandidateView, height);

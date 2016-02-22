@@ -24,15 +24,19 @@ public class Benchmark {
         android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO);
         int len = groundTruth[0].length();
         long t = System.nanoTime();
-        for (int i = 0; i < len; i++)
-            C.commit(groundTruth[0].substring(i, i+1));
-//        Engine.clear();
-//        output.setLength(0);
-//        C.debug = false;
-//        long t = System.nanoTime();
-//        String pinyin = input[0],
-//                characterLock = chara[0];
-//        iter(pinyin, characterLock);
+
+        // no engine
+//        for (int i = 0; i < len; i++)
+//            C.commit(groundTruth[0].substring(i, i+1));
+
+
+        Engine.clear();
+        output.setLength(0);
+        C.debug = false;
+        String pinyin = input[0],
+                characterLock = chara[0];
+        iter(pinyin, characterLock);
+
         System.out.println("Total time = " + (System.nanoTime() - t) / 1000000);
 //        C.debug = true;
     }
@@ -42,12 +46,10 @@ public class Benchmark {
         int characterCounter = 0;
         for (int i = 0; i < len; i++) {
             char p = pinyin.charAt(i);
-//            long start = System.nanoTime();
             if (p == '。') {
                 characterCounter++;
                 String answer = Engine.getSentence();
                 C.commit(answer);
-//                output.append(answer);
                 C.commit("。");
                 Engine.clear();
             } else if (Character.isUpperCase(p)) {
@@ -55,8 +57,6 @@ public class Benchmark {
             } else if (Character.isLowerCase(p) || Character.isDigit(p)) {
                 add(p, characterLock.charAt(characterCounter++));
             } else System.out.println("Error");
-//            long end = System.nanoTime();
-//            end = (end - start) / 1000000;
         }
 
     }

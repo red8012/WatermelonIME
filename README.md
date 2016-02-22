@@ -8,10 +8,12 @@
 
 ### Benchmark Result
 
-``` python
+``` c
 Time    Allocations  Size
 2,242   58,985       2,592,138    original engine
-
+2,422   58,988       2,592,222    original engine
+  287    5,610         457,026    *new engine*
+   11      253         138,486    no engine
    33      229           5,520    no engine
 ```
 
@@ -44,6 +46,7 @@ GOAL    1000          500
 2/13    3966         3099      PRAGMA mmap_size=64000000;
 2/13    4338         2288      remove PRAGMA mmap_size=64000000;
 2/13    4037         2117      test again
+2/22     832          289      NEW ENGINE
 ```
 
 
