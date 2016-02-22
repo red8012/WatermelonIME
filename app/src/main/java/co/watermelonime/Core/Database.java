@@ -100,7 +100,6 @@ public class Database {
         }
         builder.append(s5);
         final String queryString = builder.toString();
-
 //		System.out.println(queryString);
         return query(queryString);
     }

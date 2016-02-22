@@ -13,7 +13,7 @@ public class Transform {
         return pinyin
                 .replaceAll("1", "[cu]")
                 .replaceAll("2", "[cf]")
-                .replaceAll("3", "[uc]")
+                .replaceAll("3", "[uc]")  // uccu
                 .replaceAll("4", "[cbgv]")
                 .replaceAll("5", "[jc]")
                 .replaceAll("6", "[icb]")
