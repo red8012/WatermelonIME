@@ -15,6 +15,9 @@ Time    Allocations  Size
   287    5,610         457,026    *new engine*
    11      253         138,486    no engine
    33      229           5,520    no engine
+     
+  900   13,080         888,944    *new engine* (full run)
+  979    9,657         788,454    reduce expandQuery allocation
 ```
 
 ``` python
@@ -47,6 +50,7 @@ GOAL    1000          500
 2/13    4338         2288      remove PRAGMA mmap_size=64000000;
 2/13    4037         2117      test again
 2/22     832          289      NEW ENGINE
+2/23     917          257      NEW ENGINE (new expandQuery)
 ```
 
 
@@ -85,4 +89,3 @@ ATTACH DATABASE 'file::memory:?cache=shared' AS m KEY '';
 //        }
 //        System.out.println("Correct Ratio = " + correct + " / " + all + " = " + (float) correct / all);
 ```
-

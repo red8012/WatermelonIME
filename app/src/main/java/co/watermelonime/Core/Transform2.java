@@ -26,17 +26,14 @@ public class Transform2 {
             alphabets[i] = new char[]{(char) (i + 71)}; // a~z
 	}
 
-
-	public static void expandQuery2(final String pinyin) {
-        //noinspection MismatchedQueryAndUpdateOfStringBuilder
-        StringBuilder result = Engine2.sql; // write into Engine directly
-		end = pinyin.length() - 1;
-		final char[] codes = pinyin.toCharArray();
+	public static void expandQuery(final StringBuilder pinyin, final int start) {
+		StringBuilder result = Engine2.sql;
+		end = pinyin.length() - 1 - start;
 
 		// fill in data, lengths, indices
 		for (int i = 0; i <= end; i++) {
 			indices[i] = 0;
-			final char code = codes[i];
+			final char code = pinyin.charAt(i + start);
 			char[] target;
 			if ('0' < code && code < '9') {
 				target = targets[code - '1'];
@@ -62,6 +59,43 @@ public class Transform2 {
 		}
 		result.append('\'');
 	}
+
+
+//	public static void expandQuery2(final String pinyin) {
+//        //noinspection MismatchedQueryAndUpdateOfStringBuilder
+//        StringBuilder result = Engine2.sql; // write into Engine directly
+//		end = pinyin.length() - 1;
+//		final char[] codes = pinyin.toCharArray();
+//
+//		// fill in data, lengths, indices
+//		for (int i = 0; i <= end; i++) {
+//			indices[i] = 0;
+//			final char code = codes[i];
+//			char[] target;
+//			if ('0' < code && code < '9') {
+//				target = targets[code - '1'];
+//			} else if ('A' <= code && code <= 'Z') {
+//				target = alphabets[code - 'A'];
+//			} else {
+//				target = alphabets[code - 'a' + 26];
+//			}
+//			data[i] = target;
+//			lengths[i] = target.length;
+//		}
+//		indices[end] = -1; // move pointer before head
+//
+//		// compose result
+//		boolean isHead = true;
+//		while (getNextCartesianProduct()) {
+//			if (isHead) {
+//				result.append('\'');
+//				isHead = false;
+//			} else result.append("', '");
+//			for (int i = 0; i <= end; i++)
+//				result.append(data[i][indices[i]]);
+//		}
+//		result.append('\'');
+//	}
 
 	/**
 	 * Set indices represent the next Cartesian product (e.g. 00, 01, 10, 11)

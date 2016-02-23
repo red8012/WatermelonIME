@@ -142,7 +142,8 @@ public class Engine2 {
 		sql.append(qs[1]);
 		sql.append('1');
 		sql.append(qs[2]);
-		Transform2.expandQuery2(pinyin.substring(pinyinLength - 2, pinyinLength));
+		Transform2.expandQuery(pinyin, pinyinLength - 2);
+//		Transform2.expandQuery2(pinyin.substring(pinyinLength - 2, pinyinLength));
 		sql.append(qs[3]);
 		sql.append(ziLock, length - 1, length);
 
@@ -150,14 +151,13 @@ public class Engine2 {
 			sql.append(qs[4]);
 			sql.append(length - i);
 			sql.append(qs[2]);
-			Transform2.expandQuery2(pinyin.substring(i + i, pinyinLength)); // todo: hot spot
+            Transform2.expandQuery(pinyin, i + i);
+//			Transform2.expandQuery2(pinyin.substring(i + i, pinyinLength)); // todo: hot spot
 			sql.append(qs[3]);
 			sql.append(ziLock, i, length);
 		}
 		sql.append(qs[5]);
-
-//		System.out.println(sql);
-		cursor = dictionary.rawQuery(sql.toString(), null);
+        cursor = dictionary.rawQuery(sql.toString(), null);
 	}
 
 	public static void readQueryResult() {
