@@ -50,7 +50,7 @@ GOAL    1000          500
 2/13    4338         2288      remove PRAGMA mmap_size=64000000;
 2/13    4037         2117      test again
 2/22     832          289      NEW ENGINE
-2/23     917          257      NEW ENGINE (new expandQuery)
+2/23     827          257      NEW ENGINE (new expandQuery)
 ```
 
 

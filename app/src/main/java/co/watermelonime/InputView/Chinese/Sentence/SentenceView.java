@@ -53,6 +53,7 @@ public class SentenceView extends ViewGroup {
             removeAllViews();
             for (SentenceButton i : children)
                 addView(i);
+//            layout(0, 0, 0, 0);
             onLayout(true, 0, 0, 0, 0);
         }
     }

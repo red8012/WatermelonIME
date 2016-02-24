@@ -152,7 +152,7 @@ public class Engine2 {
 			sql.append(length - i);
 			sql.append(qs[2]);
             Transform2.expandQuery(pinyin, i + i);
-//			Transform2.expandQuery2(pinyin.substring(i + i, pinyinLength)); // todo: hot spot
+//			Transform2.expandQuery2(pinyin.substring(i + i, pinyinLength));
 			sql.append(qs[3]);
 			sql.append(ziLock, i, length);
 		}

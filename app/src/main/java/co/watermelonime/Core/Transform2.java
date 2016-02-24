@@ -91,8 +91,10 @@ public class Transform2 {
 //				result.append('\'');
 //				isHead = false;
 //			} else result.append("', '");
-//			for (int i = 0; i <= end; i++)
+//			for (int i = 0; i <= end; i++) {
 //				result.append(data[i][indices[i]]);
+//				benchCounter++;
+//			}
 //		}
 //		result.append('\'');
 //	}

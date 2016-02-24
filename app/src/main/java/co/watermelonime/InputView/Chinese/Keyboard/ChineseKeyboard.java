@@ -28,6 +28,7 @@ public class ChineseKeyboard extends ViewGroup {
 //        requestLayout(); // Useless???
 //        invalidate(); // Useless
 //        Why do I need this???
+//        layout(0, 0, 0, 0);
         onLayout(true, 0, 0, 0, 0);
         Timer.t(5, "set current keys + request layout");
     }
