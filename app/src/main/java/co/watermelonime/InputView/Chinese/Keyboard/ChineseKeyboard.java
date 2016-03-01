@@ -14,17 +14,17 @@ public class ChineseKeyboard extends ViewGroup {
     public ChineseKeyboard() {
         super(C.mainService);
         setMeasuredDimension(Size.WKeyboard, Size.HKeyboard);
-        setCurrentKeys(Consonants.keys);
+        setKeys(Consonants.keys);
     }
 
-    public void setCurrentKeys(ChineseKey[] k) {
+    public void setKeys(ChineseKey[] k) {
         Timer.t(5);
         removeAllViews();
         currentKeys = k;
         for (ChineseKey i : k)
             if (i != null)
                 addView(i);
-            else Log.e("setCurrentKeys", "null");
+            else Log.e("setKeys", "null");
 //        requestLayout(); // Useless???
 //        invalidate(); // Useless
 //        Why do I need this???

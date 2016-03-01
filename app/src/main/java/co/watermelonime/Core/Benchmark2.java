@@ -28,7 +28,7 @@ public class Benchmark2 {
 //            C.commit(groundTruth[0].substring(i, i+1));
 
 
-        Engine2.clear();
+        Engine.clear();
         output.setLength(0);
         C.debug = false;
         String pinyin = input[0],
@@ -46,10 +46,10 @@ public class Benchmark2 {
             char p = pinyin.charAt(i);
             if (p == '。') {
                 characterCounter++;
-                String answer = Engine2.sentence.toString();
+                String answer = Engine.sentence.toString();
                 C.commit(answer);
                 C.commit("。");
-                Engine2.clear();
+                Engine.clear();
             } else if (Character.isUpperCase(p)) {
                 add(p, '\0');
             } else if (Character.isLowerCase(p) || Character.isDigit(p)) {
@@ -61,17 +61,17 @@ public class Benchmark2 {
 
     public static void add(char pinyin, char characterLock) throws Exception {
         if (characterLock == '\0') {
-            if (Engine2.getLength() == 9) C.commit(Engine2.pop());
-            Engine2.add(pinyin);
+            if (Engine.getLength() == 9) C.commit(Engine.pop());
+            Engine.add(pinyin);
         } else {
-            Engine2.add(pinyin, characterLock);
+            Engine.add(pinyin, characterLock);
 
-            Engine2.queryDB();
-            Engine2.readQueryResult();
-            Engine2.makeSeparator();
-            Engine2.makeSentence();
-            Engine2.makeCandidateLeft();
-            Engine2.makeCandidateRight();
+            Engine.queryDB();
+            Engine.readQueryResult();
+            Engine.makeSeparator();
+            Engine.makeSentence();
+            Engine.makeCandidateLeft();
+            Engine.makeCandidateRight();
         }
     }
 }

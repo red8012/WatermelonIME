@@ -8,7 +8,6 @@ import android.view.View.OnTouchListener;
 import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Core.Engine;
-import co.watermelonime.Core.Runnables;
 
 public class OnTouchDel implements OnTouchListener {
     static int lastX;
@@ -18,15 +17,21 @@ public class OnTouchDel implements OnTouchListener {
         else {
             Engine.delCharacter();
             int length = Engine.getLength();
-                Engine.makeCandidateLeft(length);
-                Engine.makeCandidateRight(length);
+            Engine.makeCandidateLeft();
+            Engine.makeCandidateRight();
             if (length > 0) {
-                Runnables.makeSeparator(); // Todo: why do I need this?
-                Runnables.makeSentence();
+//                Runnables.makeSeparator(); // Todo: why do I need this?
+//                Runnables.makeSentence();
+                try {
+                    Engine.makeSeparator();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Engine.makeSentence();
             }
-            System.out.println(Engine.getSentence());
+//            System.out.println(Engine.getSentence());
             C.sentenceView.display();
-            Runnables.displayCandidate.run();
+//            Runnables.displayCandidate.run(); // TODO: 2016/3/1 display candidate
         }
     }
 
@@ -35,10 +40,10 @@ public class OnTouchDel implements OnTouchListener {
         if (ChineseKeyboard.currentKeys != Consonants.keys) {
             Engine.delConsonant();
             C.sentenceView.display();
-            C.chineseKeyboard.setCurrentKeys(Consonants.keys);
+            C.chineseKeyboard.setKeys(Consonants.keys);
             if (Engine.isEmpty()) {
             } // Todo: displayTexts nav
-            else Runnables.displayCandidate.run();
+//            else Runnables.displayCandidate.run(); // TODO: 2016/3/1 display candidate
             return true;
         }
         final int x = (int) event.getRawX();

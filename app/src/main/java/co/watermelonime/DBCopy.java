@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import co.watermelonime.Core.DB;
+import co.watermelonime.Core.Engine;
 import co.watermelonime.InputView.WaitingView;
 
 public class DBCopy {
@@ -38,7 +38,11 @@ public class DBCopy {
                 in.close();
                 out.close();
                 MainService.handler.post(() -> {
-                    DB.init();
+                    try {
+                        Engine.init();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     C.mainService.setInputView(C.chineseInputView);
                 });
                 System.out.println("Copy finished!");

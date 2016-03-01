@@ -5,8 +5,6 @@ import android.view.animation.DecelerateInterpolator;
 
 import java.util.concurrent.ExecutorService;
 
-import co.watermelonime.Core.EngineController;
-import co.watermelonime.Core.OldController;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateViewScroller;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
@@ -28,7 +26,7 @@ public class C {
     public static ChineseInputView chineseInputView;
     public static Emoji emoji;
 
-    public static EngineController e = new OldController();
+//    public static EngineController e = new OldController();
 
     public static void commit(String text) {
         if (MainService.inputConnection != null)

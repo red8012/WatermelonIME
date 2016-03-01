@@ -1,52 +1,78 @@
 package co.watermelonime.Core;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-
-/**
- * Created by ray on 2016/1/9.
- * This class is ported from the old repo and should be rewritten for better performance.
- * BENCHMARK REQUIRED!!!!!!!!!!!!!
- */
 public class Transform {
-    public static String replaceVowel(final String pinyin) {
-        return pinyin
-                .replaceAll("1", "[cu]")
-                .replaceAll("2", "[cf]")
-                .replaceAll("3", "[uc]")  // uccu
-                .replaceAll("4", "[cbgv]")
-                .replaceAll("5", "[jc]")
-                .replaceAll("6", "[icb]")
-                .replaceAll("7", "[em]")
-                .replaceAll("8", "[cs]");
-    }
+	private static final char[][] targets = {
+			{'c', 'u'},
+			{'c', 'f'},
+			{'u', 'c'},
+			{'c', 'b', 'g', 'v'},
+			{'j', 'c'},
+			{'i', 'c', 'b'},
+			{'e', 'm'},
+			{'c', 's'}
+	};
+	private static final char[][] alphabets = new char[52][];
+	private static final char[][] data = new char[18][]; // stores possible pinyin codes at each position
+	private static final int[] lengths = new int[18]; // stores number of possible pinyin expansion at that position
+	private static final int[] indices = new int[18]; // stores current index that represents the combination
+	private static int end;
 
-    public static String makeGlob(String pinyin) {
-        LinkedList<String> input = new LinkedList<String>();
-        input.addFirst(pinyin);
-        StringBuilder builder = new StringBuilder(256).append("(pinyin glob '");
-        Iterator<String> iterator = expand(input).iterator();
-        while (iterator.hasNext()) {
-            builder.append(iterator.next());
-            if (iterator.hasNext()) builder.append("' or pinyin glob '");
-        }
-        return builder.append("')").toString();
-    }
+	public static void init() {
+		for (int i = 0; i < 26; i++)
+            //noinspection ObjectAllocationInLoop
+            alphabets[i] = new char[]{(char) (i + 65)}; // A~Z
+		for (int i = 26; i < 52; i++)
+            //noinspection ObjectAllocationInLoop
+            alphabets[i] = new char[]{(char) (i + 71)}; // a~z
+	}
 
-    public static LinkedList<String> expand(LinkedList<String> input) {
-        LinkedList<String> result = new LinkedList<String>();
-        for (String i : input) {
-            if (i.contains("[")) {
-                final int start = i.indexOf('['), end = i.indexOf(']');
-                String head = i.substring(0, start), tail = i.substring(end + 1),
-                        body = i.substring(start + 1, end);
-                LinkedList<String> next = new LinkedList<String>();
-                char[] cc = body.toCharArray();
-                for (char c : cc)
-                    next.addLast(head+c+tail);
-                result.addAll(expand(next));
-            } else result.addLast(i);
-        }
-        return result;
-    }
+	public static void expandQuery(final StringBuilder pinyin, final int start) {
+		StringBuilder result = Engine.sql;
+		end = pinyin.length() - 1 - start;
+
+		// fill in data, lengths, indices
+		for (int i = 0; i <= end; i++) {
+			indices[i] = 0;
+			final char code = pinyin.charAt(i + start);
+			char[] target;
+			if ('0' < code && code < '9') {
+				target = targets[code - '1'];
+			} else if ('A' <= code && code <= 'Z') {
+				target = alphabets[code - 'A'];
+			} else {
+				target = alphabets[code - 'a' + 26];
+			}
+			data[i] = target;
+			lengths[i] = target.length;
+		}
+		indices[end] = -1; // move pointer before head
+
+		// compose result
+		boolean isHead = true;
+		while (getNextCartesianProduct()) {
+			if (isHead) {
+				result.append('\'');
+				isHead = false;
+			} else result.append("', '");
+			for (int i = 0; i <= end; i++)
+				result.append(data[i][indices[i]]);
+		}
+		result.append('\'');
+	}
+
+	/**
+	 * Set indices represent the next Cartesian product (e.g. 00, 01, 10, 11)
+	 *
+	 * @return true if it has the next product; false otherwise
+	 */
+	private static boolean getNextCartesianProduct() {
+		indices[end]++;
+		for (int i = end; i > 0; i--) {
+			if (indices[i] >= lengths[i]) {
+				indices[i] = 0;
+				indices[i - 1]++;
+			}
+		}
+		return indices[0] < lengths[0];
+	}
 }

@@ -17,8 +17,7 @@ import java.util.concurrent.Future;
 import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
-import co.watermelonime.Core.DB;
-import co.watermelonime.Core.Engine2;
+import co.watermelonime.Core.Engine;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateViewScroller;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
@@ -48,8 +47,8 @@ public class MainService extends InputMethodService {
     public static View getStartupView() {
         try {
             // check DB availability
-            DB.init();
-            Engine2.init();
+//            DB.init();
+            Engine.init();
         } catch (Exception e) {
             e.printStackTrace();
             WaitingView.me = new WaitingView();

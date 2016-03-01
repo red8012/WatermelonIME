@@ -23,7 +23,7 @@ public class OnTouchSentenceButton implements View.OnTouchListener {
                 } else {
 //                    C.candidateView.openDictionary();
                     C.chineseKeyboard.hide();
-                    C.e.getDict(index);
+//                    C.e.getDict(index);
                     DictController.openDict();
                 }
                 break;

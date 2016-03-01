@@ -58,8 +58,8 @@ public class SentenceView extends ViewGroup {
         }
     }
 
-    public void display() {
-        if (Engine.isEmpty()) {
+    public void display() { // TODO: 2016/3/1 should refactor
+        if (Engine.getLength() == 0) {
             children = FunctionKeys.keys;
             for (int i = 0; i < 9; i++) sentenceButtons[i].setText(null);
             removeAllViews();
@@ -67,7 +67,7 @@ public class SentenceView extends ViewGroup {
                 addView(i);
         } else {
             addSentenceButtons();
-            StringBuffer sentence = Engine.getSentenceBuffer();
+            StringBuilder sentence = Engine.sentence;
             final int length = sentence.length();
             for (int i = 0; i < length; i++) {
                 final String s = sentence.substring(i, i + 1);
