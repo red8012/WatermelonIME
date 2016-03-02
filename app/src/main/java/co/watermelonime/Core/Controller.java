@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 import co.watermelonime.C;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
 
-public class EngineCon {
+public class Controller {
     public static final ExecutorService thread = Executors.newFixedThreadPool(1);
     private static ArrayList<String> arrayList = new ArrayList<>(8);
 
@@ -39,33 +39,10 @@ public class EngineCon {
             Engine.makeSentence();
             Engine.makeCandidateLeft();
             Engine.makeCandidateRight();
+
             C.chineseInputView.post(() -> {
                 C.sentenceView.display();
-
-                Iterator<String> it1, it2;
-
-                if (Engine.getLength() == 1) { // candidate should fill both when only character typed
-                    it1 = Engine.candidateRight.iterator();
-                    it2 = it1;
-                } else {
-                    it1 = Engine.candidateLeft.iterator();
-                    it2 = Engine.candidateRight.iterator();
-                }
-
-                C.candidateView.clearCandidates();
-
-                arrayList.clear();
-                for (int i = 0; i < 8; i++)
-                    if (it1.hasNext()) arrayList.add(it1.next());
-                    else break;
-                C.candidateView.setCandidate(arrayList, CandidateButton.TOP);
-
-
-                arrayList.clear();
-                for (int i = 0; i < 8; i++)
-                    if (it2.hasNext()) arrayList.add(it2.next());
-                    else break;
-                C.candidateView.setCandidate(arrayList, CandidateButton.BOTTOM);
+                displayCandidates();
             });
         }
     }
@@ -116,5 +93,31 @@ public class EngineCon {
 
     static void getDict(final int index) {
 
+    }
+
+    public static void displayCandidates() {
+        Iterator<String> it1, it2;
+
+        if (Engine.getLength() == 1) { // candidate should fill both when only character typed
+            it1 = Engine.candidateRight.iterator();
+            it2 = it1;
+        } else {
+            it1 = Engine.candidateLeft.iterator();
+            it2 = Engine.candidateRight.iterator();
+        }
+
+        C.candidateView.clearCandidates();
+
+        arrayList.clear();
+        for (int i = 0; i < 8; i++)
+            if (it1.hasNext()) arrayList.add(it1.next());
+            else break;
+        C.candidateView.setCandidate(arrayList, CandidateButton.TOP);
+
+        arrayList.clear();
+        for (int i = 0; i < 8; i++)
+            if (it2.hasNext()) arrayList.add(it2.next());
+            else break;
+        C.candidateView.setCandidate(arrayList, CandidateButton.BOTTOM);
     }
 }

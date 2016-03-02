@@ -3,6 +3,7 @@ package co.watermelonime.InputView.Chinese.Candidate;
 import android.view.View;
 
 import co.watermelonime.C;
+import co.watermelonime.Core.Controller;
 import co.watermelonime.Core.Engine;
 
 public class OnClickCandidate implements View.OnClickListener {
@@ -26,6 +27,6 @@ public class OnClickCandidate implements View.OnClickListener {
 
         }
         C.sentenceView.display();
-//        Runnables.displayCandidate.run(); // TODO: 2016/3/1 display candidate
+        Controller.displayCandidates();
     }
 }

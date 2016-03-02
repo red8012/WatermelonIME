@@ -7,6 +7,7 @@ import android.view.View.OnTouchListener;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Size;
+import co.watermelonime.Core.Controller;
 import co.watermelonime.Core.Engine;
 
 public class OnTouchDel implements OnTouchListener {
@@ -20,8 +21,6 @@ public class OnTouchDel implements OnTouchListener {
             Engine.makeCandidateLeft();
             Engine.makeCandidateRight();
             if (length > 0) {
-//                Runnables.makeSeparator(); // Todo: why do I need this?
-//                Runnables.makeSentence();
                 try {
                     Engine.makeSeparator();
                 } catch (Exception e) {
@@ -29,9 +28,8 @@ public class OnTouchDel implements OnTouchListener {
                 }
                 Engine.makeSentence();
             }
-//            System.out.println(Engine.getSentence());
             C.sentenceView.display();
-//            Runnables.displayCandidate.run(); // TODO: 2016/3/1 display candidate
+            Controller.displayCandidates();
         }
     }
 
@@ -43,7 +41,7 @@ public class OnTouchDel implements OnTouchListener {
             C.chineseKeyboard.setKeys(Consonants.keys);
             if (Engine.isEmpty()) {
             } // Todo: displayTexts nav
-//            else Runnables.displayCandidate.run(); // TODO: 2016/3/1 display candidate
+//            else Runnables.displayCandidate.run(); // TODO: 2016/3/2 display auto completion
             return true;
         }
         final int x = (int) event.getRawX();

@@ -58,7 +58,6 @@ public class CandidateView extends ViewGroup {
             c.setText(s, padding, i > 0, type);
             addView(c);
         }
-        layout(0, 0, Size.WCandidateView, Size.HCandidateView);
         Timer.t(8, "set left candidate");
     }
 

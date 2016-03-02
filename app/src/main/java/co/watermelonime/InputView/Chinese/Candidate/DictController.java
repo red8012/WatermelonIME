@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Size;
+import co.watermelonime.Core.Controller;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 
 public class DictController {
@@ -70,9 +71,8 @@ public class DictController {
 
     public static void closeDict() {
         CandidateView.isDictionaryMode = false;
-        clearCandidate();
-//        Runnables.displayCandidate.run(); // TODO: 2016/3/1 display candidate
-        ChineseInputView.scrollView.removeAllViews(); // why do I have to do this?
+        Controller.displayCandidates();
+        ChineseInputView.scrollView.removeAllViews(); // todo: why do I have to do this?
         ChineseInputView.scrollView.addView(C.candidateView);
         C.chineseInputView.invalidate();
     }

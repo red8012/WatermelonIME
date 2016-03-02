@@ -29,11 +29,6 @@ public class ChineseKeyboard extends ViewGroup {
         Timer.t(5, "set current keys + request layout");
     }
 
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        setMeasuredDimension(width, height);
-//    }
-
     @Override
     public boolean shouldDelayChildPressedState() {
         return false;
