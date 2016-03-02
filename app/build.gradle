@@ -22,6 +22,27 @@ repositories {
 apply plugin: 'com.android.application' //or apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 
+def gitVersionCode() {
+    def cmd = 'git rev-list HEAD --first-parent --count'
+    cmd.execute().text.trim().toInteger()
+}
+
+def gitVersionTag() {
+    def cmd = 'git describe --tags'
+    def version = cmd.execute().text.trim()
+
+    def pattern = "-(\\d+)-g"
+    def matcher = version =~ pattern
+
+    if (matcher) {
+        version = version.substring(0, matcher.start()) + "." + matcher[0][1]
+    } else {
+        version = version + ".0"
+    }
+
+    return version
+}
+
 android {
     signingConfigs {
         config {
@@ -41,35 +62,15 @@ android {
         versionName "1.0"
         signingConfig signingConfigs.config
     }
-//    def versionPropsFile = file('version.properties')
-//
-//    if (versionPropsFile.canRead()) {
-//        def Properties versionProps = new Properties()
-//        versionProps.load(new FileInputStream(versionPropsFile))
-//        def code = versionProps['VERSION_CODE'].toInteger() + 1
-//
-//        versionProps['VERSION_CODE']=code.toString()
-//        versionProps.store(versionPropsFile.newWriter(), null)
-//
-//        defaultConfig {
-//            versionCode code
-//            applicationId "co.watermelonime"
-//            minSdkVersion 19
-//            targetSdkVersion 23
-//            versionName "1.0"
-//        }
-//    }
+
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
-//            minifyEnabled true
-//            shrinkResources true
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
@@ -77,6 +78,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     productFlavors {
+    }
+
+    applicationVariants.all { variant ->
+//        if (variant.buildType.name.equals('release')) {
+            variant.mergedFlavor.versionCode = gitVersionCode()
+            variant.mergedFlavor.versionName = gitVersionCode()
+//        }
     }
 }
 

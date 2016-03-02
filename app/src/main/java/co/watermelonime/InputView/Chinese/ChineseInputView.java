@@ -47,7 +47,7 @@ public class ChineseInputView extends ViewGroup {
                 break;
         }
         invalidate();
-        onLayout(true, 0, 0, 0, 0);
+        layout(0, 0, 0, 0);
     }
 
     @Override
