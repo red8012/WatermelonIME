@@ -21,9 +21,11 @@ public class OnTouchSentenceButton implements View.OnTouchListener {
                     C.chineseKeyboard.show();
                     DictController.closeDict();
                 } else {
-//                    C.candidateView.openDictionary();
                     C.chineseKeyboard.hide();
 //                    C.e.getDict(index);
+                    C.candidateView.clearCandidates();
+                    Engine.queryDict(index);
+                    DictController.showDictionary();
                     DictController.openDict();
                 }
                 break;

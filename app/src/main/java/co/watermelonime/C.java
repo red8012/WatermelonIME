@@ -26,8 +26,6 @@ public class C {
     public static ChineseInputView chineseInputView;
     public static Emoji emoji;
 
-//    public static EngineController e = new OldController();
-
     public static void commit(String text) {
         if (MainService.inputConnection != null)
             try {

@@ -26,6 +26,7 @@ public class Engine {
             ziLock = new StringBuilder(32),   // after dict select or direct zi pinyin
             ziOrig = new StringBuilder(32),   // before dict select
             sentence = new StringBuilder(32);
+    public final static ArrayList<String> dictResult = new ArrayList<>(16);
     final static String[][][] queryResult = new String[10][][]; // [length][start at][i]
     final static ArrayList<String> candidateLeft = new ArrayList<>(8);
     final static ArrayList<String> candidateRight = new ArrayList<>(8);
@@ -37,30 +38,32 @@ public class Engine {
             "' order by o) union all select group_concat(c) from (select c from s", //	"') union all ",
             "' order by o))"
     };
-    static SQLiteDatabase dictionary;
+    final static String[] arg = new String[1];
+    static SQLiteDatabase db;
     static Cursor cursor = null;
     static int separatorAnswer[];
 
     public static void init() throws Exception {
         // open DB
         android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
+        if (db!=null && db.isOpen()) return;
         SQLiteDatabase.loadLibs(C.mainService);
-        dictionary = SQLiteDatabase.openDatabase(
+        db = SQLiteDatabase.openDatabase(
                 C.mainService.getDatabasePath("v2.db").getAbsolutePath(),
                 "",
                 null,
                 SQLiteDatabase.OPEN_READONLY | SQLiteDatabase.NO_LOCALIZED_COLLATORS
         );
-        dictionary.setMaxSqlCacheSize(SQLiteDatabase.MAX_SQL_CACHE_SIZE);
-        dictionary.execSQL("PRAGMA synchronous = OFF;");
-        dictionary.execSQL("PRAGMA temp_store = MEMORY;");
-        Cursor c = dictionary.rawQuery("PRAGMA mmap_size=16777216;", null);
+        db.setMaxSqlCacheSize(SQLiteDatabase.MAX_SQL_CACHE_SIZE);
+        db.execSQL("PRAGMA synchronous = OFF;");
+        db.execSQL("PRAGMA temp_store = MEMORY;");
+        Cursor c = db.rawQuery("PRAGMA mmap_size=16777216;", null);
         c.moveToNext();
         c.close();
-        c = dictionary.rawQuery("PRAGMA journal_mode = OFF;", null);
+        c = db.rawQuery("PRAGMA journal_mode = OFF;", null);
         c.moveToNext();
         c.close();
-        c = dictionary.rawQuery("PRAGMA locking_mode = EXCLUSIVE;", null);
+        c = db.rawQuery("PRAGMA locking_mode = EXCLUSIVE;", null);
         c.moveToNext();
         c.close();
 
@@ -106,7 +109,7 @@ public class Engine {
     }
 
     public static String getSentence() {
-        if (sentence.length() == 0) return null;
+        if (sentence.length() == 0) return "";
         return sentence.toString();
     }
 
@@ -151,7 +154,6 @@ public class Engine {
         sql.append('1');
         sql.append(qs[2]);
         Transform.expandQuery(pinyin, pinyinLength - 2);
-//		Transform2.expandQuery2(pinyin.substring(pinyinLength - 2, pinyinLength));
         sql.append(qs[3]);
         sql.append(ziLock, length - 1, length);
 
@@ -160,20 +162,30 @@ public class Engine {
             sql.append(length - i);
             sql.append(qs[2]);
             Transform.expandQuery(pinyin, i + i);
-//			Transform2.expandQuery2(pinyin.substring(i + i, pinyinLength));
             sql.append(qs[3]);
             sql.append(ziLock, i, length);
         }
         sql.append(qs[5]);
-        cursor = dictionary.rawQuery(sql.toString(), null);
+        cursor = db.rawQuery(sql.toString(), null);
+    }
+
+    public static void queryDict(final int index) {
+        arg[0] = pinyin.substring(index * 2, index * 2 + 2);
+        System.out.println("queryDict" + arg[0]);
+        cursor = db.rawQuery("select z, c from d where p=? order by o", arg);
+        dictResult.clear();
+        while (cursor.moveToNext()) {
+            System.out.println(cursor.getString(1));
+            dictResult.add(cursor.getString(0));
+            dictResult.add(cursor.getString(1));
+        }
+        cursor.close();
     }
 
     public static void readQueryResult() {
         int i = 1, end = getLength();
         while (cursor.moveToNext()) {
-//			String result = cursor.getString(1);
             String result = cursor.getString(0); // 0 based
-//			System.out.println(result);
             queryResult[i][end - i] = result == null ? null : result.split(",");
             i++;
         }
@@ -254,7 +266,6 @@ public class Engine {
                 queryResult[i][j] = null;
             }
 
-//		final int len = getLength();
         makeCandidateLeft();
         makeCandidateRight();
         try {
@@ -287,7 +298,7 @@ public class Engine {
         }
     }
 
-        public static void delConsonant() {
+    public static void delConsonant() {
         int length = pinyin.length();
         if (length % 2 != 1) {
             if (C.debug) System.err.println("Error: On del consonant, pinyin not odd!");
@@ -295,5 +306,7 @@ public class Engine {
             pinyin.delete(length - 1, length);
         }
     }
+
+
 }
 

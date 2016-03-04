@@ -5,11 +5,14 @@ import android.view.View;
 import co.watermelonime.C;
 import co.watermelonime.Core.Controller;
 import co.watermelonime.Core.Engine;
+import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
+import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 
 public class OnClickCandidate implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if (ChineseKeyboard.currentKeys != Consonants.keys) return; // TODO: 2016/3/4 can remove if hint is enabled
         String zi = ((CandidateButton) v).text;
         if (((CandidateButton) v).type == CandidateButton.BOTTOM) {
             String sentence = Engine.getSentence();

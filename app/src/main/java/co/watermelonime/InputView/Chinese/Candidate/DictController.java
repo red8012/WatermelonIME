@@ -7,43 +7,46 @@ import java.util.ArrayList;
 import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Core.Controller;
+import co.watermelonime.Core.Engine;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 
 public class DictController {
-    public static ArrayList<ArrayList<String>> currentDict;
+    public static ArrayList<String> currentDict;
 
-    public static void showDictionary(ArrayList<String> phrase, ArrayList<ArrayList<String>> character) {
-        currentDict = character;
-        for (int i = 0; i < character.size(); i++) {
-            ArrayList<String> line = character.get(i);
-            C.candidateView.addView(DictTitle.get(line.get(0), i));
+    public static void showDictionary() {
+        ArrayList<String > d = Engine.dictResult;
+        currentDict = d;
+        for (int i = 0; i < d.size(); i += 2) {
+            C.candidateView.addView(DictTitle.get(d.get(i), i + 1));
 
-            int len = line.size();
-            if (len > 8) len = 8;
-            for (int j = 1; j < len; j++) {
-                String text = line.get(j);
-                DictButton d = DictButton.get();
-                int padding = Size.WDictButton - CandidateButton.calculateMinWidth(text);
-                d.setText(text, padding, j != len - 1, 0);
-                C.candidateView.addView(d);
+            String characters = d.get(i + 1);
+            System.out.println(characters);
+            int len = characters.length();
+            if (len > 7) len = 7;
+            for (int j = 0; j < len; j++) {
+                String text = String.valueOf(characters.charAt(j));
+                DictButton dictButton = DictButton.get();
+                int padding = Size.WDictButton - CandidateButton.calculateMinWidth(" ");
+                dictButton.setText(text, padding, j != len - 1, 0);
+                C.candidateView.addView(dictButton);
             }
         }
-        CandidateView.height = character.size() * Size.HCandidateRow;
+        CandidateView.height = d.size() / 2 * Size.HCandidateRow;
         if (CandidateView.height < Size.HCandidateView)
             CandidateView.height = Size.HCandidateView;
     }
 
     public static void showLayer2Dictionary(int index) {
-        ArrayList<String> characters = currentDict.get(index);
-        int len = characters.size();
+        String characters = currentDict.get(index);
+        int len = characters.length();
         int counter = 0;
-        for (int i = 1; i < len; i++) {
-            String text = characters.get(i);
-            if (text.contains("@")) continue;
+        for (int i = 0; i < len; i++) {
+            char text = characters.charAt(i);
+            if (text=='@') continue;
             DictButton d = DictButton.get();
-            int padding = Size.W2ndLayerDictButton - CandidateButton.calculateMinWidth(text);
+            int padding = Size.W2ndLayerDictButton - CandidateButton.calculateMinWidth();
             counter++;
-            d.setText(text, padding, counter % 8 != 0, 0);
+            d.setText(String.valueOf(text), padding, counter % 8 != 0, 0);
             C.candidateView.addView(d);
         }
         CandidateView.height = (counter / 8 + 1) * Size.HCandidateRow;

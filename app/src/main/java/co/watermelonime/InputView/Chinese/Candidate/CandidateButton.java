@@ -32,6 +32,10 @@ public class CandidateButton extends View {
         else return (int) (Size.FCandidate * len + Size.u * 2);
     }
 
+    public static int calculateMinWidth() {
+        return (int) (Size.FCandidate + Size.u * 3);
+    }
+
     public void setText(String s, int padding, boolean separator, int paddingTopBottom) {
         text = s;
         width = calculateMinWidth(s) + padding;
