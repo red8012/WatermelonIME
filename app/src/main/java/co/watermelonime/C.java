@@ -6,7 +6,6 @@ import android.view.animation.DecelerateInterpolator;
 import java.util.concurrent.ExecutorService;
 
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
-import co.watermelonime.InputView.Chinese.Candidate.CandidateViewScroller;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
@@ -21,7 +20,7 @@ public class C {
     public static boolean isLandscape, debug = true;
     public static SentenceView sentenceView;
     public static CandidateView candidateView;
-    public static CandidateViewScroller candidateViewScroller;
+//    public static CandidateViewScroller candidateViewScroller;
     public static ChineseKeyboard chineseKeyboard;
     public static ChineseInputView chineseInputView;
     public static Emoji emoji;

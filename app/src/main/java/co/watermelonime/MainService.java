@@ -19,7 +19,6 @@ import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
 import co.watermelonime.Core.Engine;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
-import co.watermelonime.InputView.Chinese.Candidate.CandidateViewScroller;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 import co.watermelonime.InputView.Chinese.Common;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
@@ -95,7 +94,7 @@ public class MainService extends InputMethodService {
 
         Timer.t(4);
         C.candidateView = new CandidateView();
-        C.candidateViewScroller = new CandidateViewScroller();
+//        C.candidateViewScroller = new CandidateViewScroller();
         Timer.t(4, "Build CandidateView");
 
         Timer.t(325);
@@ -103,13 +102,10 @@ public class MainService extends InputMethodService {
         C.sentenceView = new SentenceView();
         C.emoji = new Emoji();
         Timer.t(325, "Build SentenceView");
-        
+
         Timer.t(5);
         C.chineseInputView = new ChineseInputView();
         Timer.t(5, "Build ChineseInputView");
-
-        System.out.println("Service startup takes " +
-                String.valueOf((System.nanoTime() - initializationTimer) / 1e6) + " ms");
 
         View v = null;
         try {
