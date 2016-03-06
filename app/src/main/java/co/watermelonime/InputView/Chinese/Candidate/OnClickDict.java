@@ -16,15 +16,11 @@ public class OnClickDict implements View.OnClickListener {
         int index = SentenceButton.selectedIndex;
         Engine.setZiLock(index, text.charAt(0)); // TODO: 2016/3/1 should use text as char
         C.sentenceView.display();
-//        C.candidateView.closeDictionary();
         DictController.closeDict();
         SentenceView.setSelected(index);
         C.chineseKeyboard.show();
 
-        DictController.clearCandidate();
+        CandidateView.clearCandidates();
         Controller.displayCandidates();
-//        Runnables.displayCandidate.run(); // TODO: 2016/3/1 display candidate
-
-
     }
 }

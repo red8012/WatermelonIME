@@ -1,7 +1,5 @@
 package co.watermelonime.InputView.Chinese.Candidate;
 
-import android.view.View;
-
 import java.util.ArrayList;
 
 import co.watermelonime.C;
@@ -14,7 +12,7 @@ public class DictController {
     public static ArrayList<String> currentDict;
 
     public static void showDictionary() {
-        ArrayList<String > d = Engine.dictResult;
+        ArrayList<String> d = Engine.dictResult;
         currentDict = d;
         for (int i = 0; i < d.size(); i += 2) {
             C.candidateView.addView(DictTitle.get(d.get(i), i + 1));
@@ -41,7 +39,7 @@ public class DictController {
         int counter = 0;
         for (int i = 0; i < len; i++) {
             char text = characters.charAt(i);
-            if (text=='@') continue;
+            if (text == '@') continue;
             DictButton d = DictButton.get();
             int padding = Size.W2ndLayerDictButton - CandidateButton.calculateMinWidth();
             counter++;
@@ -51,19 +49,6 @@ public class DictController {
         CandidateView.height = (counter / 8 + 1) * Size.HCandidateRow;
         if (CandidateView.height < Size.HCandidateView)
             CandidateView.height = Size.HCandidateView;
-    }
-
-    public static void clearCandidate() {
-        int len = C.candidateView.getChildCount();
-        for (int i = 0; i < len; i++) {
-            View child = C.candidateView.getChildAt(i);
-            if (child.getClass() == DictButton.class)
-                ((DictButton) child).release();
-            else if (child.getClass() == DictTitle.class)
-                ((DictTitle) child).release();
-            else CandidateView.releaseCandidateButton((CandidateButton) child);
-        }
-        C.candidateView.removeAllViews();
     }
 
     public static void openDict() {

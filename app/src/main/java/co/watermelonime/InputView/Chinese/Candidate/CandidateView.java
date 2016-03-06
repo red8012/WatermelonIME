@@ -32,12 +32,22 @@ public class CandidateView extends ViewGroup {
         candidateButtonPool.add(c);
     }
 
-    public void clearCandidates() {
-        int end = getChildCount();
-        for (int i = 0; i < end; i++) {
-            releaseCandidateButton((CandidateButton) getChildAt(i));
+    public static void clearCandidates() {
+        int len = C.candidateView.getChildCount();
+        for (int i = 0; i < len; i++) {
+            View child = C.candidateView.getChildAt(i);
+            if (child.getClass() == DictButton.class)
+                ((DictButton) child).release();
+            else if (child.getClass() == DictTitle.class)
+                ((DictTitle) child).release();
+            else CandidateView.releaseCandidateButton((CandidateButton) child);
         }
-        removeAllViews();
+        C.candidateView.removeAllViews();
+//        int end = getChildCount();
+//        for (int i = 0; i < end; i++) {
+//            releaseCandidateButton((CandidateButton) getChildAt(i));
+//        }
+//        removeAllViews();
     }
 
     public void setCandidate(ArrayList<String> list, int type) { //Todo: can be static
@@ -51,6 +61,7 @@ public class CandidateView extends ViewGroup {
             if (totalWidth + w > Size.WCandidateView) break;
             totalWidth += w;
         }
+
         int padding = (Size.WCandidateView - totalWidth - 1) / (i);
         for (String s : list) {
             if (i-- == 0) break;
@@ -63,12 +74,9 @@ public class CandidateView extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        Log.i("CandidateView", "onMeasure");
         if (!isDictionaryMode)
             height = Size.HCandidateVisible;
         setMeasuredDimension(Size.WCandidateView, height);
-//        else
-//            setMeasuredDimension(Size.WCandidateView, Size.HCandidateView);
     }
 
     @Override
@@ -82,6 +90,7 @@ public class CandidateView extends ViewGroup {
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
             int w = v.getMeasuredWidth(), h = v.getMeasuredHeight();
+
             if (v.getClass() == DictTitle.class) {
                 if (l > 0) t += h;
                 l = 0;
@@ -100,4 +109,5 @@ public class CandidateView extends ViewGroup {
             }
         }
     }
+
 }
