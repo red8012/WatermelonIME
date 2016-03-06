@@ -13,7 +13,7 @@ import co.watermelonime.Core.Engine;
 
 public class SentenceView extends ViewGroup {
     public static SentenceButton[] sentenceButtons = new SentenceButton[9];
-    public SentenceButton[] children;
+    public View[] children;
 
     public SentenceView() {
         super(C.mainService);
@@ -22,8 +22,8 @@ public class SentenceView extends ViewGroup {
             SentenceButton sb = new SentenceButton(i);
             sentenceButtons[i] = sb;
         }
-        children = FunctionKeys.keys;
-        for (SentenceButton i : children)
+        children = LanguageSelector.keys;
+        for (View i : children)
             addView(i);
     }
 
@@ -31,7 +31,6 @@ public class SentenceView extends ViewGroup {
         if (SentenceButton.selectedIndex == index) {
             SentenceButton sb = sentenceButtons[SentenceButton.selectedIndex];
             SentenceButton.selectedIndex = -1;
-//            sb.textLayout = sb.originalTextLayout;
             sb.textLayout = Font.sentence.make(sb.text);
             sb.invalidate();
             return;
@@ -51,7 +50,7 @@ public class SentenceView extends ViewGroup {
         if (children != sentenceButtons) {
             children = sentenceButtons;
             removeAllViews();
-            for (SentenceButton i : children)
+            for (View i : children)
                 addView(i);
             layout(0, 0, 0, 0);
         }
@@ -59,10 +58,10 @@ public class SentenceView extends ViewGroup {
 
     public void display() { // TODO: 2016/3/1 should refactor
         if (Engine.getLength() == 0) {
-            children = FunctionKeys.keys;
+            children = LanguageSelector.keys;
             for (int i = 0; i < 9; i++) sentenceButtons[i].setText(null);
             removeAllViews();
-            for (SentenceButton i : children)
+            for (View i : children)
                 addView(i);
         } else {
             addSentenceButtons();
@@ -105,7 +104,8 @@ public class SentenceView extends ViewGroup {
         Printer.p("child count", end);
         t = Size.HSentencePaddingTop;
 
-        int h = Size.HSentenceButton;
+        int h = getChildAt(0).getMeasuredHeight();
+//        int h = Size.HSentenceButton;
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
             v.layout(0, t, Size.WSentenceView, t + h);

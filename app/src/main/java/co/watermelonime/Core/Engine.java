@@ -171,11 +171,11 @@ public class Engine {
 
     public static void queryDict(final int index) {
         arg[0] = pinyin.substring(index * 2, index * 2 + 2);
-        System.out.println("queryDict" + arg[0]);
+//        System.out.println("queryDict" + arg[0]);
         cursor = db.rawQuery("select z, c from d where p=? order by o", arg);
         dictResult.clear();
         while (cursor.moveToNext()) {
-            System.out.println(cursor.getString(1));
+//            System.out.println(cursor.getString(1));
             dictResult.add(cursor.getString(0));
             dictResult.add(cursor.getString(1));
         }

@@ -28,6 +28,7 @@ public class Size {
             HSentenceView,
             HSentencePaddingTop,
             HSentenceButton,
+            HLanguageSelectorKey,
             HCandidateView,
             HCandidateVisible,
             HCandidateRow,
@@ -54,7 +55,7 @@ public class Size {
         WSentenceView = WScreen - WKeyboard;
         WCandidateView = WKeyboard;
         WDictTitle = WCandidateView * 3 / 16;
-        WDictButton = (WCandidateView  - WDictTitle) / 7;
+        WDictButton = (WCandidateView - WDictTitle) / 7;
         W2ndLayerDictButton = WCandidateView / 8;
         HCandidateRow = WScreen / 10;
         HSeparator = HCandidateRow * 4 / 5;
@@ -63,6 +64,7 @@ public class Size {
         HSentenceView = HInputView;
         HCandidateView = HInputView;
         HSentenceButton = (int) ((HSentenceView - u - u) / 9);
+        HLanguageSelectorKey = (int) ((HSentenceView - u - u) / 6);
         HSentencePaddingTop = (HInputView - HSentenceButton * 9) / 2;
 
         keyIcon = HKey * 4 / 5;

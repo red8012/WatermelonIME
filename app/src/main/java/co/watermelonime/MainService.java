@@ -25,12 +25,11 @@ import co.watermelonime.InputView.Chinese.Common;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
-import co.watermelonime.InputView.Chinese.Sentence.FunctionKeys;
+import co.watermelonime.InputView.Chinese.Sentence.LanguageSelector;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
 import co.watermelonime.InputView.Emoji.Emoji;
 import co.watermelonime.InputView.WaitingView;
 
-//import net.sqlcipher.*;
 
 public class MainService extends InputMethodService {
     public static final Handler handler = new Handler();
@@ -46,8 +45,6 @@ public class MainService extends InputMethodService {
 
     public static View getStartupView() {
         try {
-            // check DB availability
-//            DB.init();
             Engine.init();
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,7 +52,8 @@ public class MainService extends InputMethodService {
             DBCopy.start();
             return WaitingView.me;
         }
-        return C.chineseInputView;
+        return null; // not sure if this can prevent crash when idle for a long time...
+//        return C.chineseInputView;
     }
 
     public boolean onEvaluateFullscreenMode() {
@@ -101,12 +99,11 @@ public class MainService extends InputMethodService {
         Timer.t(4, "Build CandidateView");
 
         Timer.t(325);
-        FunctionKeys.init();
+        LanguageSelector.init();
         C.sentenceView = new SentenceView();
         C.emoji = new Emoji();
         Timer.t(325, "Build SentenceView");
-
-
+        
         Timer.t(5);
         C.chineseInputView = new ChineseInputView();
         Timer.t(5, "Build ChineseInputView");
@@ -125,15 +122,6 @@ public class MainService extends InputMethodService {
 
         if (v == null) return C.chineseInputView;
         else return v;
-
-//        Button button = new Button(this);
-//        button.setBackgroundColor(Color.DKGRAY);
-//        button.setText("QWFPGJLUY");
-//
-//        ScrollView scrollView = new ScrollView(this);
-//        scrollView.setBackgroundColor(Color.CYAN);
-//        scrollView.addView(button);
-//        return ChineseInputView.scrollView;
     }
 
     @Override

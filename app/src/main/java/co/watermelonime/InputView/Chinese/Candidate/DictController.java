@@ -20,7 +20,6 @@ public class DictController {
             C.candidateView.addView(DictTitle.get(d.get(i), i + 1));
 
             String characters = d.get(i + 1);
-            System.out.println(characters);
             int len = characters.length();
             if (len > 7) len = 7;
             for (int j = 0; j < len; j++) {

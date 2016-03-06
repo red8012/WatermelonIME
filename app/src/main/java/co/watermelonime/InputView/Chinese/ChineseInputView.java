@@ -8,13 +8,12 @@ import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 import co.watermelonime.InputView.Chinese.Candidate.DictButton;
 import co.watermelonime.InputView.Chinese.Candidate.DictTitle;
+import co.watermelonime.InputView.Chinese.Sentence.LanguageSelector;
 
 public class ChineseInputView extends ViewGroup {
-    public static final int
-            CHINESE = 0,
-            EMOJI = 1;
 
-    public static int mode = CHINESE;
+
+//    public static int mode = LanguageSelector.CHINESE;
     public static ScrollView scrollView;
 
     public ChineseInputView() {
@@ -22,7 +21,10 @@ public class ChineseInputView extends ViewGroup {
 
         scrollView = new ScrollView(C.mainService);
         scrollView.addView(C.candidateView);
-        changeInputMode(CHINESE);
+//        LanguageSelector.setInputLanguage(LanguageSelector.CHINESE);
+        addView(C.sentenceView);
+        addView(scrollView);
+        addView(C.chineseKeyboard);
     }
 
     public static void initializeHiddenPartsAsync() {
@@ -34,15 +36,15 @@ public class ChineseInputView extends ViewGroup {
     }
 
     public void changeInputMode(final int mode) {
-        ChineseInputView.mode = mode;
+//        ChineseInputView.mode = mode;
         removeAllViews();
         addView(C.sentenceView);
         switch (mode) {
-            case CHINESE:
+            case LanguageSelector.CHINESE:
                 addView(scrollView);
                 addView(C.chineseKeyboard);
                 break;
-            case EMOJI:
+            case LanguageSelector.EMOJI:
                 addView(C.emoji);
                 break;
         }
@@ -66,13 +68,12 @@ public class ChineseInputView extends ViewGroup {
         t = 0;
         C.sentenceView.layout(l, t, l + Size.WSentenceView, t + Size.HSentenceView);
         l += Size.WSentenceView;
-        switch (mode) {
-            case CHINESE:
-//                C.candidateView.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+        switch (LanguageSelector.inputLanguage) {
+            case LanguageSelector.CHINESE:
                 scrollView.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
                 C.chineseKeyboard.layout(l, t + Size.HCandidateVisible, l + Size.WKeyboard, t + Size.HInputView);
                 break;
-            case EMOJI:
+            case LanguageSelector.EMOJI:
                 C.emoji.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
                 break;
         }

@@ -27,8 +27,11 @@ public class SentenceButton extends View {
         if (index >= 0)
             setOnTouchListener(onTouchListener);
         this.index = index;
-        rectPaint.setColor(Colour.CANDIDATE);
-        rect = new RectF(Size.u / 2, 0, Size.WSentenceView, Size.HSentenceButton);
+        if (rect == null) {
+            rectPaint.setColor(Colour.CANDIDATE);
+            rect = new RectF(Size.u / 2, 0, Size.WSentenceView, Size.HSentenceButton);
+            setMeasuredDimension(Size.WSentenceView, Size.HSentenceButton);
+        }
     }
 
     public void setText(final String s) {
@@ -60,4 +63,6 @@ public class SentenceButton extends View {
         textLayout.draw(canvas);
         canvas.restore();
     }
+
+
 }
