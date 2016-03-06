@@ -20,10 +20,9 @@ public class ChineseKey extends View {
         super(C.mainService);
         this.mainText = mainText;
         this.subText = subText;
-//        this.keyCode = keyCode;
 
         dx = mainText.getWidth() / 2;
-        dy = (Size.u * 9 - mainText.getHeight()) / 2;
+        dy = (Size.u * 9 - mainText.getHeight()) / 2; // TODO: 2016/3/6 Size.u ?
         if (subText != null) {
             dy -= subText.getHeight() / 2;
             dxSub = subText.getWidth() / 2;

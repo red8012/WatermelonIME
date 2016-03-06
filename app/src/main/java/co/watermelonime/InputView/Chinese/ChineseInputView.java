@@ -73,6 +73,9 @@ public class ChineseInputView extends ViewGroup {
                 scrollView.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
                 C.chineseKeyboard.layout(l, t + Size.HCandidateVisible, l + Size.WKeyboard, t + Size.HInputView);
                 break;
+            case LanguageSelector.NUMBER:
+                C.numberKeyboard.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+                break;
             case LanguageSelector.EMOJI:
                 C.emoji.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
                 break;

@@ -27,6 +27,7 @@ import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
 import co.watermelonime.InputView.Chinese.Sentence.LanguageSelector;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
 import co.watermelonime.InputView.Emoji.Emoji;
+import co.watermelonime.InputView.Numpad.NumberKeyboard;
 import co.watermelonime.InputView.WaitingView;
 
 
@@ -101,6 +102,7 @@ public class MainService extends InputMethodService {
         LanguageSelector.init();
         C.sentenceView = new SentenceView();
         C.emoji = new Emoji();
+        C.numberKeyboard = new NumberKeyboard();
         Timer.t(325, "Build SentenceView");
 
         Timer.t(5);

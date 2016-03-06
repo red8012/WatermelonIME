@@ -43,11 +43,6 @@ public class CandidateView extends ViewGroup {
             else CandidateView.releaseCandidateButton((CandidateButton) child);
         }
         C.candidateView.removeAllViews();
-//        int end = getChildCount();
-//        for (int i = 0; i < end; i++) {
-//            releaseCandidateButton((CandidateButton) getChildAt(i));
-//        }
-//        removeAllViews();
     }
 
     public void setCandidate(ArrayList<String> list, int type) { //Todo: can be static

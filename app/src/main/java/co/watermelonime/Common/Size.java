@@ -34,6 +34,7 @@ public class Size {
             HCandidateRow,
             HSeparator,
             HKeyboard,
+            HNumKey,
             HKey;
 
     public static int round(float x, int divider) {
@@ -61,6 +62,7 @@ public class Size {
         HSeparator = HCandidateRow * 4 / 5;
         HCandidateVisible = HCandidateRow * 2 + WScreen / 60;
         HInputView = HKeyboard + HCandidateVisible;
+        HNumKey = HInputView / 6;
         HSentenceView = HInputView;
         HCandidateView = HInputView;
         HSentenceButton = (int) ((HSentenceView - u - u) / 9);
