@@ -12,6 +12,23 @@ import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 
 public class NumKey extends View {
+    static final OnTouchListener shiftListener = new OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            NumKey key = (NumKey) v;
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN:
+                    C.numberKeyboard.removeAllViews();
+                    for (NumKey i : NumberKeyboard.chineseNumberKeys)
+                        C.numberKeyboard.addView(i);
+                    return true;
+                case MotionEvent.ACTION_UP:
+//                    key.setBackgroundColor(Colour.FUNCTION);
+                    return true;
+            }
+            return false;
+        }
+    };
     public String text;
     static final OnTouchListener ontouchListener = new OnTouchListener() {
         @Override
@@ -23,7 +40,29 @@ public class NumKey extends View {
                     key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
                     return true;
                 case MotionEvent.ACTION_UP:
-                    key.setBackgroundColor(Colour.NORMAL);
+                    if (Character.isDigit(key.text.charAt(0)))
+                        key.setBackgroundColor(Colour.CHARACTER);
+                    else if (Character.isSpaceChar(key.text.charAt(0)))
+                        key.setBackgroundColor(Colour.FUNCTION);
+                    else
+                        key.setBackgroundColor(Colour.NORMAL);
+                    return true;
+            }
+            return false;
+        }
+    };
+    public int keyCode;
+    static final OnTouchListener functionKeyListener = new OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            NumKey key = (NumKey) v;
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN:
+                    C.mainService.sendDownUpKeyEvents(key.keyCode);
+                    key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    key.setBackgroundColor(Colour.FUNCTION);
                     return true;
             }
             return false;
@@ -42,6 +81,9 @@ public class NumKey extends View {
         dx = textLayout.getWidth() / 2;
         dy = (Size.HNumKey - textLayout.getHeight()) / 2;
         setOnTouchListener(ontouchListener);
+        if (Character.isDigit(s.charAt(0)))
+            setBackgroundColor(Colour.CHARACTER);
+
     }
 
     public NumKey(int resource) {
