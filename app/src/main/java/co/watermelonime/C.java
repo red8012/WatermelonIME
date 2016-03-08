@@ -10,6 +10,8 @@ import co.watermelonime.InputView.Chinese.ChineseInputView;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
 import co.watermelonime.InputView.Emoji.Emoji;
+import co.watermelonime.InputView.Emoji.EmojiInputView;
+import co.watermelonime.InputView.Emoji.EmojiKeyboard;
 
 public class C {
     public final static TimeInterpolator
@@ -24,6 +26,8 @@ public class C {
     public static ChineseKeyboard chineseKeyboard;
     public static ChineseInputView chineseInputView;
     public static Emoji emoji;
+    public static EmojiKeyboard emojiKeyboard;
+    public static EmojiInputView emojiInputView;
 
     public static void commit(String text) {
         if (MainService.inputConnection != null)
