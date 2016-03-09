@@ -19,104 +19,130 @@ public class NumberKeyboard extends ViewGroup {
             "1", "2", "3", "-", "*", "/",
             "0", ".", ",", " "};
     public static final String chineseNumber[] = {
-            " ", " ", " ", " ", null, null,
-            "年", "月", "日", "時", "分", "秒",
-            "七", "八", "九", "十", "百", "千",
+            "年", "月", "日", "個", null, null,
+            "廿", "卅", "卌", "時", "分", "秒",
+            "七", "八", "九", "度", "元", "號",
             "四", "五", "六", "萬", "億", "兆",
-            "一", "二", "三", "度", "元", "號",
-            "〇", "‧", "負", " "};
+            "一", "二", "三", "十", "百", "千",
+            "〇", "‧", "-", " "};
     public static final String chineseCapital[] = {
-            " ", " ", " ", " ", null, null,
+            "（", "）", "之", "個", null, null,
             "年", "月", "日", "時", "分", "秒",
-            "柒", "捌", "玖", "拾", "佰", "仟",
+            "柒", "捌", "玖", "度", "圓", "號",
             "肆", "伍", "陸", "萬", "億", "兆",
-            "壹", "貳", "參", "度", "圓", "號",
-            "零", "點", "負", "⬆"};
+            "壹", "貳", "參", "拾", "佰", "仟",
+            "零", "點", "負", " "};
     final static int ARABIC = 0, CHINESE = 1, CAPITAL = 2;
-    static NumKey[] keys = new NumKey[36];
-    static NumKey[] chineseNumberKeys = new NumKey[36];
-    static NumKey[] chineseNumberCapitalKeys = new NumKey[36];
-    static int mode;
+    static final OnTouchListener functionKeyListener = (v, event) -> {
+        NumKey key = (NumKey) v;
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                C.mainService.sendDownUpKeyEvents(key.keyCode);
+                key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
+                return true;
+            case MotionEvent.ACTION_UP:
+                key.setBackgroundColor(Colour.FUNCTION);
+                return true;
+        }
+        return false;
+    };
+    final static int[] colors = new int[]{Colour.FUNCTION, Colour.reached, Colour.CHARACTER};
+    final static NumKey[][] keys = new NumKey[][]{new NumKey[36], new NumKey[36], new NumKey[36]};
+    static int mode = ARABIC;
+
 
     public NumberKeyboard() {
         super(C.mainService);
         setBackgroundColor(Colour.NORMAL);
-        for (int i = 0; i < number.length; i++) {
+        for (int i = 0; i < 36; i++) {
             NumKey k;
             switch (i) {
                 case 4:
                     k = new NumKey(R.drawable.tab);
                     k.keyCode = KeyEvent.KEYCODE_TAB;
-                    k.setOnTouchListener(NumKey.functionKeyListener);
-                    chineseNumberKeys[i] = k;
-                    chineseNumberCapitalKeys[i] = k;
+                    k.setOnTouchListener(functionKeyListener);
                     break;
                 case 5:
                     k = new NumKey(R.drawable.capslock);
-                    k.setOnTouchListener(NumKey.shiftListener);
-                    chineseNumberKeys[i] = k;
-                    chineseNumberCapitalKeys[i] = k;
+                    k.setOnTouchListener((v, event) -> {
+                        NumKey key = (NumKey) v;
+                        switch (event.getActionMasked()) {
+                            case MotionEvent.ACTION_DOWN:
+                                key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
+                                C.numberKeyboard.removeAllViews();
+                                mode = (mode + 1) % 3;
+                                for (NumKey j : keys[mode])
+                                    addView(j);
+                                layout(0, 0, 0, 0);
+                                return true;
+                            case MotionEvent.ACTION_UP:
+                                key.setBackgroundColor(colors[mode]);
+                                return true;
+                        }
+                        return false;
+                    });
                     break;
                 case 33:
                     k = new NumKey(R.drawable.space);
                     k.text = " ";
                     k.setOnTouchListener(NumKey.ontouchListener);
-                    chineseNumberKeys[i] = k;
-                    chineseNumberCapitalKeys[i] = k;
+                    break;
+                case 34:
+                    k = new NumKey(R.drawable.enter);
+                    k.setOnTouchListener(((v, event) -> {
+                        switch (event.getActionMasked()) {
+                            case MotionEvent.ACTION_DOWN:
+                                C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_ENTER);
+                                v.setBackgroundColor(Colour.CANDIDATE_SELECTED);
+                                return true;
+                            case MotionEvent.ACTION_UP:
+                                v.setBackgroundColor(Colour.FUNCTION);
+                        }
+                        return false;
+                    }));
+                    break;
+                case 35:
+                    k = new NumKey(R.drawable.backspace);
+                    k.setOnTouchListener(new OnTouchListener() {
+                        int lastX;
+
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            final int x = (int) event.getRawX();
+                            switch (event.getActionMasked()) {
+                                case MotionEvent.ACTION_DOWN:
+                                    lastX = x;
+                                    C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
+                                    v.setBackgroundColor(Colour.CANDIDATE_SELECTED);
+                                    return true;
+                                case MotionEvent.ACTION_UP:
+                                    v.setBackgroundColor(Colour.FUNCTION);
+                                    return true;
+                                case MotionEvent.ACTION_MOVE:
+                                    if (x < lastX - Size.HCandidateRow || x > lastX + Size.HCandidateRow) {
+                                        lastX = x;
+                                        C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
+                                        return true;
+                                    }
+                            }
+                            return false;
+                        }
+                    });
                     break;
                 default:
-                    k = new NumKey(number[i]);
-                    chineseNumberKeys[i] = new NumKey(chineseNumber[i]);
-                    chineseNumberCapitalKeys[i] = new NumKey(chineseCapital[i]);
+                    boolean isDigit = (i > 11 && i < 31 && (i % 6 < 3));
+                    k = new NumKey(number[i], isDigit);
+                    keys[CHINESE][i] = new NumKey(chineseNumber[i], isDigit);
+                    keys[CAPITAL][i] = new NumKey(chineseCapital[i], isDigit);
             }
-            keys[i] = k;
+            keys[ARABIC][i] = k;
+            if (i == 4 || i == 5 || i == 33 || i == 34 || i == 35) {
+                keys[CHINESE][i] = k;
+                keys[CAPITAL][i] = k;
+            }
         }
-
-        keys[34] = new NumKey(R.drawable.enter);
-        keys[34].setOnTouchListener(((v, event) -> {
-            switch (event.getActionMasked()) {
-                case MotionEvent.ACTION_DOWN:
-                    C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_ENTER);
-                    v.setBackgroundColor(Colour.CANDIDATE_SELECTED);
-                    return true;
-                case MotionEvent.ACTION_UP:
-                    v.setBackgroundColor(Colour.FUNCTION);
-            }
-            return false;
-        }));
-        chineseNumberKeys[34] = keys[34];
-
-        keys[35] = new NumKey(R.drawable.backspace);
-        keys[35].setOnTouchListener(new OnTouchListener() {
-            int lastX;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int x = (int) event.getRawX();
-                switch (event.getActionMasked()) {
-                    case MotionEvent.ACTION_DOWN:
-                        lastX = x;
-                        C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
-                        v.setBackgroundColor(Colour.CANDIDATE_SELECTED);
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        v.setBackgroundColor(Colour.FUNCTION);
-                        return true;
-                    case MotionEvent.ACTION_MOVE:
-                        if (x < lastX - Size.HCandidateRow || x > lastX + Size.HCandidateRow) {
-                            lastX = x;
-                            C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
-                            return true;
-                        }
-                }
-                return false;
-            }
-        });
-        chineseNumberKeys[35] = keys[35];
-
-        for (NumKey i: keys)
+        for (NumKey i : keys[mode])
             addView(i);
-
     }
 
     @Override

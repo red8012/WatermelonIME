@@ -12,24 +12,12 @@ import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 
 public class NumKey extends View {
-    static final OnTouchListener shiftListener = new OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            NumKey key = (NumKey) v;
-            switch (event.getActionMasked()) {
-                case MotionEvent.ACTION_DOWN:
-                    C.numberKeyboard.removeAllViews();
-                    for (NumKey i : NumberKeyboard.chineseNumberKeys)
-                        C.numberKeyboard.addView(i);
-                    return true;
-                case MotionEvent.ACTION_UP:
-//                    key.setBackgroundColor(Colour.FUNCTION);
-                    return true;
-            }
-            return false;
-        }
-    };
     public String text;
+    public int keyCode;
+    public Layout textLayout;
+    public Drawable image;
+    public float dx, dy;
+    boolean isDigit = false;
     static final OnTouchListener ontouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -40,39 +28,14 @@ public class NumKey extends View {
                     key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
                     return true;
                 case MotionEvent.ACTION_UP:
-                    if (Character.isDigit(key.text.charAt(0)))
-                        key.setBackgroundColor(Colour.CHARACTER);
-                    else if (Character.isSpaceChar(key.text.charAt(0)))
-                        key.setBackgroundColor(Colour.FUNCTION);
-                    else
-                        key.setBackgroundColor(Colour.NORMAL);
+                    key.setBackgroundColor(key.isDigit ? Colour.CHARACTER : Colour.NORMAL);
                     return true;
             }
             return false;
         }
     };
-    public int keyCode;
-    static final OnTouchListener functionKeyListener = new OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            NumKey key = (NumKey) v;
-            switch (event.getActionMasked()) {
-                case MotionEvent.ACTION_DOWN:
-                    C.mainService.sendDownUpKeyEvents(key.keyCode);
-                    key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
-                    return true;
-                case MotionEvent.ACTION_UP:
-                    key.setBackgroundColor(Colour.FUNCTION);
-                    return true;
-            }
-            return false;
-        }
-    };
-    public Layout textLayout;
-    public Drawable image;
-    public float dx, dy;
 
-    public NumKey(final String s) {
+    public NumKey(final String s, boolean isDigit) {
         super(C.mainService);
         setMeasuredDimension(Size.WKey, Size.HNumKey);
         text = s;
@@ -81,9 +44,8 @@ public class NumKey extends View {
         dx = textLayout.getWidth() / 2;
         dy = (Size.HNumKey - textLayout.getHeight()) / 2;
         setOnTouchListener(ontouchListener);
-        if (Character.isDigit(s.charAt(0)))
-            setBackgroundColor(Colour.CHARACTER);
-
+        setBackgroundColor(isDigit ? Colour.CHARACTER : Colour.NORMAL);
+        this.isDigit = isDigit;
     }
 
     public NumKey(int resource) {
