@@ -30,15 +30,17 @@ public class LanguageSelector {
         v.removeAllViews();
         v.addView(C.sentenceView);
         switch (inputLanguage) {
-            case LanguageSelector.CHINESE:
+            case CHINESE:
                 v.addView(ChineseInputView.scrollView);
                 v.addView(C.chineseKeyboard);
                 break;
-            case LanguageSelector.EMOJI:
+            case NUMBER:
+                v.addView(C.numberKeyboard);
+                break;
+            case EMOJI:
                 v.addView(C.emoji);
                 break;
         }
         v.invalidate(); // TODO: 2016/3/5 check this
-//        v.layout(0, 0, 0, 0);
     }
 }
