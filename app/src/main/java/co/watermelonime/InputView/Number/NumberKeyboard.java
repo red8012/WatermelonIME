@@ -1,4 +1,4 @@
-package co.watermelonime.InputView.Numpad;
+package co.watermelonime.InputView.Number;
 
 import android.view.KeyEvent;
 import android.view.MotionEvent;

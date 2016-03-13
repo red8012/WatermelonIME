@@ -1,4 +1,4 @@
-package co.watermelonime.InputView.Numpad;
+package co.watermelonime.InputView.English;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -11,44 +11,42 @@ import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 
-public class NumKey extends View {
+public class EnglishKey extends View {
     public String text;
-    public int keyCode;
-    public Layout textLayout;
-    public Drawable image;
-    public float dx, dy;
-    boolean isDigit = false;
     static final OnTouchListener ontouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            NumKey key = (NumKey) v;
+            EnglishKey key = (EnglishKey) v;
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
                     C.commit(key.text);
                     key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
                     return true;
                 case MotionEvent.ACTION_UP:
-                    key.setBackgroundColor(key.isDigit ? Colour.CHARACTER : Colour.NORMAL);
+                    key.setBackgroundColor(Colour.NORMAL);
                     return true;
             }
             return false;
         }
     };
+    public Layout textLayout;
+    public Drawable image;
+    public float dx, dy;
 
-    public NumKey(final String s, boolean isDigit) {
+
+    public EnglishKey(final String s) {
         super(C.mainService);
-        setMeasuredDimension(Size.WKey, Size.HNumKey);
+        setMeasuredDimension(Size.WEnglishKey, Size.HEnglishKey);
         text = s;
-        textLayout = Font.big.make(s);
+        textLayout = Font.fr.make(s, Size.WEnglishKey);
 
         dx = textLayout.getWidth() / 2;
-        dy = (Size.HNumKey - textLayout.getHeight()) / 2;
+        dy = (Size.HEnglishKey - textLayout.getHeight()) / 2;
         setOnTouchListener(ontouchListener);
-        setBackgroundColor(isDigit ? Colour.CHARACTER : Colour.NORMAL);
-        this.isDigit = isDigit;
+        setBackgroundColor(Colour.NORMAL);
     }
 
-    public NumKey(int resource) {
+    public EnglishKey(int resource, int width) {
         super(C.mainService);
         image = C.mainService.getResources().getDrawable(resource);
         image.setBounds(0, 0, Size.keyIcon, Size.keyIcon);

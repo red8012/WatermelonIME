@@ -1,10 +1,45 @@
 # Watermelon IME
 
+### Roadmap
+
+``` 
+April	Feature frozen
+May		Alpha, prepare for promotion
+June	Beta, release candidate
+July	Release
+```
+
 ### TODO
 
-1. reorganize dict (s1, s2, s3, …)
-2. hide first candidate right
-3. candidate first line height
+1. hide first candidate right
+2. candidate first line height
+3. optimize drawing
+4. clean up code
+5. Navigation keys
+6. Deutsch
+7. English prediction
+8. URL prediction
+9. English bi/tri-gram
+10. gestures
+11. Chinese hint
+12. Chinese learning 
+13. Contact learning
+14. Settings
+15. Remove from database (long press)
+16. __Landscape Input View__
+    1. Chinese
+    2. English
+17. Floating input window
+18. Getting started guide
+19. Improve accuracy
+20. Website
+
+## Settings
+
+1. Reset database
+2. Copy contact to database
+3. English keyboard type
+4. Floating window size
 
 ### Benchmark Result
 
@@ -15,7 +50,7 @@ Time    Allocations  Size
   287    5,610         457,026    *new engine*
    11      253         138,486    no engine
    33      229           5,520    no engine
-     
+
   900   13,080         888,944    *new engine* (full run)
   979    9,657         788,454    reduce expandQuery allocation
 ```

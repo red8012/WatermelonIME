@@ -27,11 +27,15 @@ public class LanguageSelector {
         LanguageSelector.inputLanguage = inputLanguage;
         ChineseInputView v = C.chineseInputView;
         v.removeAllViews();
-        v.addView(C.sentenceView);
+        if (inputLanguage != ENGLISH)
+            v.addView(C.sentenceView);
         switch (inputLanguage) {
             case CHINESE:
                 v.addView(ChineseInputView.scrollView);
                 v.addView(C.chineseKeyboard);
+                break;
+            case ENGLISH:
+                v.addView(C.englishKeyboard);
                 break;
             case NUMBER:
                 v.addView(C.numberKeyboard);

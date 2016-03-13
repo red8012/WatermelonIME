@@ -13,7 +13,7 @@ import co.watermelonime.InputView.Chinese.Sentence.LanguageSelector;
 public class ChineseInputView extends ViewGroup {
 
 
-//    public static int mode = LanguageSelector.CHINESE;
+    //    public static int mode = LanguageSelector.CHINESE;
     public static ScrollView scrollView;
 
     public ChineseInputView() {
@@ -66,8 +66,10 @@ public class ChineseInputView extends ViewGroup {
         Log.i("ChineseInputView", "onLayout");
         l = 0;
         t = 0;
-        C.sentenceView.layout(l, t, l + Size.WSentenceView, t + Size.HSentenceView);
-        l += Size.WSentenceView;
+        if (LanguageSelector.inputLanguage != LanguageSelector.ENGLISH) {
+            C.sentenceView.layout(l, t, l + Size.WSentenceView, t + Size.HSentenceView);
+            l += Size.WSentenceView;
+        }
         switch (LanguageSelector.inputLanguage) {
             case LanguageSelector.CHINESE:
                 scrollView.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
@@ -75,6 +77,9 @@ public class ChineseInputView extends ViewGroup {
                 break;
             case LanguageSelector.NUMBER:
                 C.numberKeyboard.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+                break;
+            case LanguageSelector.ENGLISH:
+                C.englishKeyboard.layout(l, t, Size.WInputView, Size.HInputView);
                 break;
             case LanguageSelector.EMOJI:
                 C.emoji.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);

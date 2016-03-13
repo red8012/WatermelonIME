@@ -21,7 +21,9 @@ public class Size {
             WDictTitle,
             WSeparator,
             WKeyboard,
-            WKey;
+            WKey,
+            WEnglishKey,
+            WSpace;
     public static int
             HScreen,
             HInputView,
@@ -35,7 +37,8 @@ public class Size {
             HSeparator,
             HKeyboard,
             HNumKey,
-            HKey;
+            HKey,
+            HEnglishKey;
 
     public static int round(float x, int divider) {
         x /= divider;
@@ -48,6 +51,7 @@ public class Size {
         u = WScreen / 70f;
         WSeparator = WScreen / 240;
         WInputView = WScreen;
+        WEnglishKey = WInputView / 10;
         WSentenceView = (int) (WScreen * 0.12);
         WKeyboard = round(WScreen - WSentenceView, 6);
         WKey = WKeyboard / 6;
@@ -62,12 +66,15 @@ public class Size {
         HSeparator = HCandidateRow * 4 / 5;
         HCandidateVisible = HCandidateRow * 2 + WScreen / 60;
         HInputView = HKeyboard + HCandidateVisible;
+        HEnglishKey = HInputView / 6;
         HNumKey = HInputView / 6;
         HSentenceView = HInputView;
         HCandidateView = HInputView;
         HSentenceButton = (int) ((HSentenceView - u - u) / 9);
         HLanguageSelectorKey = (int) ((HSentenceView - u - u) / 6);
         HSentencePaddingTop = (HInputView - HSentenceButton * 9) / 2;
+
+        WSpace = WInputView * 4 / 10;
 
         keyIcon = HKey * 4 / 5;
         FSentence = u * 4.5f;

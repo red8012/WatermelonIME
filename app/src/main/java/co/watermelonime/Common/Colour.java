@@ -11,6 +11,7 @@ public class Colour {
             FUNCTION = Color.rgb(80, 112, 83),
             CHARACTER = Color.rgb(82, 84, 120),
             DISABLED = Color.BLACK,
+            SPACE = Color.rgb(92, 90, 93),
             textKeyboard = Color.WHITE,
             textSentence = Color.WHITE,
             textCandidate = Color.BLACK,
