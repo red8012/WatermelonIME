@@ -92,6 +92,8 @@ public class EnglishKeyboard extends ViewGroup {
             r += Size.WEnglishKey;
             if (i == 9 || i == 19 || i == 28 || i == 35) {
                 r = Size.WEnglishKey;
+                if (i == 19) r += Size.WEnglishKey / 3;
+                if (i == 28) r += Size.WEnglishKey * 4 / 3;
                 t += Size.HEnglishKey;
             }
         }
