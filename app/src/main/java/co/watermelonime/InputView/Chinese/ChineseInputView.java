@@ -35,22 +35,22 @@ public class ChineseInputView extends ViewGroup {
         );
     }
 
-    public void changeInputMode(final int mode) {
-//        ChineseInputView.mode = mode;
-        removeAllViews();
-        addView(C.sentenceView);
-        switch (mode) {
-            case LanguageSelector.CHINESE:
-                addView(scrollView);
-                addView(C.chineseKeyboard);
-                break;
-            case LanguageSelector.EMOJI:
-                addView(C.emoji);
-                break;
-        }
-        invalidate();
-        layout(0, 0, 0, 0);
-    }
+//    public void changeInputMode(final int mode) {
+////        ChineseInputView.mode = mode;
+//        removeAllViews();
+//        addView(C.sentenceView);
+//        switch (mode) {
+//            case LanguageSelector.CHINESE:
+//                addView(scrollView);
+//                addView(C.chineseKeyboard);
+//                break;
+//            case LanguageSelector.EMOJI:
+//                addView(C.emoji);
+//                break;
+//        }
+//        invalidate();
+//        layout(0, 0, 0, 0);
+//    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {

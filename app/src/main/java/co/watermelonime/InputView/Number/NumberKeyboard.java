@@ -2,11 +2,11 @@ package co.watermelonime.InputView.Number;
 
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
+import co.watermelonime.Common.Listeners;
 import co.watermelonime.Common.Size;
 import co.watermelonime.R;
 
@@ -89,45 +89,11 @@ public class NumberKeyboard extends ViewGroup {
                     break;
                 case 34:
                     k = new NumKey(R.drawable.enter);
-                    k.setOnTouchListener(((v, event) -> {
-                        switch (event.getActionMasked()) {
-                            case MotionEvent.ACTION_DOWN:
-                                C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_ENTER);
-                                v.setBackgroundColor(Colour.CANDIDATE_SELECTED);
-                                return true;
-                            case MotionEvent.ACTION_UP:
-                                v.setBackgroundColor(Colour.FUNCTION);
-                        }
-                        return false;
-                    }));
+                    k.setOnTouchListener(Listeners.enter);
                     break;
                 case 35:
                     k = new NumKey(R.drawable.backspace);
-                    k.setOnTouchListener(new OnTouchListener() {
-                        int lastX;
-
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            final int x = (int) event.getRawX();
-                            switch (event.getActionMasked()) {
-                                case MotionEvent.ACTION_DOWN:
-                                    lastX = x;
-                                    C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
-                                    v.setBackgroundColor(Colour.CANDIDATE_SELECTED);
-                                    return true;
-                                case MotionEvent.ACTION_UP:
-                                    v.setBackgroundColor(Colour.FUNCTION);
-                                    return true;
-                                case MotionEvent.ACTION_MOVE:
-                                    if (x < lastX - Size.HCandidateRow || x > lastX + Size.HCandidateRow) {
-                                        lastX = x;
-                                        C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
-                                        return true;
-                                    }
-                            }
-                            return false;
-                        }
-                    });
+                    k.setOnTouchListener(Listeners.backspace);
                     break;
                 default:
                     boolean isDigit = (i > 11 && i < 31 && (i % 6 < 3));

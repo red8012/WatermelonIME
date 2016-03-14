@@ -16,11 +16,15 @@ public class SpaceBar extends View {
     static final OnTouchListener ontouchListener = (v, event) -> {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
+                rectPaint.setColor(Colour.textKeyboard);
                 C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_SPACE);
-                v.setBackgroundColor(Colour.CANDIDATE_SELECTED);
+                v.invalidate();
+//                v.setBackgroundColor(Colour.CANDIDATE_SELECTED);
                 return true;
             case MotionEvent.ACTION_UP:
-                v.setBackgroundColor(Colour.NORMAL);
+                rectPaint.setColor(Colour.SPACE);
+                v.invalidate();
+//                v.setBackgroundColor(Colour.NORMAL);
                 return true;
         }
         return false;

@@ -20,8 +20,12 @@ public class EnglishKey extends View {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
                     C.commit(key.text);
+                    EnglishKeyboard.committed = true;
+                    if (EnglishKeyboard.mode == EnglishKeyboard.UPPER && !EnglishKeyboard.isShiftPressed)
+                        C.englishKeyboard.changeMode(EnglishKeyboard.LOWER);
                     key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
                     return true;
+//                    break;
                 case MotionEvent.ACTION_UP:
                     key.setBackgroundColor(Colour.NORMAL);
                     return true;
@@ -33,6 +37,17 @@ public class EnglishKey extends View {
     public Drawable image;
     public float dx, dy;
 
+
+    public EnglishKey(final String s, int width) {
+        super(C.mainService);
+        setMeasuredDimension(width, Size.HEnglishKey);
+        text = s;
+        textLayout = Font.fr.make(s, width);
+
+        dx = textLayout.getWidth() / 2;
+        dy = (Size.HEnglishKey - textLayout.getHeight()) / 2;
+        setBackgroundColor(Colour.SENTENCE);
+    }
 
     public EnglishKey(final String s) {
         super(C.mainService);
@@ -49,11 +64,12 @@ public class EnglishKey extends View {
     public EnglishKey(int resource, int width) {
         super(C.mainService);
         image = C.mainService.getResources().getDrawable(resource);
-        image.setBounds(0, 0, Size.keyIcon, Size.keyIcon);
-        dx = Size.u * 3 / 2;
-        dy = Size.u;
+        int sideLength = Size.HEnglishKey * 4 / 5;
+        image.setBounds(0, 0, sideLength, sideLength);
+        dx = (width - sideLength) / 2;
+        dy = (Size.HEnglishKey - sideLength) / 2;
         setBackgroundColor(Colour.FUNCTION);
-        setMeasuredDimension(Size.WKey, Size.HKey);
+        setMeasuredDimension(width, Size.HEnglishKey);
     }
 
     @Override
