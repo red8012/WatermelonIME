@@ -23,33 +23,33 @@ public class Expressions {
     public static EmojiKey[] keys = new EmojiKey[24];
     public static EmojiKey enter, backspace;
 
-    @SuppressWarnings("ObjectAllocationInLoop")
-    public static void buildKeys() {
-        ArrayList<EmojiKey> keys = new ArrayList<>(24);
-        for (int i = 0; i < 19; i++)
-            keys.add(new EmojiKey(Font.big.make(displaySymbols[i]),
-                    null, Colour.NORMAL));
-
-        keys.add(18, new EmojiKey(Font.fr.make("ㄈ"),
-                Font.small.make("「」"), Colour.NORMAL));
-
-        enter = new EmojiKey(R.drawable.enter, Colour.FUNCTION);
-        //enter.setOnTouchListener(new OnTouchEnter());
-        keys.add(enter);
-
-        keys.add(new EmojiKey(Font.mid.make("ㄧㄨㄩ"),
-                Font.small.make("...其他"), Colour.NORMAL));
-        keys.add(new EmojiKey(Font.fr.make("ㄖ"),
-                Font.small.make("！。？"),
-                Colour.NORMAL));
-
-        backspace = new EmojiKey(R.drawable.backspace, Colour.FUNCTION);
-        backspace.setOnTouchListener(new OnTouchDel());
-        keys.add(backspace);
-
-        Expressions.keys = keys.toArray(Expressions.keys);
-    }
-
+//    @SuppressWarnings("ObjectAllocationInLoop")
+//    public static void buildKeys() {
+//        ArrayList<EmojiKey> keys = new ArrayList<>(24);
+//        for (int i = 0; i < 19; i++)
+//            keys.add(new EmojiKey(Font.big.make(displaySymbols[i]),
+//                    null, Colour.NORMAL));
+//
+//        keys.add(18, new EmojiKey(Font.fr.make("ㄈ"),
+//                Font.small.make("「」"), Colour.NORMAL));
+//
+//        enter = new EmojiKey(R.drawable.enter, Colour.FUNCTION);
+//        //enter.setOnTouchListener(new OnTouchEnter());
+//        keys.add(enter);
+//
+//        keys.add(new EmojiKey(Font.mid.make("ㄧㄨㄩ"),
+//                Font.small.make("...其他"), Colour.NORMAL));
+//        keys.add(new EmojiKey(Font.fr.make("ㄖ"),
+//                Font.small.make("！。？"),
+//                Colour.NORMAL));
+//
+//        backspace = new EmojiKey(R.drawable.backspace, Colour.FUNCTION);
+//        backspace.setOnTouchListener(new OnTouchDel());
+//        keys.add(backspace);
+//
+//        Expressions.keys = keys.toArray(Expressions.keys);
+//    }
+/*
     public static void addListeners() {
         OnTouchExpression onTouchExpression = new OnTouchExpression();
         for (int i = 0; i < 20; i++) {
@@ -61,4 +61,5 @@ public class Expressions {
             Expressions.keys[i].setOnTouchListener(onTouchExpression);
         }
     }
+*/
 }

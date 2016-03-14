@@ -3,9 +3,12 @@ package co.watermelonime.InputView.Emoji;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.text.Layout;
+import android.view.MotionEvent;
 import android.view.View;
 
 import co.watermelonime.C;
+import co.watermelonime.Common.Colour;
+import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 
 /**
@@ -13,53 +16,57 @@ import co.watermelonime.Common.Size;
  */
 public class EmojiKey extends View {
 
-    public static final int CONSONANT = -1, CHARACTER = -2, PUNCTUATION = -3;
-    public int action = -1; // positive vowel keyboard num or the three types above
-    public char pinyin, character;
-    public Layout mainText, subText;
+    public char character;
     public Drawable image;
-    public float dx, dy, dxSub, dySub;
+    public float dx, dy;
+    public String text;
+    public Layout textLayout;
 
-    public EmojiKey(final Layout mainText, final Layout subText, int backgroundColor) {
-        super(C.mainService);
-        this.mainText = mainText;
-        this.subText = subText;
-//        this.keyCode = keyCode;
-
-        dx = mainText.getWidth() / 2;
-        dy = (Size.u * 9 - mainText.getHeight()) / 2;
-        if (subText != null) {
-            dy -= subText.getHeight() / 2;
-            dxSub = subText.getWidth() / 2;
-            dySub = (Size.u * 8 - subText.getHeight());
+    static final OnTouchListener ontouchListener = new OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            EmojiKey key = (EmojiKey) v;
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN:
+                    C.commit(key.text);
+                    key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    return true;
+            }
+            return false;
         }
-        setBackgroundColor(backgroundColor);
-        setMeasuredDimension(Size.WKey, Size.HKey);
+    };
+
+    public EmojiKey(final String s) {
+        super(C.mainService);
+        setMeasuredDimension(Size.WKey, Size.HNumKey);
+        text = s;
+        textLayout = Font.big.make(s);
+
+        dx = textLayout.getWidth() / 2;
+        dy = (Size.HNumKey - textLayout.getHeight()) / 2;
+        setOnTouchListener(ontouchListener);
+        setBackgroundColor(Colour.NORMAL);
     }
 
-    public EmojiKey(int resource, int backgroundColor) {
+    public EmojiKey(int resource) {
         super(C.mainService);
         image = C.mainService.getResources().getDrawable(resource);
         image.setBounds(0, 0, Size.keyIcon, Size.keyIcon);
         dx = Size.u * 3 / 2;
         dy = Size.u;
-        setBackgroundColor(backgroundColor);
+        setBackgroundColor(Colour.FUNCTION);
         setMeasuredDimension(Size.WKey, Size.HKey);
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mainText != null) {
+        if (textLayout != null) {
             canvas.save();
             canvas.translate(dx, dy);
-            mainText.draw(canvas);
-            canvas.restore();
-        }
-        if (subText != null) {
-            canvas.save();
-            canvas.translate(dxSub, dySub);
-            subText.draw(canvas);
+            textLayout.draw(canvas);
             canvas.restore();
         }
         if (image != null) {

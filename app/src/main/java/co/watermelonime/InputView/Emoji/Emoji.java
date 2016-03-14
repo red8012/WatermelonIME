@@ -11,16 +11,16 @@ import co.watermelonime.InputView.Chinese.Sentence.LanguageSelector;
 
 public class Emoji extends ViewGroup {
     public static ScrollView scrollView;
-
-    public static CandidateEmojiView candidateEmojiView;
+    public static EmojiKeyboard emojiKeyboard;              //let emoji keyboard can be scrolled
+//    public static CandidateEmojiView candidateEmojiView;
     public Emoji() {
         super(C.mainService);
         setBackgroundColor(Colour.CHARACTER);
 
-        scrollView = new ScrollView(C.mainService);
-        //scrollView.addView(candidateEmojiView);
+//        scrollView = new ScrollView(C.mainService);
+//        scrollView.addView(emojiKeyboard);
 
-        Expressions.buildKeys();
+//        Expressions.buildKeys();
         for (View i : Expressions.keys)
             addView(i);
 
@@ -42,6 +42,7 @@ public class Emoji extends ViewGroup {
         l = 0;
         t = 0;
         //C.sentenceView.layout(l, t, l + Size.WSentenceView, t + Size.HSentenceView);
-        Expressions.keys[0].layout(l, t, l + Size.WSentenceView, t + Size.HSentenceView);
+        for(int i=0; i<8; i++)
+            Expressions.keys[i].layout(l, t, l + Size.WSentenceView, t + Size.HSentenceView);
     }
 }
