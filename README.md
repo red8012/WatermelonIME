@@ -14,25 +14,26 @@ July	Release
 1. hide first candidate right
 2. candidate first line height
 3. optimize drawing
-4. clean up code
-5. Navigation keys
-6. Deutsch
-7. English prediction
-8. URL prediction
-9. English bi/tri-gram
-10. gestures
-11. Chinese hint
-12. Chinese learning 
-13. Contact learning
-14. Settings
-15. Remove from database (long press)
-16. __Landscape Input View__
+4. [] clean up code
+5. [] Navigation keys
+6. [] Deutsch
+7. [] auto switch language depending on context
+8. English prediction
+9. URL prediction
+10. ~~English bi/tri-gram~~
+11. [] gestures
+12. [] Chinese hint
+13. Chinese learning 
+14. Contact learning
+15. Settings
+16. Remove from database (long press)
+17. __Landscape Input View__
     1. Chinese
     2. English
-17. Floating input window
-18. Getting started guide
-19. Improve accuracy
-20. Website
+18. Floating input window
+19. Getting started guide
+20. Improve accuracy
+21. Website
 
 ## Settings
 
