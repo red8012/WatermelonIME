@@ -1,7 +1,5 @@
 package co.watermelonime.InputView.Emoji;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,9 +8,6 @@ import android.view.ViewGroup;
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Size;
-import co.watermelonime.Common.Timer;
-import co.watermelonime.InputView.Emoji.EmojiKey;
-import co.watermelonime.InputView.Emoji.Expressions;
 import co.watermelonime.R;
 
 /**
@@ -38,17 +33,16 @@ public class EmojiKeyboard extends ViewGroup {
             "\uD83D\uDE0D","\uD83D\uDE18","\uD83D\uDE17","\uD83D\uDE19","\uD83D\uDE1A","\uD83D\uDE1C",
             "\uD83E\uDD11","\uD83E\uDD13","\uD83D\uDE0E","\uD83E\uDD17","\uD83D\uDE0F","\uD83D\uDE36",
             "\uD83D\uDE0D","\uD83D\uDE18","\uD83D\uDE17","\uD83D\uDE19","\uD83D\uDE1A","\uD83D\uDE1C",
-            "null","null","\uD83D\uDE0E","\uD83E\uDD17","\uD83D\uDE0F","\uD83D\uDE36"
+            "\uD83D\uDE0E","\uD83E\uDD17","\uD83D\uDE0F","\uD83D\uDE36","null","null"
 //            "\uD83D\uDE00","\uD83D\uDE2C","\uD83D\uDE01","\uD83D\uDE02","\uD83D\uDE03","\uD83D\uDE04","\uD83D\uDE05","\uD83D\uDE06",
 //            "\uD83D\uDE07","\uD83D\uDE09","\uD83D\uDE0A","\uD83D\uDE42","\uD83D\uDE43","☺️","\uD83D\uDE0B","\uD83D\uDE0C",
 //            "\uD83D\uDE0D","\uD83D\uDE18","\uD83D\uDE17","\uD83D\uDE19","\uD83D\uDE1A","\uD83D\uDE1C","\uD83D\uDE1D","\uD83D\uDE1B",
 //            "\uD83E\uDD11","\uD83E\uDD13","\uD83D\uDE0E","\uD83E\uDD17","\uD83D\uDE0F","\uD83D\uDE36","\uD83D\uDE10","\uD83D\uDE11",
-//            "±", ":", "∞", "#", null, null,
-//            "$", "¥", "€", "<", ">", "=",
-//            "7", "8", "9", "(", ")", "%",
-//            "4", "5", "6", "+", "×", "÷",
-//            "1", "2", "3", "-", "*", "/",
-//            "0", ".", ",", " "
+//            "\uD83D\uDE12","\uD83D\uDE44","\uD83E\uDD14","\uD83D\uDE33","\uD83D\uDE1E","\uD83D\uDE1F","\uD83D\uDE20","\uD83D\uDE21",
+//            "\uD83D\uDE14","\uD83D\uDE15","\uD83D\uDE41","☹️","\uD83D\uDE23","\uD83D\uDE16","\uD83D\uDE2B","\uD83D\uDE29",
+//            "\uD83D\uDE24","\uD83D\uDE2E","\uD83D\uDE31","\uD83D\uDE28","\uD83D\uDE30","\uD83D\uDE2F","\uD83D\uDE26","\uD83D\uDE27",
+//            "\uD83D\uDE22","\uD83D\uDE25","\uD83D\uDE2A","\uD83D\uDE13","\uD83D\uDE2D","\uD83D\uDE35","\uD83D\uDE32","\uD83E\uDD10",
+//            "\uD83D\uDE37","\uD83E\uDD12","\uD83E\uDD15","\uD83D\uDE34"
     };
     public static final String game[] = {
             "","","","","","","","",
@@ -74,12 +68,12 @@ public class EmojiKeyboard extends ViewGroup {
             "","","","","","","","",
             "","","","","","","",""
     };
-    final static int EMOTICON = 0, CHINESE = 1, CAPITAL = 2;
+    final static int EMOTICON = 0, GAME = 1, FLOWER = 2, TRAFFIC = 3, DIRECTION = 4;
 //    static final OnTouchListener functionKeyListener = (v, event) -> {
 //        EmojiKey key = (EmojiKey) v;
 //        switch (event.getActionMasked()) {
 //            case MotionEvent.ACTION_DOWN:
-//                C.mainService.sendDownUpKeyEvents(key.keyCode);
+//                C.mainService.sendDownUpKeyEvents(key.character);
 //                key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
 //                return true;
 //            case MotionEvent.ACTION_UP:
@@ -90,28 +84,20 @@ public class EmojiKeyboard extends ViewGroup {
 //    };
     final static int[] colors = new int[]{Colour.FUNCTION, Colour.reached, Colour.CHARACTER};
 //    final static EmojiKey[][] keys = new EmojiKey[][]{new EmojiKey[32], new EmojiKey[32], new EmojiKey[32]};
-    final static EmojiKey[][] keys = new EmojiKey[][]{new EmojiKey[32]};
+    final static EmojiKey[][] keys = new EmojiKey[][]{new EmojiKey[36]};
     static int mode = EMOTICON;
-
-
 //    public static EmojiKey[] currentKeys;
 //    public static boolean visible = true;
-
     public EmojiKeyboard() {
         super(C.mainService);
         setBackgroundColor(Colour.NORMAL);
         setMeasuredDimension(Size.WKeyboard, Size.HKeyboard);
 //        setKeys(Expressions.keys);
 
-        for (int i = 0; i < 32; i++) {
+        for (int i = 0; i < 36; i++) {
             EmojiKey k;
             switch (i) {
-//                case 29:
-//                    k = new EmojiKey(R.drawable.space);
-//                    k.text = " ";
-//                    k.setOnTouchListener(NumKey.ontouchListener);
-//                    break;
-                case 30:
+                case 34:
                     k = new EmojiKey(R.drawable.enter);
                     k.setOnTouchListener(((v, event) -> {
                         switch (event.getActionMasked()) {
@@ -125,7 +111,7 @@ public class EmojiKeyboard extends ViewGroup {
                         return false;
                     }));
                     break;
-                case 31:
+                case 35:
                     k = new EmojiKey(R.drawable.backspace);
                     k.setOnTouchListener(new OnTouchListener() {
                         int lastX;
@@ -158,6 +144,7 @@ public class EmojiKeyboard extends ViewGroup {
                     k = new EmojiKey(emoticon[i]);
 //                    keys[CHINESE][i] = new NumKey(chineseNumber[i], isDigit);
 //                    keys[CAPITAL][i] = new NumKey(chineseCapital[i], isDigit);
+
             }
             keys[EMOTICON][i] = k;
 //            if (i == 30 || i == 31) {
@@ -201,7 +188,7 @@ public class EmojiKeyboard extends ViewGroup {
             r += Size.WKey;
             if (r > Size.WKeyboard) {
                 r = Size.WKey;
-                t += Size.HEmojiKey;
+                t += Size.HNumKey;
             }
         }
     }

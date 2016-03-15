@@ -40,12 +40,12 @@ public class EmojiKey extends View {
 
     public EmojiKey(final String s) {
         super(C.mainService);
-        setMeasuredDimension(Size.WKey, Size.HNumKey);
+        setMeasuredDimension(Size.WKey, Size.HEmojiKey);
         text = s;
-        textLayout = Font.big.make(s);
+        textLayout = Font.fr.make(s);
 
         dx = textLayout.getWidth() / 2;
-        dy = (Size.HNumKey - textLayout.getHeight()) / 2;
+        dy = (Size.HEmojiKey - textLayout.getHeight()) / 2;
         setOnTouchListener(ontouchListener);
         setBackgroundColor(Colour.NORMAL);
     }

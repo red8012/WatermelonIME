@@ -44,9 +44,9 @@ public class ChineseInputView extends ViewGroup {
                 addView(scrollView);
                 addView(C.chineseKeyboard);
                 break;
-            case LanguageSelector.EMOJI:
-                addView(C.emoji);
-                break;
+//            case LanguageSelector.EMOJI:
+//                addView(C.emoji);
+//                break;
         }
         invalidate();
         layout(0, 0, 0, 0);
@@ -77,7 +77,8 @@ public class ChineseInputView extends ViewGroup {
                 C.numberKeyboard.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
                 break;
             case LanguageSelector.EMOJI:
-                C.emoji.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+//                C.emoji.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+                C.emojiKeyboard.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
                 break;
         }
     }

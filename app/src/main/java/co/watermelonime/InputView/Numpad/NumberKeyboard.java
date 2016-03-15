@@ -32,6 +32,7 @@ public class NumberKeyboard extends ViewGroup {
             "肆", "伍", "陸", "萬", "億", "兆",
             "壹", "貳", "參", "拾", "佰", "仟",
             "零", "點", "負", " "};
+
     final static int ARABIC = 0, CHINESE = 1, CAPITAL = 2;
     static final OnTouchListener functionKeyListener = (v, event) -> {
         NumKey key = (NumKey) v;

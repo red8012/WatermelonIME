@@ -2,7 +2,6 @@ package co.watermelonime.InputView.Chinese.Sentence;
 
 import co.watermelonime.C;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
-import co.watermelonime.InputView.Emoji.EmojiInputView;
 
 public class LanguageSelector {
     public static final int
@@ -38,7 +37,8 @@ public class LanguageSelector {
                 v.addView(C.numberKeyboard);
                 break;
             case EMOJI:
-                v.addView(C.emoji);
+//                v.addView(C.emoji);
+                v.addView(C.emojiKeyboard);
                 break;
         }
         v.invalidate(); // TODO: 2016/3/5 check this
