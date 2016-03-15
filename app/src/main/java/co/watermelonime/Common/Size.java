@@ -38,7 +38,8 @@ public class Size {
             HKeyboard,
             HNumKey,
             HKey,
-            HEnglishKey;
+            HEnglishKey,
+            HEmojiKey;
 
     public static int round(float x, int divider) {
         x /= divider;
@@ -68,6 +69,7 @@ public class Size {
         HInputView = HKeyboard + HCandidateVisible;
         HEnglishKey = HInputView / 6;
         HNumKey = HInputView / 6;
+        HEmojiKey = HInputView / 8;
         HSentenceView = HInputView;
         HCandidateView = HInputView;
         HSentenceButton = (int) ((HSentenceView - u - u) / 9);

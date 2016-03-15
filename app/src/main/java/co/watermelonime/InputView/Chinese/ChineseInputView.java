@@ -35,23 +35,6 @@ public class ChineseInputView extends ViewGroup {
         );
     }
 
-//    public void changeInputMode(final int mode) {
-////        ChineseInputView.mode = mode;
-//        removeAllViews();
-//        addView(C.sentenceView);
-//        switch (mode) {
-//            case LanguageSelector.CHINESE:
-//                addView(scrollView);
-//                addView(C.chineseKeyboard);
-//                break;
-//            case LanguageSelector.EMOJI:
-//                addView(C.emoji);
-//                break;
-//        }
-//        invalidate();
-//        layout(0, 0, 0, 0);
-//    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 //        Log.i("ChineseInputView", "onMeasure");
@@ -82,7 +65,8 @@ public class ChineseInputView extends ViewGroup {
                 C.englishKeyboard.layout(l, t, Size.WInputView, Size.HInputView);
                 break;
             case LanguageSelector.EMOJI:
-                C.emoji.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+//                C.emoji.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+                C.emojiKeyboard.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
                 break;
         }
     }

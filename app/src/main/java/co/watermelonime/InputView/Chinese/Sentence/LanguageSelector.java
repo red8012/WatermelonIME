@@ -19,7 +19,7 @@ public class LanguageSelector {
         keys[ENGLISH] = new LanguageSelectorKey(ENGLISH, "En");
         keys[NUMBER] = new LanguageSelectorKey(NUMBER, "12");
         keys[CHINESE_NUMBER] = new LanguageSelectorKey(CHINESE_NUMBER, " ");
-        keys[EMOJI] = new LanguageSelectorKey(EMOJI, "\uD83D\uDE19");
+        keys[EMOJI] = new LanguageSelectorKey(EMOJI, "\uD83D\uDE00");
         keys[SETTINGS] = new LanguageSelectorKey(SETTINGS, "S");
     }
 
@@ -43,7 +43,8 @@ public class LanguageSelector {
                 v.addView(C.numberKeyboard);
                 break;
             case EMOJI:
-                v.addView(C.emoji);
+//                v.addView(C.emoji);
+                v.addView(C.emojiKeyboard);
                 break;
         }
         v.invalidate(); // TODO: 2016/3/5 check this

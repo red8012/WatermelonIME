@@ -23,7 +23,7 @@ public class Consonants {
                     null, Colour.NORMAL));
 
         keys.add(18, new ChineseKey(Font.fr.make("ㄈ"),
-                Font.small.make("符號 2"), Colour.NORMAL));
+                Font.small.make("「」"), Colour.NORMAL));
 
         enter = new ChineseKey(R.drawable.enter, Colour.FUNCTION);
         enter.setOnTouchListener(new OnTouchEnter());
@@ -32,7 +32,7 @@ public class Consonants {
         keys.add(new ChineseKey(Font.mid.make("ㄧㄨㄩ"),
                 Font.small.make("...其他"), Colour.NORMAL));
         keys.add(new ChineseKey(Font.fr.make("ㄖ"),
-                Font.small.make("符號 1"),
+                Font.small.make("！。？"),
                 Colour.NORMAL));
 
         backspace = new ChineseKey(R.drawable.backspace, Colour.FUNCTION);
