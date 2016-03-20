@@ -58,7 +58,7 @@ public class EnglishKeyboard extends ViewGroup {
             keys[PUNCTUATION][i] = new EnglishKey(punctuation[i]);
         }
 
-        shiftKey = new EnglishKey(R.drawable.capslock, Size.WEnglishKey * 4 / 3);
+        shiftKey = new EnglishKey(R.drawable.arrow_bold_up, Size.WEnglishKey * 4 / 3);
         shiftKey.setOnTouchListener((v, event) -> {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
@@ -81,7 +81,7 @@ public class EnglishKeyboard extends ViewGroup {
             }
             return false;
         });
-        backspace = new EnglishKey(R.drawable.backspace, Size.WEnglishKey * 5 / 3);
+        backspace = new EnglishKey(R.drawable.erase, Size.WEnglishKey * 5 / 3);
         backspace.setOnTouchListener(Listeners.backspace);
 
         EnglishKey toChinese = new EnglishKey("中", Size.WEnglishKey * 4 / 3);

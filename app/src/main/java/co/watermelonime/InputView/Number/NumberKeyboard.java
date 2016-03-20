@@ -59,12 +59,12 @@ public class NumberKeyboard extends ViewGroup {
             NumKey k;
             switch (i) {
                 case 4:
-                    k = new NumKey(R.drawable.tab);
+                    k = new NumKey(R.drawable.keyboard_tab_white);
                     k.keyCode = KeyEvent.KEYCODE_TAB;
                     k.setOnTouchListener(functionKeyListener);
                     break;
                 case 5:
-                    k = new NumKey(R.drawable.capslock);
+                    k = new NumKey(R.drawable.arrow_bold_up);
                     k.setOnTouchListener((v, event) -> {
                         NumKey key = (NumKey) v;
                         switch (event.getActionMasked()) {
@@ -84,16 +84,16 @@ public class NumberKeyboard extends ViewGroup {
                     });
                     break;
                 case 33:
-                    k = new NumKey(R.drawable.space);
+                    k = new NumKey(R.drawable.space_bar_white);
                     k.text = " ";
                     k.setOnTouchListener(NumKey.ontouchListener);
                     break;
                 case 34:
-                    k = new NumKey(R.drawable.enter);
+                    k = new NumKey(R.drawable.keyboard_return_white);
                     k.setOnTouchListener(Listeners.enter);
                     break;
                 case 35:
-                    k = new NumKey(R.drawable.backspace);
+                    k = new NumKey(R.drawable.erase);
                     k.setOnTouchListener(Listeners.backspace);
                     break;
                 default:

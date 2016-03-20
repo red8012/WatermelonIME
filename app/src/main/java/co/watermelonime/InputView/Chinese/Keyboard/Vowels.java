@@ -1,12 +1,15 @@
 package co.watermelonime.InputView.Chinese.Keyboard;
 
 import android.os.Process;
+import android.view.MotionEvent;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Font;
 import co.watermelonime.Common.TextLayoutFactory;
 import co.watermelonime.Common.Timer;
+import co.watermelonime.Core.Engine;
+import co.watermelonime.R;
 
 public class Vowels {
     final public static String[] displayTexts = {
@@ -124,7 +127,16 @@ public class Vowels {
             disabledKeys[i] = new ChineseKey(td.make(s), null, Colour.DISABLED);
         }
 
-        backspace = Consonants.backspace; // Todo: should I do this?
+        backspace = new ChineseKey(R.drawable.level_up, Colour.FUNCTION);
+        backspace.setOnTouchListener((v, event) -> {
+            if (event.getActionMasked() != MotionEvent.ACTION_DOWN) return false;
+            Engine.delConsonant();
+            C.sentenceView.display();
+            C.chineseKeyboard.setKeys(Consonants.keys);
+            if (Engine.isEmpty()) {
+            } // Todo: displayTexts nav
+            return true;
+        });
         enabledKeys[23] = backspace;
         disabledKeys[23] = backspace;
 

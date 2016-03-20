@@ -2,6 +2,7 @@ package co.watermelonime.InputView.Chinese.Keyboard;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.view.View;
 
@@ -34,7 +35,7 @@ public class ChineseKey extends View {
 
     public ChineseKey(int resource, int backgroundColor) {
         super(C.mainService);
-        image = C.mainService.getResources().getDrawable(resource);
+        image = ContextCompat.getDrawable(C.context, resource);
         image.setBounds(0, 0, Size.keyIcon, Size.keyIcon);
         dx = Size.u * 3 / 2;
         dy = Size.u;

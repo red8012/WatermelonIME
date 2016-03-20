@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.inputmethodservice.InputMethodService;
 import android.os.Handler;
 import android.os.Process;
+import android.support.v7.widget.TintContextWrapper;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -26,9 +27,9 @@ import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
 import co.watermelonime.InputView.Chinese.Sentence.LanguageSelector;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
+import co.watermelonime.InputView.Emoji.EmojiKeyboard;
 import co.watermelonime.InputView.English.EnglishKeyboard;
 import co.watermelonime.InputView.Number.NumberKeyboard;
-import co.watermelonime.InputView.Emoji.EmojiKeyboard;
 import co.watermelonime.InputView.WaitingView;
 
 
@@ -62,6 +63,11 @@ public class MainService extends InputMethodService {
         ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(size);
         Size.calculate(size);
         return false;
+    }
+
+    @Override
+    public void onCreate() {
+        C.context = TintContextWrapper.wrap(C.mainService);
     }
 
     @Override

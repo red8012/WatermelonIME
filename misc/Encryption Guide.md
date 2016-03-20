@@ -19,3 +19,14 @@ sqlite> SELECT sqlcipher_export('plaintext');
 sqlite> DETACH DATABASE plaintext;
 ```
 
+``` 
+signingConfigs {
+    config {
+        keyAlias 'WatermelonReleaseKey'
+        keyPassword ''
+        storeFile file('/Users/ray/WatermelonReleaseKey.jks')
+        storePassword ''
+    }
+}
+```
+

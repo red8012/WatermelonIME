@@ -35,15 +35,15 @@ public class OnTouchDel implements OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (ChineseKeyboard.currentKeys != Consonants.keys) {
-            Engine.delConsonant();
-            C.sentenceView.display();
-            C.chineseKeyboard.setKeys(Consonants.keys);
-            if (Engine.isEmpty()) {
-            } // Todo: displayTexts nav
-//            else Runnables.displayCandidate.run(); // TODO: 2016/3/2 display auto completion
-            return true;
-        }
+//        if (ChineseKeyboard.currentKeys != Consonants.keys) {
+//            Engine.delConsonant();
+//            C.sentenceView.display();
+//            C.chineseKeyboard.setKeys(Consonants.keys);
+//            if (Engine.isEmpty()) {
+//            }
+////            else Runnables.displayCandidate.run();
+//            return true;
+//        }
         final int x = (int) event.getRawX();
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:

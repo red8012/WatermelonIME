@@ -1,6 +1,7 @@
 package co.watermelonime;
 
 import android.animation.TimeInterpolator;
+import android.content.Context;
 import android.view.animation.DecelerateInterpolator;
 
 import java.util.concurrent.ExecutorService;
@@ -9,14 +10,15 @@ import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
+import co.watermelonime.InputView.Emoji.EmojiKeyboard;
 import co.watermelonime.InputView.English.EnglishKeyboard;
 import co.watermelonime.InputView.Number.NumberKeyboard;
-import co.watermelonime.InputView.Emoji.EmojiKeyboard;
 
 public class C {
     public final static TimeInterpolator
             decelerate = new DecelerateInterpolator(2f);
     public static MainService mainService;
+    public static Context context;
     public static ExecutorService threadPool;
 
     public static boolean isLandscape, debug = true;
