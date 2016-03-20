@@ -2,6 +2,7 @@ package co.watermelonime.InputView.Emoji;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,12 +16,6 @@ import co.watermelonime.Common.Size;
  * Created by din on 2016/3/7.
  */
 public class EmojiKey extends View {
-
-    public char character;
-    public Drawable image;
-    public float dx, dy;
-    public String text;
-    public Layout textLayout;
 
     static final OnTouchListener ontouchListener = new OnTouchListener() {
         @Override
@@ -38,6 +33,11 @@ public class EmojiKey extends View {
             return false;
         }
     };
+    public char character;
+    public Drawable image;
+    public float dx, dy;
+    public String text;
+    public Layout textLayout;
 
     public EmojiKey(final String s) {
         super(C.mainService);
@@ -53,7 +53,8 @@ public class EmojiKey extends View {
 
     public EmojiKey(int resource) {
         super(C.mainService);
-        image = C.mainService.getResources().getDrawable(resource);
+//        image = C.mainService.getResources().getDrawable(resource);
+        image = ContextCompat.getDrawable(C.context, resource);
         image.setBounds(0, 0, Size.keyIcon, Size.keyIcon);
         dx = Size.u * 3 / 2;
         dy = Size.u;

@@ -2,6 +2,7 @@ package co.watermelonime.InputView.English;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +13,6 @@ import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 
 public class EnglishKey extends View {
-    public String text;
     static final OnTouchListener ontouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -33,6 +33,7 @@ public class EnglishKey extends View {
             return false;
         }
     };
+    public String text;
     public Layout textLayout;
     public Drawable image;
     public float dx, dy;
@@ -63,7 +64,8 @@ public class EnglishKey extends View {
 
     public EnglishKey(int resource, int width) {
         super(C.mainService);
-        image = C.mainService.getResources().getDrawable(resource);
+//        image = C.mainService.getResources().getDrawable(resource);
+        image = ContextCompat.getDrawable(C.context, resource);
         int sideLength = Size.HEnglishKey * 4 / 5;
         image.setBounds(0, 0, sideLength, sideLength);
         dx = (width - sideLength) / 2;

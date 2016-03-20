@@ -2,6 +2,7 @@ package co.watermelonime.InputView.Number;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,12 +13,6 @@ import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 
 public class NumKey extends View {
-    public String text;
-    public int keyCode;
-    public Layout textLayout;
-    public Drawable image;
-    public float dx, dy;
-    boolean isDigit = false;
     static final OnTouchListener ontouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -34,6 +29,12 @@ public class NumKey extends View {
             return false;
         }
     };
+    public String text;
+    public int keyCode;
+    public Layout textLayout;
+    public Drawable image;
+    public float dx, dy;
+    boolean isDigit = false;
 
     public NumKey(final String s, boolean isDigit) {
         super(C.mainService);
@@ -50,7 +51,8 @@ public class NumKey extends View {
 
     public NumKey(int resource) {
         super(C.mainService);
-        image = C.mainService.getResources().getDrawable(resource);
+//        image = C.mainService.getResources().getDrawable(resource);
+        image = ContextCompat.getDrawable(C.context, resource);
         image.setBounds(0, 0, Size.keyIcon, Size.keyIcon);
         dx = Size.u * 3 / 2;
         dy = Size.u;

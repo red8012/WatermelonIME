@@ -98,7 +98,7 @@ public class EmojiKeyboard extends ViewGroup {
             EmojiKey k;
             switch (i) {
                 case 34:
-                    k = new EmojiKey(R.drawable.enter);
+                    k = new EmojiKey(R.drawable.keyboard_return_white);
                     k.setOnTouchListener(((v, event) -> {
                         switch (event.getActionMasked()) {
                             case MotionEvent.ACTION_DOWN:
@@ -112,7 +112,7 @@ public class EmojiKeyboard extends ViewGroup {
                     }));
                     break;
                 case 35:
-                    k = new EmojiKey(R.drawable.backspace);
+                    k = new EmojiKey(R.drawable.erase);
                     k.setOnTouchListener(new OnTouchListener() {
                         int lastX;
 

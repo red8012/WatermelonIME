@@ -113,7 +113,7 @@ public class EnglishKeyboard extends ViewGroup {
         leftPunctuation[SLASH] = new EnglishKey("/");
         leftPunctuation[AT] = new EnglishKey("@");
 
-        EnglishKey enter = new EnglishKey(R.drawable.enter, Size.WEnglishKey * 5 / 3);
+        EnglishKey enter = new EnglishKey(R.drawable.keyboard_return_white, Size.WEnglishKey * 5 / 3);
         enter.setOnTouchListener(Listeners.enter);
 
         bottomRow[0] = toChinese;

@@ -65,10 +65,10 @@ public class MainService extends InputMethodService {
         return false;
     }
 
-    @Override
-    public void onCreate() {
-        C.context = TintContextWrapper.wrap(C.mainService);
-    }
+//    @Override
+//    public void onCreate() {
+//        C.context = TintContextWrapper.wrap(C.mainService);
+//    }
 
     @Override
     public void onInitializeInterface() {
@@ -87,6 +87,7 @@ public class MainService extends InputMethodService {
         Font.init();
 
         Timer.t(1);
+        C.context = TintContextWrapper.wrap(C.mainService);
         Common.initialize();
         Consonants.buildKeys();
         Timer.t(1, "Build consonants");
