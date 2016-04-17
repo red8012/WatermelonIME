@@ -34,6 +34,8 @@ July	Release
 19. Getting started guide
 20. Improve accuracy
 21. Website
+22. http://pinyin4j.sourceforge.net
+23. 繪
 
 ## Settings
 

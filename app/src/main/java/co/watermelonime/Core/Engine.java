@@ -49,7 +49,7 @@ public class Engine {
         if (db!=null && db.isOpen()) return;
         SQLiteDatabase.loadLibs(C.mainService);
         db = SQLiteDatabase.openDatabase(
-                C.mainService.getDatabasePath("v2.db").getAbsolutePath(),
+                C.mainService.getDatabasePath("magician.db").getAbsolutePath(),
                 "",
                 null,
                 SQLiteDatabase.OPEN_READONLY | SQLiteDatabase.NO_LOCALIZED_COLLATORS

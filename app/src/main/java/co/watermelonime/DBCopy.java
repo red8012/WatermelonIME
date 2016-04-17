@@ -21,8 +21,8 @@ public class DBCopy {
 //                InputStream in = c.getApplicationContext().getAssets().open("magician20130911.db3");
 //                File output = c.getDatabasePath("db.db3");
 
-                InputStream in = c.getApplicationContext().getAssets().open("v2.db");
-                File output = c.getDatabasePath("v2.db");
+                InputStream in = c.getApplicationContext().getAssets().open("v3.db");
+                File output = c.getDatabasePath("magician.db");
 
 
                 output.mkdirs();
