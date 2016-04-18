@@ -44,6 +44,23 @@ July	Release
 3. English keyboard type
 4. Floating window size
 
+## Dex optimization
+
+```shell
+ANDROID_SDK=~/Code/android-sdk-macosx redex app-release-unsigned.apk -o release.apk -w 10
+```
+
+```
+Debug                         3.4M
+Proguard                      536K
+Without Proguard              527K
+Default Proguard with Redex   414K (77%) (crashed)
+New Proguard with Redex		 459K (85%)
+Redex only                    443K
+```
+
+
+
 ### Benchmark Result
 
 ``` c
