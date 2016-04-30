@@ -2,6 +2,7 @@ package co.watermelonime.InputView.Chinese.Sentence;
 
 import co.watermelonime.C;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
+import co.watermelonime.R;
 
 public class LanguageSelector {
     public static final int
@@ -19,7 +20,8 @@ public class LanguageSelector {
         keys[ENGLISH] = new LanguageSelectorKey(ENGLISH, "En");
         keys[NUMBER] = new LanguageSelectorKey(NUMBER, "12");
         keys[CHINESE_NUMBER] = new LanguageSelectorKey(CHINESE_NUMBER, " ");
-        keys[EMOJI] = new LanguageSelectorKey(EMOJI, "\uD83D\uDE00");
+//        keys[EMOJI] = new LanguageSelectorKey(EMOJI, "\uD83D\uDE00");
+        keys[EMOJI] = new LanguageSelectorKey(EMOJI, R.drawable.emoji_happy);
         keys[SETTINGS] = new LanguageSelectorKey(SETTINGS, "S");
     }
 
@@ -43,7 +45,6 @@ public class LanguageSelector {
                 v.addView(C.numberKeyboard);
                 break;
             case EMOJI:
-//                v.addView(C.emoji);
                 v.addView(C.emojiKeyboard);
                 break;
         }
