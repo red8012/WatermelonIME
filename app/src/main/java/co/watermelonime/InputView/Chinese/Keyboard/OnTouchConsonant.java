@@ -5,6 +5,7 @@ import android.view.View;
 
 import co.watermelonime.C;
 import co.watermelonime.Core.Controller;
+import co.watermelonime.InputView.Chinese.Candidate.CharacterKey;
 
 public class OnTouchConsonant implements View.OnTouchListener {
     public static final char[] code = {
@@ -19,10 +20,32 @@ public class OnTouchConsonant implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN:
                 ChineseKey key = (ChineseKey) v;
                 int id = key.action;
-                C.chineseKeyboard.setKeys(Vowels.keyArray[id]);
                 char keyCode = code[id];
                 Controller.add(keyCode, '\0');
+                C.chineseKeyboard.setKeys(Vowels.keyArray[id]);
                 C.sentenceView.consonantPreview((String) key.mainText.getText());
+
+                // fill in character locks
+                System.out.println("Charakey" + id);
+                for (CharacterKey k : CharacterKey.keys[id]) {
+                    C.candidateView.addView(k);
+                }
+
+//                String[] list = CharacterKey.characters[id];
+//                int len = list.length;
+//                if (len == 0) return true;
+//                boolean isIUV = len > 6;
+//                int width = isIUV ? Size.WCandidateView / 6 : Size.WCandidateView / len;
+//                for (int i = 0; i < len; i++) {
+//                    CharacterKey characterKey = CharacterKey.get();
+//                    characterKey.setText(list[i], width,
+//                            isIUV && i < 7 ? CandidateButton.TOP : CandidateButton.BOTTOM);
+//                    C.candidateView.addView(characterKey);
+//                    System.out.print(list[i]);
+//                }
+//                System.out.println();
+
+
                 System.out.println("OnTouchConsonant: " + keyCode);
         }
         return true;

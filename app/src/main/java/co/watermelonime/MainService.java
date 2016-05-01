@@ -20,6 +20,7 @@ import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
 import co.watermelonime.Core.Engine;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
+import co.watermelonime.InputView.Chinese.Candidate.CharacterKey;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 import co.watermelonime.InputView.Chinese.Common;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
@@ -108,6 +109,7 @@ public class MainService extends InputMethodService {
 
         Timer.t(325);
         LanguageSelector.init();
+        CharacterKey.init();
         C.sentenceView = new SentenceView();
 //        C.emoji = new Emoji();
         C.numberKeyboard = new NumberKeyboard();

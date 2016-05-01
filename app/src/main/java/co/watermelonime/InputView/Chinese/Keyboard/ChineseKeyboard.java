@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
+import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 
 public class ChineseKeyboard extends ViewGroup {
     public static ChineseKey[] currentKeys;
@@ -19,6 +20,8 @@ public class ChineseKeyboard extends ViewGroup {
 
     public void setKeys(ChineseKey[] k) {
         Timer.t(5);
+        if (C.candidateView != null)
+            CandidateView.clearCandidates();
         removeAllViews();
         currentKeys = k;
         for (ChineseKey i : k)

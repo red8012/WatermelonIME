@@ -5,6 +5,8 @@ import android.graphics.Paint;
 import android.text.Layout;
 import android.view.View;
 
+import java.util.ArrayList;
+
 import co.watermelonime.C;
 import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
@@ -13,6 +15,7 @@ public class CandidateButton extends View {
     public static final Paint separatorPaint = new Paint();
     public static final int BOTTOM = -1, TOP = 1;
     static final OnClickCandidate onClickCandidate = new OnClickCandidate();
+    static ArrayList<CandidateButton> pool = new ArrayList<>(16);
     public float dx, dy;
     int type = 0;
     int width;
@@ -25,6 +28,15 @@ public class CandidateButton extends View {
         setOnClickListener(onClickCandidate);
     }
 
+    public static CandidateButton get() {
+        CandidateButton d;
+        if (pool.isEmpty())
+            d = new CandidateButton();
+         else
+            d = pool.remove(pool.size() - 1);
+        return d;
+    }
+
     public static int calculateMinWidth(String s) {
         int len = s.length();
         if (len < 2)
@@ -34,6 +46,10 @@ public class CandidateButton extends View {
 
     public static int calculateMinWidth() {
         return (int) (Size.FCandidate + Size.u * 3);
+    }
+
+    public void release() {
+        pool.add(this);
     }
 
     public void setText(String s, int padding, boolean separator, int paddingTopBottom) {

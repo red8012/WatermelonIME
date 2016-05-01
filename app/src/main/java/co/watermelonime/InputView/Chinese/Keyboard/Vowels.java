@@ -9,6 +9,7 @@ import co.watermelonime.Common.Font;
 import co.watermelonime.Common.TextLayoutFactory;
 import co.watermelonime.Common.Timer;
 import co.watermelonime.Core.Engine;
+import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.R;
 
 public class Vowels {
@@ -46,52 +47,9 @@ public class Vowels {
             {}, // 20
             {0, 1, 4, 7, 15, 16, 17, 18, 22},
     };
-    public static final char[][] vowelToChange = {
-            {'u', 'a', 'f', 'a', 'v', 'd', 'p'},
-            {'1', 'i', '2', '3'},
-            {'c', 'j', 'b', 'c', 'g'},
-            {'\0', '\0', 'u', '\0', '\0', 'n', 'u', '\0', '\0', 'o', '\0', 't'},
-            {'u', 'u', '4', 'u'},
-            {'e', 'r', 'e', 'b', '5', 'b'},
-            {'e', 'e', '\0', 'e', '\0', '\0'},
-            {'a', 'a', 'a', 'a', 'e', '\0'},
-            {'\0', 'e', '\0', '\0', 'c', '\0'},
-            {'\0', 'm', 'u', '\0', '\0', 'r', 'w', 'd', '\0', '\0', '\0', '\0'},
-            {'g', '\0', '\0', '\0', '\0'},
-            {'u', 'e', 'p', '\0', '\0', '\0', '\0'},
-            {'e', 'e', 'a', 'a'},
-            {'u'},
-            {'6', 'r', 'b', '7', 'j'},
-            {'\0', 'm', '\0', '\0', '\0', 'o', 'w', 'd', 'o', 'o', 'p', 'p'},
-            {'u', 'u', '\0', 'u', 'u'},
-            {'r', 'b', '\0', 'u', '\0', '\0', '\0'},
-            {'f', '『', '』', '\'', '「', '」', '+', '&', '（', '）', '=', '…'},
-            {'a', '8'},
-            {},
-            {'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'}
-    };
+
     public static final char[][] textToChange = {
-            {'比', '吧', '被', '把', '不', '別', '並'},
-            {'的', '但', '得', '地'},
-            {'個', '跟', '過', '各', '搞'},
-            {'\0', '\0', '及', '\0', '\0', '僅', '即', '\0', '\0', '將', '\0', '就'},
-            {'之', '只', '著', '至'},
-            {'在', '最', '再', '做', '怎', '作'},
-            {'拍', '排', '\0', '派', '\0', '\0'},
-            {'它', '他', '她', '牠', '太', '\0'},
-            {'\0', '開', '\0', '\0', '可', '\0'},
-            {'\0', '前', '其', '\0', '\0', '卻', '去', '且', '\0', '\0', '\0', '\0'},
-            {'超', '\0', '\0', '\0', '\0'},
-            {'此', '才', '從', '\0', '\0', '\0', '\0'},
-            {'買', '賣', '嗎', '嘛'},
-            {'你'},
-            {'和', '會', '或', '還', '很'},
-            {'\0', '先', '\0', '\0', '\0', '想', '須', '些', '向', '像', '型', '性'},
-            {'是', '時', '\0', '使', '事'},
-            {'雖', '所', '\0', '似', '\0', '\0', '\0'},
-            {'\0', '『', '』', '\'', '「', '」', '+', '&', '（', '）', '=', '…'},
-            {'啦', '了'},
-            {},
+            {'\"', '『', '』', '\'', '「', '」', '+', '&', '（', '）', '=', '…'},
             {'─', '：', '、', '；', '？', '。', '！', '‧', '，'}
     };
     public static final int[] noVowel = {4, 5, 10, 11, 16, 17, 21};
@@ -104,7 +62,7 @@ public class Vowels {
     public static void buildKeysAsync() {
         C.threadPool.submit(() -> {
             Timer.t(14);
-            android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_DISPLAY);
+            Process.setThreadPriority(Process.THREAD_PRIORITY_DISPLAY);
             buildKeys();
             Consonants.addListeners();
             Timer.t(14, "build keys async");
@@ -130,6 +88,7 @@ public class Vowels {
         backspace = new ChineseKey(R.drawable.level_up, Colour.FUNCTION);
         backspace.setOnTouchListener((v, event) -> {
             if (event.getActionMasked() != MotionEvent.ACTION_DOWN) return false;
+            CandidateView.clearCandidates();
             Engine.delConsonant();
             C.sentenceView.display();
             C.chineseKeyboard.setKeys(Consonants.keys);
@@ -147,41 +106,27 @@ public class Vowels {
 
             for (int i = Vowels.keysToChange[kb].length - 1; i >= 0; --i) {
                 final int keyToChange = Vowels.keysToChange[kb][i];
-                final char textToChange = Vowels.textToChange[kb][i];
-                final char vowelToChange = Vowels.vowelToChange[kb][i];
-
-                if (textToChange == '\0') {
+                if (kb != 18 && kb != 21) { // not f or r
                     keyArray[kb][keyToChange] = disabledKeys[keyToChange];
-                } else if (kb != 18 && kb != 21) {
-                    final ChineseKey k = new ChineseKey(
-                            Font.big.make(String.valueOf(textToChange)), null, Colour.CHARACTER);
-                    k.setOnTouchListener(onTouchVowel);
-                    k.action = ChineseKey.CHARACTER;
-                    k.pinyin = vowelToChange;
-                    k.character = textToChange;
-                    keyArray[kb][keyToChange] = k;
                 } else {
+                    final char punctuation = textToChange[kb == 18 ? 0 : 1][i];
                     final ChineseKey k = new ChineseKey(
-                            Font.big.make(String.valueOf(textToChange)), null, Colour.CHARACTER);
+                            Font.big.make(String.valueOf(punctuation)), null, Colour.CHARACTER);
+                    k.character = punctuation;
                     k.action = ChineseKey.PUNCTUATION;
-                    k.character = textToChange;
                     k.setOnTouchListener(onTouchPunctuation);
                     keyArray[kb][keyToChange] = k;
                 }
             }
         }
 
-        try {
-            for (int kb : noVowel) {
-                final ChineseKey k = new ChineseKey(
-                        kb == 21 ? Font.big.make("ㄖ") : Consonants.keys[kb].mainText,
-                        null, Colour.NORMAL);
-                k.pinyin = 'u';
-                k.setOnTouchListener(onTouchVowel);
-                keyArray[kb][5] = k;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (int kb : noVowel) { // z, c, s, zh, ch, sh, r
+            final ChineseKey k = new ChineseKey(
+                    kb == 21 ? Font.big.make("ㄖ") : Consonants.keys[kb].mainText,
+                    null, Colour.NORMAL);
+            k.pinyin = 'u';
+            k.setOnTouchListener(onTouchVowel);
+            keyArray[kb][5] = k;
         }
     }
 }

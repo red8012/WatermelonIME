@@ -17,11 +17,12 @@ public class OnTouchVowel implements View.OnTouchListener {
                     C.chineseKeyboard.setKeys(Consonants.keys);
                     Controller.add(key.pinyin, '?');
                     System.out.println("OnTouchVowel: " + key.pinyin);
-                } else if (key.action == ChineseKey.CHARACTER) {
-                    C.chineseKeyboard.setKeys(Consonants.keys);
-                    Controller.add(key.pinyin, key.character);
-                    System.out.println("OnTouchVowel: " + key.pinyin + String.valueOf(key.character));
                 }
+//                else if (key.action == ChineseKey.CHARACTER) {
+//                    C.chineseKeyboard.setKeys(Consonants.keys);
+//                    Controller.add(key.pinyin, key.character);
+//                    System.out.println("OnTouchVowel: " + key.pinyin + String.valueOf(key.character));
+//                }
         }
         return true;
     }

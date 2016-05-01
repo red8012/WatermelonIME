@@ -13,7 +13,6 @@ import co.watermelonime.Common.Timer;
 
 public class CandidateView extends ViewGroup {
     public static int height = Size.HCandidateVisible;
-    static ArrayList<CandidateButton> candidateButtonPool = new ArrayList<>(128);
     static boolean isDictionaryMode = false;
 
     public CandidateView() {
@@ -21,31 +20,24 @@ public class CandidateView extends ViewGroup {
         setBackgroundColor(Colour.CANDIDATE);
     }
 
-    static CandidateButton getCandidateButton() {
-        if (candidateButtonPool.isEmpty())
-            return new CandidateButton();
-        int index = candidateButtonPool.size() - 1;
-        return candidateButtonPool.remove(index);
-    }
-
-    static void releaseCandidateButton(CandidateButton c) {
-        candidateButtonPool.add(c);
-    }
-
     public static void clearCandidates() {
         int len = C.candidateView.getChildCount();
         for (int i = 0; i < len; i++) {
             View child = C.candidateView.getChildAt(i);
-            if (child.getClass() == DictButton.class)
+            Class cls = child.getClass();
+            if (cls == DictButton.class)
                 ((DictButton) child).release();
-            else if (child.getClass() == DictTitle.class)
+            else if (cls == DictTitle.class)
                 ((DictTitle) child).release();
-            else CandidateView.releaseCandidateButton((CandidateButton) child);
+//            else if (cls == CharacterKey.class)
+//                ((CharacterKey) child).release();
+            else if (cls == CandidateButton.class)
+              ((CandidateButton) child).release();
         }
         C.candidateView.removeAllViews();
     }
 
-    public void setCandidate(ArrayList<String> list, int type) { //Todo: can be static
+    public static void setCandidate(ArrayList<String> list, int type) { //Todo: can be static
         Timer.t(8);
         int totalWidth = 0;
         int end = list.size();
@@ -58,12 +50,21 @@ public class CandidateView extends ViewGroup {
         }
 
         int padding = (Size.WCandidateView - totalWidth - 1) / (i);
+
+
         for (String s : list) {
             if (i-- == 0) break;
-            CandidateButton c = getCandidateButton();
+            CandidateButton c = CandidateButton.get();
             c.setText(s, padding, i > 0, type);
-            addView(c);
+            C.candidateView.addView(c);
         }
+//        final int length = list.size();
+//        final int padding = CandidateButton.calculatePadding(list);
+//        for (int i = 0; i < length; i++) {
+//            CandidateButton c = CandidateButton.get();
+//            c.setText(list.get(i), padding, i < length - 1, type);
+//            addView(c);
+//        }
         Timer.t(8, "set candidate" + type);
     }
 

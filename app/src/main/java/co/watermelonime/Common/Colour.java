@@ -15,6 +15,7 @@ public class Colour {
             textKeyboard = Color.WHITE,
             textSentence = Color.WHITE,
             textCandidate = Color.BLACK,
+            textCharacter = Color.rgb(75, 80, 145), // メリイ
             reached = Color.rgb(140, 200, 70),
             unreached = Color.rgb(70, 70, 70),
             DICT_TITLE = Color.rgb(87, 146, 116);
