@@ -85,7 +85,7 @@ public class CharacterKey extends CandidateButton {
             for (int j = 0; j < len; j++) {
                 CharacterKey characterKey = new CharacterKey(
                         chara[j], vowels[j], width,
-                        isIUV && j < 7 ? CandidateButton.TOP : CandidateButton.BOTTOM);
+                        isIUV && j < 6 ? CandidateButton.TOP : CandidateButton.BOTTOM);
                 keys[i][j] = characterKey;
             }
         }

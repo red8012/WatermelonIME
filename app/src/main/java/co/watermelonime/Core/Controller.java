@@ -2,14 +2,13 @@ package co.watermelonime.Core;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import co.watermelonime.C;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
+import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 
 public class Controller {
-    public static final ExecutorService thread = Executors.newFixedThreadPool(1);
+//    public static final ExecutorService thread = Executors.newFixedThreadPool(1);
     private static ArrayList<String> arrayList = new ArrayList<>(8);
 
     public static void init() {
@@ -106,18 +105,18 @@ public class Controller {
             it2 = Engine.candidateRight.iterator();
         }
 
-        C.candidateView.clearCandidates();
+        CandidateView.clearCandidates();
 
         arrayList.clear();
         for (int i = 0; i < 8; i++)
             if (it1.hasNext()) arrayList.add(it1.next());
             else break;
-        C.candidateView.setCandidate(arrayList, CandidateButton.TOP);
+        CandidateView.setCandidate(arrayList, CandidateButton.TOP);
 
         arrayList.clear();
         for (int i = 0; i < 8; i++)
             if (it2.hasNext()) arrayList.add(it2.next());
             else break;
-        C.candidateView.setCandidate(arrayList, CandidateButton.BOTTOM);
+        CandidateView.setCandidate(arrayList, CandidateButton.BOTTOM);
     }
 }

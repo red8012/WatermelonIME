@@ -21,6 +21,7 @@ import co.watermelonime.Common.Timer;
 import co.watermelonime.Core.Engine;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Candidate.CharacterKey;
+import co.watermelonime.InputView.Chinese.Candidate.PredictionKey;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 import co.watermelonime.InputView.Chinese.Common;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
@@ -66,11 +67,6 @@ public class MainService extends InputMethodService {
         return false;
     }
 
-//    @Override
-//    public void onCreate() {
-//        C.context = TintContextWrapper.wrap(C.mainService);
-//    }
-
     @Override
     public void onInitializeInterface() {
 
@@ -104,14 +100,13 @@ public class MainService extends InputMethodService {
 
         Timer.t(4);
         C.candidateView = new CandidateView();
-//        C.candidateViewScroller = new CandidateViewScroller();
         Timer.t(4, "Build CandidateView");
 
         Timer.t(325);
         LanguageSelector.init();
         CharacterKey.init();
+        PredictionKey.init();
         C.sentenceView = new SentenceView();
-//        C.emoji = new Emoji();
         C.numberKeyboard = new NumberKeyboard();
         C.englishKeyboard = new EnglishKeyboard();
         C.emojiKeyboard = new EmojiKeyboard();
@@ -120,10 +115,6 @@ public class MainService extends InputMethodService {
         Timer.t(5);
         C.chineseInputView = new ChineseInputView();
         Timer.t(5, "Build ChineseInputView");
-
-        //Build EmojiInputView
-        //C.emojiInputView = new EmojiInputView();
-        //
 
         View v = null;
         try {

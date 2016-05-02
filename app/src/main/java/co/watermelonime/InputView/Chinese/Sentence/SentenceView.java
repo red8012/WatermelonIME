@@ -84,7 +84,6 @@ public class SentenceView extends ViewGroup {
     }
 
     public void consonantPreview(String text) {
-        System.out.println("displayTexts consonant preview");
         addSentenceButtons();
         final int length = Engine.getLength();
         sentenceButtons[length].setText(text);
