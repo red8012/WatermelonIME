@@ -18,6 +18,7 @@ public class Size {
             WCandidateView,
             WDictButton,
             W2ndLayerDictButton,
+            WNavigationKey,
             WDictTitle,
             WSeparator,
             WKeyboard,
@@ -63,6 +64,7 @@ public class Size {
         WDictTitle = WCandidateView * 3 / 16;
         WDictButton = (WCandidateView - WDictTitle) / 7;
         W2ndLayerDictButton = WCandidateView / 8;
+        WNavigationKey = WCandidateView / 6;
         HCandidateRow = WScreen / 10;
         HSeparator = HCandidateRow * 4 / 5;
         HCandidateVisible = HCandidateRow * 2 + WScreen / 60;

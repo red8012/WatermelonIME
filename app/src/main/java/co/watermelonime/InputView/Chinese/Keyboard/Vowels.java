@@ -8,8 +8,8 @@ import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Font;
 import co.watermelonime.Common.TextLayoutFactory;
 import co.watermelonime.Common.Timer;
+import co.watermelonime.Core.Controller;
 import co.watermelonime.Core.Engine;
-import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.R;
 
 public class Vowels {
@@ -88,7 +88,7 @@ public class Vowels {
         backspace = new ChineseKey(R.drawable.level_up, Colour.FUNCTION);
         backspace.setOnTouchListener((v, event) -> {
             if (event.getActionMasked() != MotionEvent.ACTION_DOWN) return false;
-            CandidateView.clearCandidates();
+            Controller.displayCandidates();
             Engine.delConsonant();
             C.sentenceView.display();
             C.chineseKeyboard.setKeys(Consonants.keys);

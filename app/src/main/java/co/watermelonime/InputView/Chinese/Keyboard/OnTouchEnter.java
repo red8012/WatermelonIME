@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import co.watermelonime.C;
+import co.watermelonime.Core.Controller;
 import co.watermelonime.Core.Engine;
 
 public class OnTouchEnter implements View.OnTouchListener {
@@ -19,7 +20,7 @@ public class OnTouchEnter implements View.OnTouchListener {
                     C.commit(Engine.getSentence());
                     Engine.clear();
                     C.sentenceView.display();
-                    C.candidateView.clearCandidates();
+                    Controller.displayCandidates();
                 }
         }
         return true;

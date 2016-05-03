@@ -6,6 +6,7 @@ import java.util.Iterator;
 import co.watermelonime.C;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
+import co.watermelonime.InputView.Chinese.Candidate.NavigationKey;
 
 public class Controller {
 //    public static final ExecutorService thread = Executors.newFixedThreadPool(1);
@@ -95,6 +96,12 @@ public class Controller {
     }
 
     public static void displayCandidates() {
+        CandidateView.clearCandidates();
+        if (Engine.isEmpty()) {
+            NavigationKey.display();
+            return;
+        }
+
         Iterator<String> it1, it2;
 
         if (Engine.getLength() == 1) { // candidate should fill both when only character typed
@@ -104,8 +111,6 @@ public class Controller {
             it1 = Engine.candidateLeft.iterator();
             it2 = Engine.candidateRight.iterator();
         }
-
-        CandidateView.clearCandidates();
 
         arrayList.clear();
         for (int i = 0; i < 8; i++)

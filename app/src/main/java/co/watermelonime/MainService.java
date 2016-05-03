@@ -21,6 +21,7 @@ import co.watermelonime.Common.Timer;
 import co.watermelonime.Core.Engine;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Candidate.CharacterKey;
+import co.watermelonime.InputView.Chinese.Candidate.NavigationKey;
 import co.watermelonime.InputView.Chinese.Candidate.PredictionKey;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 import co.watermelonime.InputView.Chinese.Common;
@@ -100,12 +101,14 @@ public class MainService extends InputMethodService {
 
         Timer.t(4);
         C.candidateView = new CandidateView();
+        NavigationKey.init();
         Timer.t(4, "Build CandidateView");
 
         Timer.t(325);
         LanguageSelector.init();
         CharacterKey.init();
         PredictionKey.init();
+
         C.sentenceView = new SentenceView();
         C.numberKeyboard = new NumberKeyboard();
         C.englishKeyboard = new EnglishKeyboard();

@@ -14,7 +14,9 @@ public class OnTouchDel implements OnTouchListener {
     static int lastX;
 
     final static void backspace() {
-        if (Engine.isEmpty()) C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
+        if (Engine.isEmpty()) {
+            C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
+        }
         else {
             Engine.delCharacter();
             int length = Engine.getLength();

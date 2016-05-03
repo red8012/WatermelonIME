@@ -4,6 +4,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import co.watermelonime.C;
+import co.watermelonime.Core.Controller;
 import co.watermelonime.Core.Engine;
 
 public class OnTouchPunctuation implements View.OnTouchListener {
@@ -20,7 +21,7 @@ public class OnTouchPunctuation implements View.OnTouchListener {
             C.commit(Engine.getSentence());
             Engine.clear();
             C.sentenceView.display();
-            C.candidateView.clearCandidates();
+            Controller.displayCandidates();
             C.commit(String.valueOf(((ChineseKey) v).character));
         }
         return true;
