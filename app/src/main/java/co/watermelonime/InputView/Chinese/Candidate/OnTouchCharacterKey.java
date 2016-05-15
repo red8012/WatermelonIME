@@ -12,10 +12,9 @@ public class OnTouchCharacterKey implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getActionMasked() != MotionEvent.ACTION_DOWN) return false;
         CharacterKey k = (CharacterKey) v;
-        System.out.println("on touch character key " + k.vowel + k.text);
         C.chineseKeyboard.setKeys(Consonants.keys);
         Controller.add(k.vowel, k.character);
-        System.out.println("OnTouchCharacterKey: " + k.vowel + String.valueOf(k.character));
+//        System.out.println("OnTouchCharacterKey: " + k.vowel + String.valueOf(k.character));
         return true;
     }
 }

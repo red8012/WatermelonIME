@@ -16,13 +16,13 @@ July	Release
 3. optimize drawing
 4. [] clean up code
 5. [ok] ~~Navigation keys~~
-6. [] Deutsch
-7. [] auto switch language depending on context
+6. [5/18] Deutsch
+7. [5/16] auto switch language depending on context
 8. English prediction
 9. URL prediction
 10. ~~English bi/tri-gram~~
-11. [] gestures
-12. [] Chinese hint
+11. [low priority] gestures
+12. [5/20] Chinese hint
 13. Chinese learning 
 14. Contact learning
 15. Settings

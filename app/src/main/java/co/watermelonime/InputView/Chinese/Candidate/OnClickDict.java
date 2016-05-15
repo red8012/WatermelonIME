@@ -14,7 +14,7 @@ public class OnClickDict implements View.OnClickListener {
         DictButton dictButton = (DictButton) v;
         String text = dictButton.text;
         int index = SentenceButton.selectedIndex;
-        Engine.setZiLock(index, text.charAt(0)); // TODO: 2016/3/1 should use text as char
+        Engine.setZiLock(index, text.charAt(0));
         C.sentenceView.display();
         DictController.closeDict();
         SentenceView.setSelected(index);
