@@ -31,10 +31,8 @@ public class OnTouchConsonant implements View.OnTouchListener {
                 }
 
                 // fill in character locks
-                System.out.println("Charakey" + id);
-                for (CharacterKey k : CharacterKey.keys[id]) {
+                for (CharacterKey k : CharacterKey.keys[id])
                     C.candidateView.addView(k);
-                }
 
                 System.out.println("OnTouchConsonant: " + keyCode);
         }

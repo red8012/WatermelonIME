@@ -3,7 +3,6 @@ package co.watermelonime.InputView.Chinese.Candidate;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -93,7 +92,6 @@ public class NavigationKey extends View {
     }
 
     public static void display() {
-        Log.w("NavKey", "display");
         CandidateView.clearCandidates();
         for (NavigationKey k : keys)
             if (k != null)

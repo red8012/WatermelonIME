@@ -22,6 +22,8 @@ import co.watermelonime.Common.Timer;
 import co.watermelonime.Core.Engine;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Candidate.CharacterKey;
+import co.watermelonime.InputView.Chinese.Candidate.DictButton;
+import co.watermelonime.InputView.Chinese.Candidate.DictTitle;
 import co.watermelonime.InputView.Chinese.Candidate.NavigationKey;
 import co.watermelonime.InputView.Chinese.Candidate.PredictionKey;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
@@ -60,7 +62,18 @@ public class MainService extends InputMethodService {
             return WaitingView.me;
         }
         return null; // not sure if this can prevent crash when idle for a long time...
-//        return C.chineseInputView;
+    }
+
+    public static void initializeUIAsync() {
+        C.threadPool.submit(() -> {
+            CharacterKey.init();
+            PredictionKey.init();
+            C.numberKeyboard = new NumberKeyboard();
+            C.englishKeyboard = new EnglishKeyboard();
+            C.emojiKeyboard = new EmojiKeyboard();
+            DictTitle.init();
+            DictButton.init();
+        });
     }
 
     @Override
@@ -95,17 +108,14 @@ public class MainService extends InputMethodService {
         Timer.t(1);
         C.context = TintContextWrapper.wrap(C.mainService);
         Common.initialize();
+        Vowels.buildKeysAsync();
+        initializeUIAsync();
         Consonants.buildKeys();
         Timer.t(1, "Build consonants");
 
-//        Timer.t(3);
-        Vowels.buildKeysAsync();
-        ChineseInputView.initializeHiddenPartsAsync();
-//        Timer.t(3, "Build vowels");
-
-//        Timer.t(2);
+        Timer.t(3);
         C.chineseKeyboard = new ChineseKeyboard();
-//        Timer.t(2, "Build keyboard");
+        Timer.t(3, "Build keyboard");
 
         Timer.t(4);
         C.candidateView = new CandidateView();
@@ -114,13 +124,7 @@ public class MainService extends InputMethodService {
 
         Timer.t(325);
         LanguageSelector.init();
-        CharacterKey.init();
-        PredictionKey.init();
-
         C.sentenceView = new SentenceView();
-        C.numberKeyboard = new NumberKeyboard();
-        C.englishKeyboard = new EnglishKeyboard();
-        C.emojiKeyboard = new EmojiKeyboard();
         Timer.t(325, "Build SentenceView");
 
         Timer.t(5);
@@ -144,5 +148,4 @@ public class MainService extends InputMethodService {
     public void onStartInput(EditorInfo editorInfo, boolean restarting) {
         inputConnection = getCurrentInputConnection();
     }
-
 }
