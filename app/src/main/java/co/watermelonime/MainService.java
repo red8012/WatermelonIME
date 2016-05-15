@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -38,8 +39,9 @@ import co.watermelonime.InputView.WaitingView;
 
 public class MainService extends InputMethodService {
     public static final Handler handler = new Handler();
+    public static InputConnection inputConnection;
+    public static InputMethodManager inputMethodManager;
     static long initializationTimer;
-    static InputConnection inputConnection;
 
     public MainService() {
         initializationTimer = System.nanoTime();
@@ -59,6 +61,12 @@ public class MainService extends InputMethodService {
         }
         return null; // not sure if this can prevent crash when idle for a long time...
 //        return C.chineseInputView;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        inputMethodManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     public boolean onEvaluateFullscreenMode() {

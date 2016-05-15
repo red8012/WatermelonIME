@@ -26,6 +26,7 @@ public class LanguageSelectorKey extends View {
     static Paint rectPaint;
     public final int language;
     public float dx, dy;
+    int height;
     Layout textLayout;
     Drawable image;
 
@@ -33,39 +34,48 @@ public class LanguageSelectorKey extends View {
         super(C.mainService);
         setOnTouchListener(onTouchListener);
         this.language = language;
+        setSize();
         textLayout = Font.sentence.make(text, Size.WSentenceView);
         dx = Size.WSentenceView / 2;
-        dy = (Size.HLanguageSelectorKey - textLayout.getHeight()) / 2;
-        setMeasuredDimension(Size.WSentenceView, Size.HLanguageSelectorKey);
-        if (rectPaint == null) {
-            rectPaint = new Paint();
-            rectPaint.setColor(Colour.CANDIDATE);
-        }
+        dy = (Size.HKey - textLayout.getHeight()) / 2;
+//        setMeasuredDimension(Size.WSentenceView, Size.HLanguageSelectorKey);
+//        if (rectPaint == null) {
+//            rectPaint = new Paint();
+//            rectPaint.setColor(Colour.CANDIDATE);
+//        }
     }
 
     public LanguageSelectorKey(final int language, int resource) {
         super(C.mainService);
         setOnTouchListener(onTouchListener);
         this.language = language;
+        setSize();
 
         image = ContextCompat.getDrawable(C.context, resource);
-        dx = Size.WSentenceView * 1 / 5 + Size.u / 5;
-        dy = Size.WSentenceView * 1 / 5;
         int size = Size.WSentenceView * 3 / 5;
+        dx = Size.WSentenceView * 1 / 5 + Size.u / 5;
+        dy = (height - size) / 2;
         image.setBounds(0, 0, size, size);
 
-        setMeasuredDimension(Size.WSentenceView, Size.HLanguageSelectorKey);
+//        setMeasuredDimension(Size.WSentenceView, Size.HLanguageSelectorKey);
         if (rectPaint == null) {
             rectPaint = new Paint();
             rectPaint.setColor(Colour.CANDIDATE);
         }
     }
 
+    void setSize() {
+        if (language == LanguageSelector.GLOBE || language == LanguageSelector.SETTINGS)
+            height = Size.HCandidateRow;
+        else height = Size.HKey;
+        setMeasuredDimension(Size.WSentenceView, height);
+    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 //        Log.i("LanguageSelectorKey", "onMeasure");
-        setMeasuredDimension(Size.WSentenceView, Size.HLanguageSelectorKey);
+//        setMeasuredDimension(Size.WSentenceView, Size.HLanguageSelectorKey);
+        setSize();
     }
 
     @Override
@@ -77,7 +87,7 @@ public class LanguageSelectorKey extends View {
             canvas.restore();
         }
         if (LanguageSelector.inputLanguage == language) {
-            canvas.drawRect(0, 0, Size.u / 2, Size.HLanguageSelectorKey, rectPaint);
+            canvas.drawRect(0, 0, Size.u / 2, Size.HKey, rectPaint);
         }
         if (textLayout != null) {
             canvas.save();

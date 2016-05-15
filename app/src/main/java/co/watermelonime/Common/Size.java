@@ -31,7 +31,7 @@ public class Size {
             HSentenceView,
             HSentencePaddingTop,
             HSentenceButton,
-            HLanguageSelectorKey,
+//            HLanguageSelectorKey,
             HCandidateView,
             HCandidateVisible,
             HCandidateRow,
@@ -75,7 +75,7 @@ public class Size {
         HSentenceView = HInputView;
         HCandidateView = HInputView;
         HSentenceButton = (int) ((HSentenceView - u - u) / 9);
-        HLanguageSelectorKey = (int) ((HSentenceView - u - u) / 6);
+//        HLanguageSelectorKey = (int) ((HSentenceView - u - u) / 6);
         HSentencePaddingTop = (HInputView - HSentenceButton * 9) / 2;
 
         WSpace = WInputView * 4 / 10;

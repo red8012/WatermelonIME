@@ -65,7 +65,6 @@ public class ChineseInputView extends ViewGroup {
                 C.englishKeyboard.layout(l, t, Size.WInputView, Size.HInputView);
                 break;
             case LanguageSelector.EMOJI:
-//                C.emoji.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
                 C.emojiKeyboard.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
                 break;
         }

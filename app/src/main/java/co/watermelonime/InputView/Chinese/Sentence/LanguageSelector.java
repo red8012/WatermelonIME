@@ -2,6 +2,7 @@ package co.watermelonime.InputView.Chinese.Sentence;
 
 import co.watermelonime.C;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
+import co.watermelonime.MainService;
 import co.watermelonime.R;
 
 public class LanguageSelector {
@@ -9,8 +10,8 @@ public class LanguageSelector {
             CHINESE = 5,
             ENGLISH = 4,
             NUMBER = 3,
-            CHINESE_NUMBER = 1,
             EMOJI = 2,
+            GLOBE = 1,
             SETTINGS = 0;
     static final LanguageSelectorKey[] keys = new LanguageSelectorKey[6];
     public static int inputLanguage = CHINESE;
@@ -19,14 +20,16 @@ public class LanguageSelector {
         keys[CHINESE] = new LanguageSelectorKey(CHINESE, "中");
         keys[ENGLISH] = new LanguageSelectorKey(ENGLISH, "En");
         keys[NUMBER] = new LanguageSelectorKey(NUMBER, "12");
-        keys[CHINESE_NUMBER] = new LanguageSelectorKey(CHINESE_NUMBER, " ");
-//        keys[EMOJI] = new LanguageSelectorKey(EMOJI, "\uD83D\uDE00");
         keys[EMOJI] = new LanguageSelectorKey(EMOJI, R.drawable.emoji_happy);
-        keys[SETTINGS] = new LanguageSelectorKey(SETTINGS, "S");
+        keys[GLOBE] = new LanguageSelectorKey(GLOBE, R.drawable.globe);
+        keys[SETTINGS] = new LanguageSelectorKey(SETTINGS, R.drawable.settings);
     }
 
     public static void setInputLanguage(final int inputLanguage) {
-        if (inputLanguage == CHINESE_NUMBER) return;
+        if (inputLanguage == GLOBE) {
+            MainService.inputMethodManager.showInputMethodPicker();
+            return;
+        }
         if (inputLanguage == SETTINGS) return;
         LanguageSelector.inputLanguage = inputLanguage;
         ChineseInputView v = C.chineseInputView;

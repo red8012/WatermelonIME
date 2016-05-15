@@ -103,10 +103,10 @@ public class SentenceView extends ViewGroup {
         Printer.p("child count", end);
         t = Size.HSentencePaddingTop;
 
-        int h = getChildAt(0).getMeasuredHeight();
 //        int h = Size.HSentenceButton;
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
+            int h = v.getMeasuredHeight();
             v.layout(0, t, Size.WSentenceView, t + h);
             t += h;
         }
