@@ -11,11 +11,11 @@ July	Release
 
 ### TODO
 
-1. hide first candidate right
-2. candidate first line height
+1. [consideration] ~~hide first candidate right~~
+2. ~~candidate first line height~~
 3. optimize drawing
 4. [] clean up code
-5. [] Navigation keys
+5. [ok] ~~Navigation keys~~
 6. [] Deutsch
 7. [] auto switch language depending on context
 8. English prediction
