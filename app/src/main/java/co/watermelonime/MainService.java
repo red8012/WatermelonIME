@@ -46,7 +46,6 @@ public class MainService extends InputMethodService {
     static long initializationTimer;
 
     public MainService() {
-        initializationTimer = System.nanoTime();
         C.mainService = this;
         Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_DISPLAY);
         C.threadPool = Executors.newFixedThreadPool(2);
@@ -66,13 +65,16 @@ public class MainService extends InputMethodService {
 
     public static void initializeUIAsync() {
         C.threadPool.submit(() -> {
+            Timer.t(2);
             CharacterKey.init();
             PredictionKey.init();
+            NavigationKey.init();
             C.numberKeyboard = new NumberKeyboard();
             C.englishKeyboard = new EnglishKeyboard();
             C.emojiKeyboard = new EmojiKeyboard();
             DictTitle.init();
             DictButton.init();
+            Timer.t(2, "Build initializeUIAsync");
         });
     }
 
@@ -96,6 +98,7 @@ public class MainService extends InputMethodService {
 
     @Override
     public View onCreateInputView() {
+        initializationTimer = System.nanoTime();
         Future<View> inputViewFuture = C.threadPool.submit(() -> getStartupView());
 
         if (Font.sans == null) {
@@ -119,7 +122,6 @@ public class MainService extends InputMethodService {
 
         Timer.t(4);
         C.candidateView = new CandidateView();
-        NavigationKey.init();
         Timer.t(4, "Build CandidateView");
 
         Timer.t(325);
