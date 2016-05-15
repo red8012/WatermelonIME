@@ -23,7 +23,7 @@ public class Consonants {
                     null, Colour.NORMAL));
 
         keys.add(18, new ChineseKey(Font.fr.make("ㄈ"),
-                Font.small.make("「」"), Colour.NORMAL));
+                Font.small.make("（「」）"), Colour.NORMAL));
 
         enter = new ChineseKey(R.drawable.keyboard_return_white, Colour.FUNCTION);
 //        enter = new ChineseKey(R.drawable.enter, Colour.FUNCTION);
