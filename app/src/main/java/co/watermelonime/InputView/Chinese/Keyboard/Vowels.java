@@ -92,8 +92,7 @@ public class Vowels {
             Engine.delConsonant();
             C.sentenceView.display();
             C.chineseKeyboard.setKeys(Consonants.keys);
-            if (Engine.isEmpty()) {
-            } // Todo: displayTexts nav
+            Controller.displayCandidates();
             return true;
         });
         enabledKeys[23] = backspace;
