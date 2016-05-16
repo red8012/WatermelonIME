@@ -14,7 +14,7 @@ public class LanguageSelector {
             GLOBE = 1,
             SETTINGS = 0;
     static final LanguageSelectorKey[] keys = new LanguageSelectorKey[6];
-    public static int inputLanguage = CHINESE;
+    public static int inputLanguage = CHINESE, lastInputLanguage = CHINESE;
 
     public static void init() {
         keys[CHINESE] = new LanguageSelectorKey(CHINESE, "中");
@@ -25,12 +25,13 @@ public class LanguageSelector {
         keys[SETTINGS] = new LanguageSelectorKey(SETTINGS, R.drawable.settings);
     }
 
-    public static void setInputLanguage(final int inputLanguage) {
+    public static void setInputLanguage(final int inputLanguage, boolean recordLastLanguage) {
         if (inputLanguage == GLOBE) {
             MainService.inputMethodManager.showInputMethodPicker();
             return;
         }
         if (inputLanguage == SETTINGS) return;
+        if (recordLastLanguage) lastInputLanguage = inputLanguage;
         LanguageSelector.inputLanguage = inputLanguage;
         ChineseInputView v = C.chineseInputView;
         v.removeAllViews();
@@ -52,5 +53,9 @@ public class LanguageSelector {
                 break;
         }
         v.invalidate(); // TODO: 2016/3/5 check this
+    }
+
+    public static void setInputLanguage(final int inputLanguage) {
+        setInputLanguage(inputLanguage, true);
     }
 }

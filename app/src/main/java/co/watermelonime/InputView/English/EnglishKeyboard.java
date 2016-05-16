@@ -24,6 +24,7 @@ public class EnglishKeyboard extends ViewGroup {
             "~", "`", "_", "-", "+", "=", "{", "}", "|", "\\",
             "£", "€", "¥", ":", ";", "\"", "'", "[", "]",
             "°", "<", ">", "?", ",", ".", "/"};
+    public final static int LOWER = 0, UPPER = 1, PUNCTUATION = 2, CAPSLOCK = 3;
     static final OnTouchListener functionKeyListener = (v, event) -> {
         NumKey key = (NumKey) v;
         switch (event.getActionMasked()) {
@@ -40,7 +41,6 @@ public class EnglishKeyboard extends ViewGroup {
     final static EnglishKey[][] keys = new EnglishKey[][]{new EnglishKey[36], new EnglishKey[36], new EnglishKey[36]};
     final static View[] bottomRow = new View[6];
     final static EnglishKey[] leftPunctuation = new EnglishKey[3];
-    final static int LOWER = 0, UPPER = 1, PUNCTUATION = 2, CAPSLOCK = 3;
     final static int COMMA = 0, SLASH = 1, AT = 2;
     final static int QWERTY = 0, DVORAK = 1, COLEMAK = 2;
     static int mode = LOWER, type = QWERTY, modeBeforePunctuation;

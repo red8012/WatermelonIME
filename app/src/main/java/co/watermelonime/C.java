@@ -20,14 +20,12 @@ public class C {
     public static MainService mainService;
     public static Context context;
     public static ExecutorService threadPool;
-
-    public static boolean isLandscape, debug = true;
+    public static int inputType, initialCapsMode;
+    public static boolean isLandscape, debug = false;
     public static SentenceView sentenceView;
     public static CandidateView candidateView;
-//    public static CandidateViewScroller candidateViewScroller;
     public static ChineseKeyboard chineseKeyboard;
     public static ChineseInputView chineseInputView;
-//    public static Emoji emoji;
     public static EmojiKeyboard emojiKeyboard;
     public static NumberKeyboard numberKeyboard;
     public static EnglishKeyboard englishKeyboard;

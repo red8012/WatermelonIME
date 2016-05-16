@@ -6,8 +6,6 @@ import android.widget.ScrollView;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Size;
-import co.watermelonime.InputView.Chinese.Candidate.DictButton;
-import co.watermelonime.InputView.Chinese.Candidate.DictTitle;
 import co.watermelonime.InputView.Chinese.Sentence.LanguageSelector;
 
 public class ChineseInputView extends ViewGroup {
@@ -25,14 +23,6 @@ public class ChineseInputView extends ViewGroup {
         addView(C.sentenceView);
         addView(scrollView);
         addView(C.chineseKeyboard);
-    }
-
-    public static void initializeHiddenPartsAsync() {
-        C.threadPool.submit(() -> {
-                    DictTitle.init();
-                    DictButton.init();
-                }
-        );
     }
 
     @Override

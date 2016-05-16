@@ -1,10 +1,13 @@
 package co.watermelonime.Common;
 import java.util.HashMap;
 
+import co.watermelonime.C;
+
 public class Timer {
 	static HashMap<Integer, Long> map = new HashMap<>();
 
 	public static String t(Integer id, String... message) {
+		if (!C.debug) return null;
 		Long time = System.nanoTime();
 		if (message.length == 0) {
 			map.put(id, time);
