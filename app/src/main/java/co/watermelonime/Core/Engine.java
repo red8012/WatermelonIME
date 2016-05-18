@@ -31,12 +31,13 @@ public class Engine {
     final static ArrayList<String> candidateLeft = new ArrayList<>(8);
     final static ArrayList<String> candidateRight = new ArrayList<>(8);
     final static String[] qs = {
-            "select * from (",
-            "select group_concat(c) from (select c from s",
-            " where p in (",
-            ") and c glob '",
-            "' order by o) union all select group_concat(c) from (select c from s", //	"') union all ",
-            "' order by o))"
+            "select * from(",
+            "select group_concat(c)from(select c from s",
+            " where p in(",
+            ")and c glob'",
+            "'order by o)union all select group_concat(c)from(select c from s", //	"') union all ",
+            "'order by o))",
+            "select group_concat(c)from(select distinct c from s"
     };
     final static String[] arg = new String[1];
     static SQLiteDatabase db;
@@ -150,7 +151,7 @@ public class Engine {
         final int length = getLength(), pinyinLength = length + length;
 
         sql.append(qs[0]);
-        sql.append(qs[1]);
+        sql.append(qs[6]);
         sql.append('1');
         sql.append(qs[2]);
         Transform.expandQuery(pinyin, pinyinLength - 2);

@@ -1,27 +1,19 @@
 package co.watermelonime.Core;
 
 public class Transform {
-    //	private static final char[][] targets = {
-//			{'c', 'u'},
-//			{'c', 'f'},
-//			{'u', 'c'},
-//			{'c', 'b', 'g', 'v'},
-//			{'j', 'c'},
-//			{'i', 'c', 'b'},
-//			{'e', 'm'},
-//			{'c', 's'}
-//	};
     private static final char[][] targets = {
-            {'a', 'b', 'f'},
-            {'a', 'f'},
-            {'c', 'b', 'i'},
-            {'c', 'f'},
-            {'c', 'j'},
-            {'c', 's'},
-            {'c', 'u'},
-            {'c', 'v', 'b', 'g'},
-            {'e', 'a'},
-            {'e', 'm'},
+            {'a', 'e'} ,
+            {'a', 'f'} ,
+            {'a', 'f', 'b'} ,
+            {'c', 'b'} ,
+            {'c', 'b', 'i'} ,
+            {'c', 'f'} ,
+            {'c', 'g', 'v', 'b'} ,
+            {'c', 'j'} ,
+            {'c', 's'} ,
+            {'c', 'u'} ,
+            {'e', 'm'} ,
+            {'f', 'b'} ,
     };
     private static final char[][] alphabets = new char[52][];
     private static final char[][] data = new char[18][]; // stores possible pinyin codes at each position
@@ -47,8 +39,8 @@ public class Transform {
             indices[i] = 0;
             final char code = pinyin.charAt(i + start);
             char[] target;
-            if ('0' < code && code < '9') {
-                target = targets[code - '1'];
+            if ('+' <= code && code <= '9') {
+                target = targets[code - '+'];
             } else if ('A' <= code && code <= 'Z') {
                 target = alphabets[code - 'A'];
             } else {
