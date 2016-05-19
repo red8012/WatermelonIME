@@ -7,21 +7,18 @@ import android.view.ViewGroup;
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Font;
-import co.watermelonime.Common.Printer;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Core.Engine;
 
 public class SentenceView extends ViewGroup {
     public static SentenceButton[] sentenceButtons = new SentenceButton[9];
-    public View[] children;
+    public static View[] children;
 
     public SentenceView() {
         super(C.mainService);
         setBackgroundColor(Colour.SENTENCE);
-        for (int i = 0; i < 9; i++) {
-            SentenceButton sb = new SentenceButton(i);
-            sentenceButtons[i] = sb;
-        }
+        for (int i = 0; i < 9; i++)
+            sentenceButtons[i] = new SentenceButton(i);
         children = LanguageSelector.keys;
         for (View i : children)
             addView(i);
@@ -47,39 +44,36 @@ public class SentenceView extends ViewGroup {
     }
 
     public void addSentenceButtons() {
-        if (children != sentenceButtons) {
-            children = sentenceButtons;
-            removeAllViews();
-            for (View i : children)
-                addView(i);
-            layout(0, 0, 0, 0);
-        }
+        if (children == sentenceButtons) return;
+        children = sentenceButtons;
+        removeAllViews();
+        for (View i : children)
+            addView(i);
+        layout(0, 0, 0, 0);
     }
 
-    public void display() { // TODO: 2016/3/1 should refactor
-        if (Engine.getLength() == 0) {
+    public void display() {
+        if (Engine.isEmpty()) {
             children = LanguageSelector.keys;
-            for (int i = 0; i < 9; i++) sentenceButtons[i].setText(null);
             removeAllViews();
-            for (View i : children)
-                addView(i);
-        } else {
-            addSentenceButtons();
-            StringBuilder sentence = Engine.sentence;
-            final int length = sentence.length();
-            for (int i = 0; i < length; i++) {
-                final String s = sentence.substring(i, i + 1);
-                final SentenceButton sb = sentenceButtons[i];
-                if (sb.text.equals(s)) continue;
-                sb.setText(s);
-                sb.invalidate();
-            }
-            for (int i = length; i < 9; i++) {
-                final SentenceButton sb = sentenceButtons[i];
-                if (sb.text == null) continue;
-                sb.setText(null);
-                sb.invalidate();
-            }
+            for (int i = 0; i < 9; i++) sentenceButtons[i].setText(null);
+            for (View i : children) addView(i);
+            return;
+        }
+        addSentenceButtons();
+        StringBuilder sentence = Engine.sentence;
+        final int length = sentence.length();
+
+        for (int i = 0; i < length; i++) {
+            final String s = sentence.substring(i, i + 1);
+            final SentenceButton sb = sentenceButtons[i];
+            if (sb.text != null && sb.text.charAt(0) == s.charAt(0)) continue;
+            sb.setText(s);
+        }
+        for (int i = length; i < 9; i++) {
+            final SentenceButton sb = sentenceButtons[i];
+            if (sb.text == null) continue;
+            sb.setText(null);
         }
     }
 
@@ -100,10 +94,8 @@ public class SentenceView extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         Log.i("SentenceView", "onLayout");
         final int end = getChildCount();
-        Printer.p("child count", end);
         t = Size.HSentencePaddingTop;
 
-//        int h = Size.HSentenceButton;
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
             int h = v.getMeasuredHeight();

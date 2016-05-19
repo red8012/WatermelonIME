@@ -42,6 +42,7 @@ public class SentenceButton extends View {
             dx = Size.WSentenceView / 2;
             dy = (Size.HSentenceButton - textLayout.getHeight()) / 2;
         }
+        invalidate();
     }
 
     @Override

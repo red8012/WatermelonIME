@@ -14,28 +14,29 @@ July	Release
 1. [consideration] ~~hide first candidate right~~
 2. ~~candidate first line height~~
 3. optimize drawing
-4. [] clean up code
-5. [ok] ~~Navigation keys~~
-6. [5/18] Deutsch
-7. [5/16] auto switch language depending on context
-8. English prediction
-9. URL prediction
-10. ~~English bi/tri-gram~~
-11. [low priority] gestures
-12. [5/20] Chinese hint
-13. Chinese learning 
-14. Contact learning
-15. Settings
-16. Remove from database (long press)
-17. __Landscape Input View__
+4. [5/19]bug fix(displaySentence, displayPreview), monkey test
+5. [] clean up code
+6. [ok] ~~Navigation keys~~
+7. [5/18] Deutsch
+8. [5/16 ok] ~~auto switch language depending on context~~
+9. English prediction
+10. URL prediction
+11. ~~English bi/tri-gram~~
+12. [low priority] gestures
+13. [5/20] Chinese hint
+14. Chinese learning 
+15. Contact learning
+16. Settings
+17. Remove from database (long press)
+18. __Landscape Input View__
     1. Chinese
     2. English
-18. Floating input window
-19. Getting started guide
-20. Improve accuracy
-21. Website
-22. http://pinyin4j.sourceforge.net
-23. 繪
+19. [low priority] Floating input window
+20. Getting started guide
+21. Improve accuracy
+22. Website
+23. http://pinyin4j.sourceforge.net
+24. 繪
 
 ## Settings
 

@@ -116,12 +116,14 @@ public class Engine {
 
     public static void add(final char keyCode) {
         pinyin.append(keyCode);
+//        System.out.println("Engine add" + pinyin);
     }
 
     public static void add(final char keyCode, final char characterLock) {
         pinyin.append(keyCode);
         ziLock.append(characterLock);
         ziOrig.append(characterLock);
+//        System.out.println("Engine add" + pinyin);
     }
 
     public static void setZiLock(final int index, final char zi) {

@@ -9,7 +9,6 @@ import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Candidate.NavigationKey;
 
 public class Controller {
-//    public static final ExecutorService thread = Executors.newFixedThreadPool(1);
     private static ArrayList<String> arrayList = new ArrayList<>(8);
 
     public static void init() {
@@ -24,8 +23,12 @@ public class Controller {
      *                      if pinyin is a consonant, this should be null
      */
     public static void add(final char pinyin, final char characterLock) {
+//        System.out.println("controller add: " + pinyin + " | " + characterLock);
         if (characterLock == '\0') {
-            if (Engine.getLength() == 9) C.commit(Engine.pop());
+            if (Engine.getLength() == 9) {
+                C.commit(Engine.pop());
+                C.sentenceView.display();
+            }
             Engine.add(pinyin);
         } else {
             Engine.add(pinyin, characterLock);
@@ -35,15 +38,14 @@ public class Controller {
                 Engine.makeSeparator();
             } catch (Exception e) {
                 e.printStackTrace();
+                Engine.clear();
             }
             Engine.makeSentence();
             Engine.makeCandidateLeft();
             Engine.makeCandidateRight();
 
-            C.chineseInputView.post(() -> {
-                C.sentenceView.display();
-                displayCandidates();
-            });
+            C.sentenceView.display();
+            displayCandidates();
         }
     }
 
