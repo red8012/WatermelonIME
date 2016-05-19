@@ -14,7 +14,7 @@ July	Release
 1. [consideration] ~~hide first candidate right~~
 2. ~~candidate first line height~~
 3. optimize drawing
-4. [5/19]bug fix(displaySentence, displayPreview), monkey test
+4. [5/19]~~bug fix(displaySentence, displayPreview), monkey test~~
 5. [] clean up code
 6. [ok] ~~Navigation keys~~
 7. [5/18] Deutsch
