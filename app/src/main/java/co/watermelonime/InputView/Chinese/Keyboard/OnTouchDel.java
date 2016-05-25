@@ -16,8 +16,7 @@ public class OnTouchDel implements OnTouchListener {
     final static void backspace() {
         if (Engine.isEmpty()) {
             C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
-        }
-        else {
+        } else {
             Engine.delCharacter();
             int length = Engine.getLength();
             Engine.makeCandidateLeft();
@@ -37,6 +36,7 @@ public class OnTouchDel implements OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if (event.getPointerCount() != 1) return true;
         final int x = (int) event.getRawX();
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:

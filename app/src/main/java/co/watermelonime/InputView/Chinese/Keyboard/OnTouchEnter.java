@@ -11,6 +11,7 @@ import co.watermelonime.Core.Engine;
 public class OnTouchEnter implements View.OnTouchListener {
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if (event.getPointerCount() != 1) return true;
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 System.out.println("OnTouchEnter");

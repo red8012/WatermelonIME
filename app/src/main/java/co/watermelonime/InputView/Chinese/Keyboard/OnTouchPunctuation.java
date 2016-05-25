@@ -8,14 +8,9 @@ import co.watermelonime.Core.Controller;
 import co.watermelonime.Core.Engine;
 
 public class OnTouchPunctuation implements View.OnTouchListener {
-//    String punctuation;
-
-//    public OnTouchPunctuation(String p) {
-//        punctuation = p;
-//    }
-
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if (event.getPointerCount() != 1) return true;
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
             C.chineseKeyboard.setKeys(Consonants.keys);
             C.commit(Engine.getSentence());

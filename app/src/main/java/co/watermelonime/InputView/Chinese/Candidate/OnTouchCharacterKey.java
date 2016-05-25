@@ -10,7 +10,8 @@ import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 public class OnTouchCharacterKey implements View.OnTouchListener {
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (event.getActionMasked() != MotionEvent.ACTION_DOWN) return false;
+        if (event.getActionMasked() != MotionEvent.ACTION_DOWN) return true;
+        if (event.getPointerCount() != 1) return true;
         CharacterKey k = (CharacterKey) v;
         C.chineseKeyboard.setKeys(Consonants.keys);
         Controller.add(k.vowel, k.character);

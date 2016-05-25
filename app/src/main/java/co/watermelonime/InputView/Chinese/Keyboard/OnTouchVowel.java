@@ -10,6 +10,7 @@ public class OnTouchVowel implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if (event.getPointerCount() != 1) return true;
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 ChineseKey key = (ChineseKey) v;

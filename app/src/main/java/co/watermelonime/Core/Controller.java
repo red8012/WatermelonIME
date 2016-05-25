@@ -39,6 +39,9 @@ public class Controller {
             } catch (Exception e) {
                 e.printStackTrace();
                 Engine.clear();
+                C.sentenceView.display();
+                displayCandidates();
+                return;
             }
             Engine.makeSentence();
             Engine.makeCandidateLeft();
