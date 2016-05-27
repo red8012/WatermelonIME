@@ -38,11 +38,6 @@ public class LanguageSelectorKey extends View {
         textLayout = Font.sentence.make(text, Size.WSentenceView);
         dx = Size.WSentenceView / 2;
         dy = (Size.HKey - textLayout.getHeight()) / 2;
-//        setMeasuredDimension(Size.WSentenceView, Size.HLanguageSelectorKey);
-//        if (rectPaint == null) {
-//            rectPaint = new Paint();
-//            rectPaint.setColor(Colour.CANDIDATE);
-//        }
     }
 
     public LanguageSelectorKey(final int language, int resource) {
@@ -57,7 +52,6 @@ public class LanguageSelectorKey extends View {
         dy = (height - size) / 2;
         image.setBounds(0, 0, size, size);
 
-//        setMeasuredDimension(Size.WSentenceView, Size.HLanguageSelectorKey);
         if (rectPaint == null) {
             rectPaint = new Paint();
             rectPaint.setColor(Colour.CANDIDATE);
@@ -74,7 +68,6 @@ public class LanguageSelectorKey extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 //        Log.i("LanguageSelectorKey", "onMeasure");
-//        setMeasuredDimension(Size.WSentenceView, Size.HLanguageSelectorKey);
         setSize();
     }
 

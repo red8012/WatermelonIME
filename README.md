@@ -15,30 +15,31 @@ July	Release
 2. ~~candidate first line height~~
 3. @ sign on email
 4. punctuation auto return
-5. optimize drawing
-6. [5/19]~~bug fix(displaySentence, displayPreview), monkey test~~
-7. [] clean up code
-8. [ok] ~~Navigation keys~~
-9. [5/18] Deutsch
-10. [5/16 ok] ~~auto switch language depending on context~~
-11. English prediction
-12. URL prediction
-13. ~~English bi/tri-gram~~
-14. [low priority] gestures
-15. [5/20] Chinese hint
-16. Chinese learning 
-17. Contact learning
-18. Settings
-19. Remove from database (long press)
-20. __Landscape Input View__
+5. optimize drawing (candidate 2274~2365, size=110300~120856)
+6. Or (學), Nr
+7. [5/19]~~bug fix(displaySentence, displayPreview), monkey test~~
+8. [] clean up code
+9. [ok] ~~Navigation keys~~
+10. [5/18] Deutsch
+11. [5/16 ok] ~~auto switch language depending on context~~
+12. English prediction
+13. URL prediction
+14. ~~English bi/tri-gram~~
+15. [low priority] gestures
+16. [5/20] Chinese hint
+17. Chinese learning 
+18. Contact learning
+19. Settings
+20. Remove from database (long press)
+21. __Landscape Input View__
     1. Chinese
     2. English
-21. [low priority] Floating input window
-22. Getting started guide
-23. Improve accuracy
-24. Website
-25. http://pinyin4j.sourceforge.net
-26. 繪
+22. [low priority] Floating input window
+23. Getting started guide
+24. Improve accuracy
+25. Website
+26. http://pinyin4j.sourceforge.net
+27. 繪
 
 ## Settings
 
@@ -76,6 +77,9 @@ Time    Allocations  Size
 
   900   13,080         888,944    *new engine* (full run)
   979    9,657         788,454    reduce expandQuery allocation
+    
+  880    9,961       1,065,548    production
+  359    8,706         698,240    production warm start
 ```
 
 ``` python

@@ -32,39 +32,32 @@ public class CandidateView extends ViewGroup {
 //            else if (cls == CharacterKey.class)
 //                ((CharacterKey) child).release();
             else if (cls == CandidateButton.class)
-              ((CandidateButton) child).release();
+                ((CandidateButton) child).release();
         }
         C.candidateView.removeAllViews();
     }
 
-    public static void setCandidate(ArrayList<String> list, int type) { //Todo: can be static
+    public static void setCandidate(ArrayList<String> list, int start, int end, int type) {
         Timer.t(8);
+        if (end - start == 0) return;
         int totalWidth = 0;
-        int end = list.size();
-        if (end == 0) return; // ? why this happens?
-        int i = 0;
+
+        int i = start;
         for (; i < end; i++) {
             int w = CandidateButton.calculateMinWidth(list.get(i));
             if (totalWidth + w > Size.WCandidateView) break;
             totalWidth += w;
         }
+        end = i;
 
-        int padding = (Size.WCandidateView - totalWidth - 1) / (i);
+        int padding = (Size.WCandidateView - totalWidth - 1) / (end - start);
 
-
-        for (String s : list) {
-            if (i-- == 0) break;
+        for (int j = start; j < end; j++) {
             CandidateButton c = CandidateButton.get();
-            c.setText(s, padding, i > 0, type);
+            c.setText(list.get(j), padding, j < end - 1, type);
             C.candidateView.addView(c);
         }
-//        final int length = list.size();
-//        final int padding = CandidateButton.calculatePadding(list);
-//        for (int i = 0; i < length; i++) {
-//            CandidateButton c = CandidateButton.get();
-//            c.setText(list.get(i), padding, i < length - 1, type);
-//            addView(c);
-//        }
+
         Timer.t(8, "set candidate" + type);
     }
 

@@ -29,7 +29,7 @@ public class Engine {
     public final static ArrayList<String> dictResult = new ArrayList<>(16);
     final static String[][][] queryResult = new String[10][][]; // [length][start at][i]
     final static ArrayList<String> candidateLeft = new ArrayList<>(8);
-    final static ArrayList<String> candidateRight = new ArrayList<>(8);
+    final static ArrayList<String> candidateRight = new ArrayList<>(16);
     final static String[] qs = {
             "select * from(",
             "select group_concat(c)from(select c from s",

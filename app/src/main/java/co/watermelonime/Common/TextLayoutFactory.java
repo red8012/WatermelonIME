@@ -2,6 +2,7 @@ package co.watermelonime.Common;
 
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.text.DynamicLayout;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -27,6 +28,11 @@ public class TextLayoutFactory {
 
     public Layout make(String text, int width) {
         return new StaticLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
+                1.0f, 0.0f, false);
+    }
+
+    public Layout makeDynamic(CharSequence text, int width) {
+        return new DynamicLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
                 1.0f, 0.0f, false);
     }
 }

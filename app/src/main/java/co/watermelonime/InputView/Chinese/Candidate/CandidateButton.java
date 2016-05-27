@@ -3,6 +3,7 @@ package co.watermelonime.InputView.Chinese.Candidate;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -30,9 +31,11 @@ public class CandidateButton extends View {
 
     public static CandidateButton get() {
         CandidateButton d;
-        if (pool.isEmpty())
+        if (pool.isEmpty()) {
             d = new CandidateButton();
-         else
+            Log.e("pool", "empty");
+        }
+        else
             d = pool.remove(pool.size() - 1);
         return d;
     }

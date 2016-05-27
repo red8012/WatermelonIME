@@ -1,6 +1,7 @@
 package co.watermelonime.InputView.Chinese.Sentence;
 
 import co.watermelonime.C;
+import co.watermelonime.Core.Benchmark2;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 import co.watermelonime.MainService;
 import co.watermelonime.R;
@@ -30,7 +31,14 @@ public class LanguageSelector {
             MainService.inputMethodManager.showInputMethodPicker();
             return;
         }
-        if (inputLanguage == SETTINGS) return;
+        if (inputLanguage == SETTINGS) {
+            try {
+                Benchmark2.run();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return;
+        }
         if (recordLastLanguage) lastInputLanguage = inputLanguage;
         LanguageSelector.inputLanguage = inputLanguage;
         ChineseInputView v = C.chineseInputView;

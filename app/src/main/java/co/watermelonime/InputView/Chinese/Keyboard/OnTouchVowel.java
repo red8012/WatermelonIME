@@ -4,6 +4,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import co.watermelonime.C;
+import co.watermelonime.Common.Timer;
 import co.watermelonime.Core.Controller;
 
 public class OnTouchVowel implements View.OnTouchListener {
@@ -14,11 +15,13 @@ public class OnTouchVowel implements View.OnTouchListener {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 ChineseKey key = (ChineseKey) v;
-                if (key.action == ChineseKey.CONSONANT) {
-                    C.chineseKeyboard.setKeys(Consonants.keys);
-                    Controller.add(key.pinyin, '?');
-                    System.out.println("OnTouchVowel: " + key.pinyin);
-                }
+//                if (key.action == ChineseKey.CONSONANT) {
+                C.chineseKeyboard.setKeys(Consonants.keys);
+                Timer.t(375);
+                Controller.add(key.pinyin, '?');
+                Timer.t(375, "controller add");
+                System.out.println("OnTouchVowel: " + key.pinyin);
+//                }
         }
         return true;
     }

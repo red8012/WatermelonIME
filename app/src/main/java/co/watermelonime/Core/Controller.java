@@ -1,15 +1,15 @@
 package co.watermelonime.Core;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import co.watermelonime.C;
+import co.watermelonime.Common.Timer;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Candidate.NavigationKey;
 
 public class Controller {
-    private static ArrayList<String> arrayList = new ArrayList<>(8);
+    private static ArrayList<String> arrayList = new ArrayList<>(16);
 
     public static void init() {
 
@@ -33,7 +33,10 @@ public class Controller {
         } else {
             Engine.add(pinyin, characterLock);
             Engine.queryDB();
+
+            Timer.t(111);
             Engine.readQueryResult();
+            Timer.t(111, "read");
             try {
                 Engine.makeSeparator();
             } catch (Exception e) {
@@ -43,12 +46,15 @@ public class Controller {
                 displayCandidates();
                 return;
             }
+
             Engine.makeSentence();
             Engine.makeCandidateLeft();
             Engine.makeCandidateRight();
 
             C.sentenceView.display();
+            Timer.t(444);
             displayCandidates();
+            Timer.t(444, "candidate display");
         }
     }
 
@@ -107,26 +113,22 @@ public class Controller {
             return;
         }
 
-        Iterator<String> it1, it2;
-
         if (Engine.getLength() == 1) { // candidate should fill both when only character typed
-            it1 = Engine.candidateRight.iterator();
-            it2 = it1;
-        } else {
-            it1 = Engine.candidateLeft.iterator();
-            it2 = Engine.candidateRight.iterator();
+            int leftLength = 8, rightLength = 8;
+            int totalLength = Engine.candidateRight.size();
+            if (totalLength < 16) {
+                rightLength = totalLength / 2;
+                leftLength = totalLength - rightLength;
+            }
+            CandidateView.setCandidate(Engine.candidateRight, 0, leftLength, CandidateButton.TOP);
+            CandidateView.setCandidate(Engine.candidateRight,
+                    leftLength, leftLength + rightLength, CandidateButton.BOTTOM);
+            return;
         }
 
-        arrayList.clear();
-        for (int i = 0; i < 8; i++)
-            if (it1.hasNext()) arrayList.add(it1.next());
-            else break;
-        CandidateView.setCandidate(arrayList, CandidateButton.TOP);
-
-        arrayList.clear();
-        for (int i = 0; i < 8; i++)
-            if (it2.hasNext()) arrayList.add(it2.next());
-            else break;
-        CandidateView.setCandidate(arrayList, CandidateButton.BOTTOM);
+        CandidateView.setCandidate(Engine.candidateLeft,
+                0, Engine.candidateLeft.size(), CandidateButton.TOP);
+        CandidateView.setCandidate(Engine.candidateRight,
+                0, Engine.candidateRight.size(), CandidateButton.BOTTOM);
     }
 }

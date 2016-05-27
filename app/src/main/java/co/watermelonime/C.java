@@ -21,7 +21,7 @@ public class C {
     public static Context context;
     public static ExecutorService threadPool;
     public static int inputType, initialCapsMode;
-    public static boolean isLandscape, debug = false;
+    public static boolean isLandscape, debug = true;
     public static SentenceView sentenceView;
     public static CandidateView candidateView;
     public static ChineseKeyboard chineseKeyboard;
