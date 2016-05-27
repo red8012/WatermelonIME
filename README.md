@@ -82,6 +82,17 @@ Time    Allocations  Size
   359    8,706         698,240    production warm start
 ```
 
+```c
+candidate 中文輸入法測試
+Allocations   Size
+   2365      120,856    Cold
+   2274      110,300    Hot
+   1959      106,486    DynamicLayout (cold)
+   1824       71,268    DynamicLayout (hot)
+```
+
+
+
 ``` python
 wrong  total  ratio
 70     202    0.34653  (w/o characterLock)

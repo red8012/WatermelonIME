@@ -30,7 +30,7 @@ public class C {
     public static NumberKeyboard numberKeyboard;
     public static EnglishKeyboard englishKeyboard;
 
-    public static void commit(String text) {
+    public static void commit(CharSequence text) {
         if (MainService.inputConnection != null)
             try {
                 MainService.inputConnection.commitText(text, 1);

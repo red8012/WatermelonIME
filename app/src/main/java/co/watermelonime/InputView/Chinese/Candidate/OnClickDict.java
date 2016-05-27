@@ -12,7 +12,7 @@ public class OnClickDict implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         DictButton dictButton = (DictButton) v;
-        String text = dictButton.text;
+        CharSequence text = dictButton.text;
         int index = SentenceButton.selectedIndex;
         Engine.setZiLock(index, text.charAt(0));
         C.sentenceView.display();

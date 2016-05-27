@@ -21,10 +21,12 @@ import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
 import co.watermelonime.Core.Engine;
+import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Candidate.CharacterKey;
 import co.watermelonime.InputView.Chinese.Candidate.DictButton;
 import co.watermelonime.InputView.Chinese.Candidate.DictTitle;
+import co.watermelonime.InputView.Chinese.Candidate.DynamicLayoutPool;
 import co.watermelonime.InputView.Chinese.Candidate.NavigationKey;
 import co.watermelonime.InputView.Chinese.Candidate.PredictionKey;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
@@ -117,11 +119,15 @@ public class MainService extends InputMethodService {
             Timer.t(24);
             CharacterKey.init();
             PredictionKey.init();
+            DynamicLayoutPool.init();
+            CandidateButton.init();
             DictTitle.init();
             DictButton.init();
             Timer.t(24, "f4");
             return null;
         });
+
+
 
 
         Consonants.buildKeys();

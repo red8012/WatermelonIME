@@ -21,17 +21,17 @@ public class TextLayoutFactory {
         textPaint.setAntiAlias(true);
     }
 
-    public Layout make(String text) {
+    public Layout make(CharSequence text) {
         return new StaticLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
                 1.0f, 0.0f, false);
     }
 
-    public Layout make(String text, int width) {
+    public Layout make(CharSequence text, int width) {
         return new StaticLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
                 1.0f, 0.0f, false);
     }
 
-    public Layout makeDynamic(CharSequence text, int width) {
+    public DynamicLayout makeDynamic(CharSequence text, int width) {
         return new DynamicLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
                 1.0f, 0.0f, false);
     }

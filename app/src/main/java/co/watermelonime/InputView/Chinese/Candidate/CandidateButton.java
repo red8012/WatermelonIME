@@ -2,6 +2,7 @@ package co.watermelonime.InputView.Chinese.Candidate;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.text.DynamicLayout;
 import android.text.Layout;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +10,6 @@ import android.view.View;
 import java.util.ArrayList;
 
 import co.watermelonime.C;
-import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 
 public class CandidateButton extends View {
@@ -20,13 +20,20 @@ public class CandidateButton extends View {
     public float dx, dy;
     int type = 0;
     int width;
-    String text;
+//    String text;
+    CharSequence text;
     Layout textLayout;
     boolean needSeparator = true;
 
     public CandidateButton() {
         super(C.mainService);
         setOnClickListener(onClickCandidate);
+    }
+
+    public static void init() {
+        for (int i = 0; i < 16; i++) {
+            pool.add(new CandidateButton());
+        }
     }
 
     public static CandidateButton get() {
@@ -53,6 +60,7 @@ public class CandidateButton extends View {
 
     public void release() {
         pool.add(this);
+        DynamicLayoutPool.release((DynamicLayout) textLayout);
     }
 
     public void setText(String s, int padding, boolean separator, int paddingTopBottom) {
@@ -63,7 +71,8 @@ public class CandidateButton extends View {
         setMeasuredDimension(width, (int) (Size.HCandidateRow + (paddingTopBottom == 0 ? 0 : Size.u / 2)));
         if (s == null) textLayout = null;
         else {
-            textLayout = Font.candidate.make(text, width);
+//            textLayout = Font.candidate.make(text, width);
+            textLayout = DynamicLayoutPool.get(s);
             dx = width / 2;
             dy = (Size.HCandidateRow - textLayout.getHeight()) / 2 +
                     (paddingTopBottom == TOP ? Size.u / 2 : 0);
