@@ -33,6 +33,8 @@ public class Benchmark2 {
         iter(pinyin, characterLock);
 
         System.out.println("Total time = " + (System.nanoTime() - t) / 1000000);
+//        Printer.p("capacity", Engine.sql.capacity(), Engine.pinyin.capacity(),
+//                Engine.ziLock.capacity(), Engine.ziOrig.capacity(), Engine.sentence.capacity());
         C.debug = true;
     }
 

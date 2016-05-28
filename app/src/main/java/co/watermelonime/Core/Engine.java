@@ -22,9 +22,9 @@ public class Engine {
     final static public StringBuilder
             sql = new StringBuilder(2048),
             pinyin = new StringBuilder(32),
-            ziLock = new StringBuilder(32),   // after dict select or direct zi pinyin
-            ziOrig = new StringBuilder(32),   // before dict select
-            sentence = new StringBuilder(32);
+            ziLock = new StringBuilder(16),   // after dict select or direct zi pinyin
+            ziOrig = new StringBuilder(16),   // before dict select
+            sentence = new StringBuilder(16);
     public final static ArrayList<String> dictResult = new ArrayList<>(16);
     final static ArrayList<StringBuilder>[][] queryResult = new ArrayList[10][]; // [length][start at][i]
     final static ArrayList<StringBuilder> candidateLeft = new ArrayList<>(8);
@@ -33,9 +33,9 @@ public class Engine {
             "select * from(",
             "select group_concat(c)from(select c from s",
             " where p in(",
-            ")and c glob'",
-            "'order by o)union all select group_concat(c)from(select c from s", //	"') union all ",
-            "'order by o))",
+            "and c glob'",
+            "order by o)union all select group_concat(c)from(select c from s",
+            "order by o))",
             "select group_concat(c)from(select distinct c from s"
     };
     final static String[] arg = new String[1];
@@ -72,10 +72,10 @@ public class Engine {
             queryResult[i] = new ArrayList[9 - i + 1];
         // warm up engine
         final String[]
-                p = {"GuLbFaTiKhLnLrWbLu", "E1SuCaH8Kj"},
-                z = {"你?他????所?", "的是嗎了很"};
-        for (int j = 0; j < 1; j++) {
-            for (int i = 0; i < 2; i++) {
+                p = {"GuLbFaTiKhLnLrWbLu", "E4SuCaH3KjAaMt", "GuLbFaTiKhLnLrWbLu"},
+                z = {"你我他????所以", "的是嗎了很吧就", "?????????"};
+        for (int j = 0; j < 3; j++) {
+            for (int i = 0; i < z[j].length(); i++) {
                 Engine.pinyin.append(p[j].substring(i + i, i + i + 2));
                 Engine.ziLock.append(z[j].substring(i, i + 1));
                 Engine.queryDB();
@@ -147,29 +147,49 @@ public class Engine {
      * and c glob '?'
      * )
      * )
+     * <p>
+     * select * from(select group_concat(c)from(select distinct c from s1 where p in('Qp')and c glob'?'order by o))
+     * select * from(select group_concat(c)from(select distinct c from s1 where p in('Ln')and c glob'?'order by o)union all select group_concat(c)from(select c from s2 where p in('QpLn')and c glob'??'order by o))
      */
     public static void queryDB() {
         sql.setLength(0);
         final int length = getLength(), pinyinLength = length + length;
 
-        sql.append(qs[0]);
-        sql.append(qs[6]);
+        sql.append(qs[0]); // select * from(
+        sql.append(qs[6]); // select group_concat(c)from(select distinct c from s
         sql.append('1');
-        sql.append(qs[2]);
+        sql.append(qs[2]); //  where p in(
         Transform.expandQuery(pinyin, pinyinLength - 2);
-        sql.append(qs[3]);
-        sql.append(ziLock, length - 1, length);
+        sql.append(')');
+        if (needGlobbing(length-1, length)) {
+            sql.append(qs[3]); // and c glob'
+            sql.append(ziLock, length - 1, length);
+            sql.append('\'');
+        }
 
         for (int i = length - 2; i >= 0; i--) {
-            sql.append(qs[4]);
+            sql.append(qs[4]); // order by o)union all select group_concat(c)from(select c from s
             sql.append(length - i);
-            sql.append(qs[2]);
+            sql.append(qs[2]); //  where p in(
             Transform.expandQuery(pinyin, i + i);
-            sql.append(qs[3]);
-            sql.append(ziLock, i, length);
+            sql.append(')');
+            if (needGlobbing(i, length)) {
+                sql.append(qs[3]); // and c glob'
+                sql.append(ziLock, i, length);
+                sql.append('\'');
+            }
         }
         sql.append(qs[5]);
+//        System.out.println(sql);
+//        System.out.println(pinyin);
+//        System.out.println(ziLock);
         cursor = db.rawQuery(sql.toString(), null);
+    }
+
+    static boolean needGlobbing(int start, int end) {
+        for (int i = start; i < end; i++)
+            if (ziLock.charAt(i) != '?') return true;
+        return false;
     }
 
     public static void queryDict(final int index) {
@@ -188,14 +208,12 @@ public class Engine {
         while (cursor.moveToNext()) {
             String result = cursor.getString(0); // 0 based
 //            System.out.println("STRING: " + result);
-//            queryResult[i][end - i] = result == null ? null : result.split(",");
 
             ArrayList<StringBuilder> list = queryResult[i][end - i];
-                BufferedSplitter.releaseArrayList(list);
+            BufferedSplitter.releaseArrayList(list);
             queryResult[i][end - i] = result == null ? null : BufferedSplitter.split(result);
 
 //            if (result != null) {
-//
 //                for (CharSequence s : queryResult[i][end - i])
 //                    System.out.print(s + "/");
 //                System.out.println("#");
@@ -251,20 +269,28 @@ public class Engine {
     public static void makeCandidateLeft() {
         candidateLeft.clear();
         for (int i = getLength() - 1; i > 0; i--)
-            if (queryResult[i][0] != null)
-                for (StringBuilder sb: queryResult[i][0])
-                    candidateLeft.add(sb);
-//                candidateLeft.addAll(queryResult[i][0]);
-//                Collections.addAll(candidateLeft, queryResult[i][0]);
+            if (queryResult[i][0] != null) {
+                ArrayList<StringBuilder> list = queryResult[i][0];
+                int end = list.size();
+                for (int j = 0; j < end; j++)
+                    candidateLeft.add(list.get(j));
+            }
+//                for (StringBuilder sb : queryResult[i][0])
+//                    candidateLeft.add(sb);
     }
 
     public static void makeCandidateRight() {
         int length = getLength();
         candidateRight.clear();
         for (int i = getLength(); i > 0; i--)
-            if (queryResult[i][length - i] != null)
-                for (StringBuilder sb: queryResult[i][length - i])
-                    candidateRight.add(sb);
+            if (queryResult[i][length - i] != null){
+                ArrayList<StringBuilder> list = queryResult[i][length - i];
+                int end = list.size();
+                for (int j = 0; j < end; j++)
+                    candidateRight.add(list.get(j));
+            }
+//                for (StringBuilder sb : queryResult[i][length - i])
+//                    candidateRight.add(sb);
 //                candidateRight.addAll(queryResult[i][length - i]);
 //                Collections.addAll(candidateRight, queryResult[i][length - i]);
     }
@@ -300,7 +326,11 @@ public class Engine {
         try {
             makeSeparator();
         } catch (Exception e) {
-            e.printStackTrace(); // TODO: 2016/3/1 should clear everything
+            e.printStackTrace();
+            Engine.clear();
+            C.sentenceView.display();
+            Controller.displayCandidates();
+            return result;
         }
         makeSentence();
 
@@ -336,7 +366,5 @@ public class Engine {
             pinyin.delete(length - 1, length);
         }
     }
-
-
 }
 

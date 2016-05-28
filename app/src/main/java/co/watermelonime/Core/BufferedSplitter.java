@@ -11,6 +11,7 @@ public class BufferedSplitter {
     public static void init() {
         for (int length = 1; length < 10; length++) {
             int numberOfObjects = 200 / length / length;
+            if (length == 2) numberOfObjects += 10;
             pool[length] = new ArrayList<>(numberOfObjects);
             for (int i = 0; i < numberOfObjects; i++)
                 pool[length].add(new StringBuilder(length));
@@ -24,7 +25,7 @@ public class BufferedSplitter {
     public static StringBuilder get(int length) {
         ArrayList<StringBuilder> list = pool[length];
         if (list.isEmpty()) {
-            Log.e("StringBuilder pool", "is empty");
+            Log.e("StringBuilder pool", "is empty" + length);
             return new StringBuilder(length);
         }
         StringBuilder sb = list.remove(list.size() - 1);
@@ -41,7 +42,7 @@ public class BufferedSplitter {
     public static ArrayList<StringBuilder> getArrayList(int length) {
         ArrayList<ArrayList<StringBuilder>> list = listPool[length];
         if (list.isEmpty()) {
-            Log.e("ArrayList pool", "is empty");
+            Log.e("ArrayList pool", "is empty" + length);
             return new ArrayList<>(24 / length);
         }
         return list.remove(list.size() - 1);

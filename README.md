@@ -18,7 +18,7 @@ July	Release
 5. [5/29]~~optimize drawing (candidate 2274~2365, size=110300~120856)~~
 6. [5/29] ~~Or (學), Nr~~
 7. [5/19]~~bug fix(displaySentence, displayPreview), monkey test~~
-8. [] clean up code
+8. [5/20] Chinese hint
 9. [ok] ~~Navigation keys~~
 10. [5/18] Deutsch
 11. [5/16 ok] ~~auto switch language depending on context~~
@@ -26,20 +26,21 @@ July	Release
 13. URL prediction
 14. ~~English bi/tri-gram~~
 15. [low priority] gestures
-16. [5/20] Chinese hint
+16. ​
 17. Chinese learning 
 18. Contact learning
 19. Settings
 20. Remove from database (long press)
-21. __Landscape Input View__
+21. [] clean up code
+22. __Landscape Input View__
     1. Chinese
     2. English
-22. [low priority] Floating input window
-23. Getting started guide
-24. Improve accuracy
-25. Website
-26. http://pinyin4j.sourceforge.net
-27. 繪
+23. [low priority] Floating input window
+24. Getting started guide
+25. Improve accuracy
+26. Website
+27. http://pinyin4j.sourceforge.net
+28. 繪
 
 ## Settings
 
@@ -47,6 +48,13 @@ July	Release
 2. Copy contact to database
 3. English keyboard type
 4. Floating window size
+
+## Meaning of Priority
+
+|    Priority    |                   < 0                    |                   >= 0                   |                  > 100                   |
+| :------------: | :--------------------------------------: | :--------------------------------------: | :--------------------------------------: |
+| odd (learned)  | sentence, candidate, prediction (confirmed on 3rd time) | sentence, candidate (confirmed 2nd time on commit) | sentence, (newly learned, not in sX table) |
+| even (factory) | sentence, candidate, prediction (selected from candidate) | sentence, candidate, prediction (originally shipped in database) |                   nope                   |
 
 ## Dex optimization
 
@@ -67,7 +75,7 @@ Redex only                    443K
 
 ### Benchmark Result
 
-``` c
+``` java
 Time    Allocations  Size
 2,242   58,985       2,592,138    original engine
 2,422   58,988       2,592,222    original engine
@@ -81,8 +89,15 @@ Time    Allocations  Size
   880    9,961       1,065,548    production
   359    8,706         698,240    production warm start
     
-  356    7,381         683,828    Using pools
+  356    7,381         683,828    Using pools (warm)
   330    6.378         633,648    warm start
+  
+  ???    7,651         991,342    improved sql & warm up (cold)
+  315    6.378         622,716    warm start
+    
+  777    6,882         972,720    don't use iterator (cold)
+  328    5,616         604,916    don't use iterator (warm)
+  288                             3rd warm run
 ```
 
 ```c
