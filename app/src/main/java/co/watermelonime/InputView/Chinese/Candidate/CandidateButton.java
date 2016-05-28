@@ -47,7 +47,7 @@ public class CandidateButton extends View {
         return d;
     }
 
-    public static int calculateMinWidth(String s) {
+    public static int calculateMinWidth(CharSequence s) {
         int len = s.length();
         if (len < 2)
             return (int) (Size.FCandidate * len + Size.u * 3);
@@ -63,7 +63,7 @@ public class CandidateButton extends View {
         DynamicLayoutPool.release((DynamicLayout) textLayout);
     }
 
-    public void setText(String s, int padding, boolean separator, int paddingTopBottom) {
+    public void setText(CharSequence s, int padding, boolean separator, int paddingTopBottom) {
         text = s;
         width = calculateMinWidth(s) + padding;
         this.type = paddingTopBottom;

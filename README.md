@@ -13,10 +13,10 @@ July	Release
 
 1. [consideration] ~~hide first candidate right~~
 2. ~~candidate first line height~~
-3. @ sign on email
-4. punctuation auto return
-5. optimize drawing (candidate 2274~2365, size=110300~120856)
-6. Or (學), Nr
+3. [5/29] @ sign on email
+4. [5/29] punctuation auto return (English)
+5. [5/29]~~optimize drawing (candidate 2274~2365, size=110300~120856)~~
+6. [5/29] Or (學), Nr
 7. [5/19]~~bug fix(displaySentence, displayPreview), monkey test~~
 8. [] clean up code
 9. [ok] ~~Navigation keys~~
@@ -80,6 +80,9 @@ Time    Allocations  Size
     
   880    9,961       1,065,548    production
   359    8,706         698,240    production warm start
+    
+  356    7,381         683,828    Using pools
+  330    6.378         633,648    warm start
 ```
 
 ```c
@@ -89,6 +92,8 @@ Allocations   Size
    2274      110,300    Hot
    1959      106,486    DynamicLayout (cold)
    1824       71,268    DynamicLayout (hot)
+   1670       94,482    sentence DynamicLayout (cold)
+   1382       55,972    sentence DynamicLayout (hot)
 ```
 
 

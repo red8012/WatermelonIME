@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
-import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Core.Engine;
 
@@ -28,18 +27,21 @@ public class SentenceView extends ViewGroup {
         if (SentenceButton.selectedIndex == index) {
             SentenceButton sb = sentenceButtons[SentenceButton.selectedIndex];
             SentenceButton.selectedIndex = -1;
-            sb.textLayout = Font.sentence.make(sb.text);
+//            sb.textLayout = Font.sentence.make(sb.text);
+            sb.textLayout = sb.whiteTextLayout;
             sb.invalidate();
             return;
         } else if (SentenceButton.selectedIndex >= 0) {
             SentenceButton sb = sentenceButtons[SentenceButton.selectedIndex];
-            if (sb.originalTextLayout != null) sb.textLayout = sb.originalTextLayout;
+//            if (sb.originalTextLayout != null) sb.textLayout = sb.originalTextLayout;
+            sb.textLayout = sb.whiteTextLayout;
             sb.invalidate();
         }
         SentenceButton.selectedIndex = index;
         SentenceButton sb = sentenceButtons[index];
-        sb.originalTextLayout = sb.textLayout;
-        sb.textLayout = Font.sentenceSelected.make(sb.text);
+//        sb.originalTextLayout = sb.textLayout;
+//        sb.textLayout = Font.sentenceSelected.make(sb.text);
+        sb.textLayout = sb.blackTextLayout;
         sb.invalidate();
     }
 
@@ -56,7 +58,9 @@ public class SentenceView extends ViewGroup {
         if (Engine.isEmpty()) {
             children = LanguageSelector.keys;
             removeAllViews();
-            for (int i = 0; i < 9; i++) sentenceButtons[i].setText(null);
+            for (int i = 0; i < 9; i++)
+                sentenceButtons[i].setText('\0');
+//                sentenceButtons[i].setText(null);
             for (View i : children) addView(i);
             return;
         }
@@ -65,23 +69,23 @@ public class SentenceView extends ViewGroup {
         final int length = sentence.length();
 
         for (int i = 0; i < length; i++) {
-            final String s = sentence.substring(i, i + 1);
+//            final String s = sentence.substring(i, i + 1);
             final SentenceButton sb = sentenceButtons[i];
-            if (sb.text != null && sb.text.charAt(0) == s.charAt(0)) continue;
-            sb.setText(s);
+            if (sb.text != null && sb.text.charAt(0) == sentence.charAt(i)) continue;
+            sb.setText(sentence.charAt(i));
         }
         for (int i = length; i < 9; i++) {
             final SentenceButton sb = sentenceButtons[i];
-            if (sb.text == null) continue;
-            sb.setText(null);
+            if (sb.textLayout == null) continue;
+            sb.setText('\0');
         }
     }
 
     public void consonantPreview(String text) {
         addSentenceButtons();
         final int length = Engine.getLength();
-        sentenceButtons[length].setText(text);
-        sentenceButtons[length].invalidate();
+        sentenceButtons[length].setText(text.charAt(0));
+//        sentenceButtons[length].invalidate();
     }
 
     @Override

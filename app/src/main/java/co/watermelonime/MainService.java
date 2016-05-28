@@ -20,6 +20,7 @@ import java.util.concurrent.Future;
 import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
+import co.watermelonime.Core.BufferedSplitter;
 import co.watermelonime.Core.Engine;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
@@ -53,6 +54,7 @@ public class MainService extends InputMethodService {
         C.mainService = this;
         Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_DISPLAY);
         C.threadPool = Executors.newFixedThreadPool(3);
+        BufferedSplitter.init();
     }
 
     public static View getStartupView() {
@@ -126,7 +128,6 @@ public class MainService extends InputMethodService {
             Timer.t(24, "f4");
             return null;
         });
-
 
 
 

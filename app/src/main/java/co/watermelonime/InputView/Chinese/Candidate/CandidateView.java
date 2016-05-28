@@ -37,7 +37,7 @@ public class CandidateView extends ViewGroup {
         C.candidateView.removeAllViews();
     }
 
-    public static void setCandidate(ArrayList<String> list, int start, int end, int type) {
+    public static void setCandidate(ArrayList<StringBuilder> list, int start, int end, int type) {
         Timer.t(8);
         if (end - start == 0) return;
         int totalWidth = 0;

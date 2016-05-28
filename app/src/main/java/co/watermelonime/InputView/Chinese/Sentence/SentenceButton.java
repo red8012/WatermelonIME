@@ -19,8 +19,8 @@ public class SentenceButton extends View {
     static RectF rect;
     public float dx, dy;
     public int index; // the i-th sentence button
-    public String text;
-    Layout textLayout, originalTextLayout;
+    public StringBuilder text = new StringBuilder("　");
+    Layout textLayout, whiteTextLayout, blackTextLayout;
 
     public SentenceButton(int index) {
         super(C.mainService);
@@ -32,13 +32,16 @@ public class SentenceButton extends View {
             rect = new RectF(Size.u / 2, 0, Size.WSentenceView, Size.HSentenceButton);
         }
         setMeasuredDimension(Size.WSentenceView, Size.HSentenceButton);
+        whiteTextLayout = Font.sentence.makeDynamic(text, Size.WSentenceView);
+        blackTextLayout = Font.sentenceSelected.makeDynamic(text, Size.WSentenceView);
     }
 
-    public void setText(final String s) {
-        text = s;
-        if (s == null) textLayout = null;
+    public void setText(char s) {
+        if (s == '\0') textLayout = null;
         else {
-            textLayout = Font.sentence.make(text, Size.WSentenceView);
+            text.setLength(0);
+            text.append(s);
+            textLayout = whiteTextLayout;
             dx = Size.WSentenceView / 2;
             dy = (Size.HSentenceButton - textLayout.getHeight()) / 2;
         }

@@ -4,7 +4,6 @@ import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import co.watermelonime.C;
 
@@ -27,9 +26,9 @@ public class Engine {
             ziOrig = new StringBuilder(32),   // before dict select
             sentence = new StringBuilder(32);
     public final static ArrayList<String> dictResult = new ArrayList<>(16);
-    final static String[][][] queryResult = new String[10][][]; // [length][start at][i]
-    final static ArrayList<String> candidateLeft = new ArrayList<>(8);
-    final static ArrayList<String> candidateRight = new ArrayList<>(16);
+    final static ArrayList<StringBuilder>[][] queryResult = new ArrayList[10][]; // [length][start at][i]
+    final static ArrayList<StringBuilder> candidateLeft = new ArrayList<>(8);
+    final static ArrayList<StringBuilder> candidateRight = new ArrayList<>(16);
     final static String[] qs = {
             "select * from(",
             "select group_concat(c)from(select c from s",
@@ -70,7 +69,7 @@ public class Engine {
 
         Transform.init();
         for (int i = 1; i <= 9; i++)
-            queryResult[i] = new String[9 - i + 1][];
+            queryResult[i] = new ArrayList[9 - i + 1];
         // warm up engine
         final String[]
                 p = {"GuLbFaTiKhLnLrWbLu", "E1SuCaH8Kj"},
@@ -95,6 +94,7 @@ public class Engine {
         sentence.setLength(0);
         for (int i = 1; i <= 9; i++)
             for (int j = 0; j < 9 - i + 1; j++) {
+                BufferedSplitter.releaseArrayList(queryResult[i][j]);
                 queryResult[i][j] = null;
             }
         candidateLeft.clear();
@@ -187,7 +187,20 @@ public class Engine {
         int i = 1, end = getLength();
         while (cursor.moveToNext()) {
             String result = cursor.getString(0); // 0 based
-            queryResult[i][end - i] = result == null ? null : result.split(",");
+//            System.out.println("STRING: " + result);
+//            queryResult[i][end - i] = result == null ? null : result.split(",");
+
+            ArrayList<StringBuilder> list = queryResult[i][end - i];
+                BufferedSplitter.releaseArrayList(list);
+            queryResult[i][end - i] = result == null ? null : BufferedSplitter.split(result);
+
+//            if (result != null) {
+//
+//                for (CharSequence s : queryResult[i][end - i])
+//                    System.out.print(s + "/");
+//                System.out.println("#");
+//            }
+
             i++;
         }
         cursor.close();
@@ -223,7 +236,8 @@ public class Engine {
         int counter = 0;
         sentence.setLength(0);
         for (int i : separatorAnswer) {
-            sentence.append(queryResult[i][counter][0]);
+//            sentence.append(queryResult[i][counter][0]);
+            sentence.append(queryResult[i][counter].get(0));
             counter += i;
         }
         // force apply character lock
@@ -238,7 +252,10 @@ public class Engine {
         candidateLeft.clear();
         for (int i = getLength() - 1; i > 0; i--)
             if (queryResult[i][0] != null)
-                Collections.addAll(candidateLeft, queryResult[i][0]);
+                for (StringBuilder sb: queryResult[i][0])
+                    candidateLeft.add(sb);
+//                candidateLeft.addAll(queryResult[i][0]);
+//                Collections.addAll(candidateLeft, queryResult[i][0]);
     }
 
     public static void makeCandidateRight() {
@@ -246,7 +263,10 @@ public class Engine {
         candidateRight.clear();
         for (int i = getLength(); i > 0; i--)
             if (queryResult[i][length - i] != null)
-                Collections.addAll(candidateRight, queryResult[i][length - i]);
+                for (StringBuilder sb: queryResult[i][length - i])
+                    candidateRight.add(sb);
+//                candidateRight.addAll(queryResult[i][length - i]);
+//                Collections.addAll(candidateRight, queryResult[i][length - i]);
     }
 
     public static String pop(final int popLength) {
@@ -265,11 +285,13 @@ public class Engine {
         int newLength = originalLength - popLength;
         for (int i = 1; i <= newLength; i++)
             for (int j = 0; j <= newLength - i; j++) {
+                BufferedSplitter.releaseArrayList(queryResult[i][j]);
                 queryResult[i][j] = queryResult[i][j + popLength];
                 queryResult[i][j + popLength] = null;
             }
         for (int i = 1; i <= originalLength; i++)
             for (int j = Math.max(newLength - i + 1, 0); j <= originalLength - i; j++) {
+                BufferedSplitter.releaseArrayList(queryResult[i][j]);
                 queryResult[i][j] = null;
             }
 
@@ -300,6 +322,7 @@ public class Engine {
             ziLock.delete(end - 1, end);
             ziOrig.delete(end - 1, end);
             for (int start = 0; start < end; start++) {
+                BufferedSplitter.releaseArrayList(queryResult[end - start][start]);
                 queryResult[end - start][start] = null;
             }
         }
