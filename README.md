@@ -16,7 +16,7 @@ July	Release
 3. [5/29] @ sign on email
 4. [5/29] punctuation auto return (English)
 5. [5/29]~~optimize drawing (candidate 2274~2365, size=110300~120856)~~
-6. [5/29] Or (學), Nr
+6. [5/29] ~~Or (學), Nr~~
 7. [5/19]~~bug fix(displaySentence, displayPreview), monkey test~~
 8. [] clean up code
 9. [ok] ~~Navigation keys~~

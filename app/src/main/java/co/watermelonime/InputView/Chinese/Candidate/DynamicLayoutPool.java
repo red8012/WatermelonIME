@@ -13,7 +13,6 @@ public class DynamicLayoutPool {
     public static ArrayList<StringBuilder>[] span = new ArrayList[10]; // span[length]
 
     public static void init() {
-        DynamicLayout[] temp = new DynamicLayout[16];
         for (int length = 1; length < 10; length++) {
             int numberOfDefaultLayouts = 10 - length;
             if (length == 1) numberOfDefaultLayouts = 16;
@@ -22,11 +21,13 @@ public class DynamicLayoutPool {
             pool[length] = new ArrayList<>(numberOfDefaultLayouts);
             span[length] = new ArrayList<>(numberOfDefaultLayouts);
 
-            for (int i = 0; i < numberOfDefaultLayouts; i++)
-                temp[i] = get("123456789".substring(0, length));
-
-            for (int i = 0; i < numberOfDefaultLayouts; i++)
-                release(temp[i]);
+            for (int i = 0; i < numberOfDefaultLayouts; i++) {
+                StringBuilder content = new StringBuilder("123456789".substring(0, length));
+                DynamicLayout dynamicLayout = Font.candidate.makeDynamic(content,
+                        (int) (Size.FCandidate * length));
+                span[length].add(content);
+                pool[length].add(dynamicLayout);
+            }
         }
     }
 
@@ -55,5 +56,4 @@ public class DynamicLayoutPool {
         span[length].add(sb);
         pool[length].add(dynamicLayout);
     }
-
 }
