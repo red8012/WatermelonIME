@@ -109,6 +109,7 @@ Allocations   Size
    1824       71,268    DynamicLayout (hot)
    1670       94,482    sentence DynamicLayout (cold)
    1382       55,972    sentence DynamicLayout (hot)
+   1351       54,392    356 -> 288 improve performance
 ```
 
 
