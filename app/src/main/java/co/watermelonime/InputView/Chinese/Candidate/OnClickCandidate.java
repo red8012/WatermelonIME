@@ -12,7 +12,7 @@ public class OnClickCandidate implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (ChineseKeyboard.currentKeys != Consonants.keys) return; // TODO: 2016/3/4 can remove if hint is enabled
+        if (ChineseKeyboard.currentKeys != Consonants.keys) return;
         CharSequence zi = ((CandidateButton) v).text;
         if (((CandidateButton) v).type == CandidateButton.BOTTOM) {
             String sentence = Engine.getSentence();
@@ -20,14 +20,13 @@ public class OnClickCandidate implements View.OnClickListener {
             C.commit(sentence);
             Engine.clear();
         } else {
+            C.commit(zi);
             try {
                 Engine.pop(zi.length());
             } catch (Exception e) {
                 e.printStackTrace();
-                Engine.clear();  // TODO: 2016/3/1 should clear everything
+                Engine.clear();
             }
-            C.commit(zi);
-
         }
         C.sentenceView.display();
         Controller.displayCandidates();
