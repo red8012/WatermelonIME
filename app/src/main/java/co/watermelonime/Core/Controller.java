@@ -7,6 +7,10 @@ import co.watermelonime.Common.Timer;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Candidate.NavigationKey;
+import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
+import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
+import co.watermelonime.InputView.Chinese.Keyboard.OnTouchConsonant;
+import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
 
 public class Controller {
     private static ArrayList<String> arrayList = new ArrayList<>(16);
@@ -113,7 +117,15 @@ public class Controller {
             return;
         }
 
-        if (Engine.getLength() == 1) { // candidate should fill both when only character typed
+        if (ChineseKeyboard.currentKeys != Consonants.keys) {
+            for (int id = 0; id < Vowels.keyArray.length; id++)
+                if (ChineseKeyboard.currentKeys == Vowels.keyArray[id]) {
+                    OnTouchConsonant.fillInPredictionAndCharacterKeys(id);
+                    return;
+                }
+        }
+
+        if (Engine.getLength() == 1) { // candidate should fill both when only one character typed
             int leftLength = 8, rightLength = 8;
             int totalLength = Engine.candidateRight.size();
             if (totalLength < 16) {

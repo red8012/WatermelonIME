@@ -15,7 +15,6 @@ public class OnTouchVowel implements View.OnTouchListener {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 ChineseKey key = (ChineseKey) v;
-//                if (key.action == ChineseKey.CONSONANT) {
                 C.chineseKeyboard.setKeys(Consonants.keys);
                 Timer.t(375);
                 Controller.add(key.pinyin, '?');

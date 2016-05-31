@@ -1,5 +1,6 @@
 package co.watermelonime.InputView.Chinese.Keyboard;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -16,9 +17,21 @@ public class OnTouchConsonant implements View.OnTouchListener {
             'C', 'G', 'K', 'O', 'S', 'W',
             'D', 'H', 'L', 'T'};
 
+    public static void fillInPredictionAndCharacterKeys(int id) {
+        if (id != 20)  // if not IUV
+            C.candidateView.addView(PredictionKey.placeholder);
+
+        // fill in character locks
+        for (CharacterKey k : CharacterKey.keys[id])
+            C.candidateView.addView(k);
+    }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (event.getPointerCount()!=1) return true;
+        if (event.getPointerCount() != 1) {
+            Log.e("OnTouchConsonant", "multi touched");
+            return true;
+        }
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 ChineseKey key = (ChineseKey) v;
@@ -27,17 +40,8 @@ public class OnTouchConsonant implements View.OnTouchListener {
                 Controller.add(keyCode, '\0');
                 C.chineseKeyboard.setKeys(Vowels.keyArray[id]);
                 C.sentenceView.consonantPreview((String) key.mainText.getText());
-
-                if (id != 20) { // if not IUV
-                    C.candidateView.addView(PredictionKey.placeholder);
-                }
-
-                // fill in character locks
-                for (CharacterKey k : CharacterKey.keys[id])
-                    C.candidateView.addView(k);
-
+                fillInPredictionAndCharacterKeys(id);
                 System.out.println("OnTouchConsonant: " + keyCode);
-
                 Engine.queryPrediction();
         }
         return true;
