@@ -42,6 +42,11 @@ July	Release
 27. http://pinyin4j.sourceforge.net
 28. 繪
 
+## Optimization Opportunities
+
+1. Commit without toString().
+2. Don't set sql StringBuilder to empty.
+
 ## Settings
 
 1. Reset database

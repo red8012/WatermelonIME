@@ -5,6 +5,7 @@ import android.view.View;
 
 import co.watermelonime.C;
 import co.watermelonime.Core.Controller;
+import co.watermelonime.Core.Engine;
 import co.watermelonime.InputView.Chinese.Candidate.CharacterKey;
 import co.watermelonime.InputView.Chinese.Candidate.PredictionKey;
 
@@ -36,6 +37,8 @@ public class OnTouchConsonant implements View.OnTouchListener {
                     C.candidateView.addView(k);
 
                 System.out.println("OnTouchConsonant: " + keyCode);
+
+                Engine.queryPrediction();
         }
         return true;
     }

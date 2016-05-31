@@ -1,5 +1,7 @@
 package co.watermelonime.InputView.Chinese.Candidate;
 
+import android.text.DynamicLayout;
+
 import java.util.ArrayList;
 
 public class DictButton extends CandidateButton {
@@ -29,5 +31,6 @@ public class DictButton extends CandidateButton {
 
     public void release() {
         pool.add(this);
+        DynamicLayoutPool.release((DynamicLayout) textLayout);
     }
 }

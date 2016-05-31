@@ -6,6 +6,7 @@ import net.sqlcipher.database.SQLiteDatabase;
 import java.util.ArrayList;
 
 import co.watermelonime.C;
+import co.watermelonime.Common.Timer;
 
 public class Engine {
     public static final int separator[][][] = {
@@ -38,14 +39,27 @@ public class Engine {
             "order by o))",
             "select group_concat(c)from(select distinct c from s"
     };
+    final static String[] pq = {
+            "select c from(",
+            "select c,o from s",
+            " where p glob'",
+            "'and c glob'",
+            "'union all ",
+            "')order by o limit 3"
+    };
+    final static ArrayList<StringBuilder> predictionResults = new ArrayList<>(3);
     final static String[] arg = new String[1];
     static SQLiteDatabase db;
     static Cursor cursor = null;
     static int separatorAnswer[];
+    static StringBuilder pSQL = new StringBuilder(2048);
 
     public static void init() throws Exception {
         // open DB
         android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
+        for (int i = 0; i < 3; i++)
+            predictionResults.add(new StringBuilder(9));
+
         if (db != null && db.isOpen()) return;
         SQLiteDatabase.loadLibs(C.mainService);
         db = SQLiteDatabase.openDatabase(
@@ -161,7 +175,7 @@ public class Engine {
         sql.append(qs[2]); //  where p in(
         Transform.expandQuery(pinyin, pinyinLength - 2);
         sql.append(')');
-        if (needGlobbing(length-1, length)) {
+        if (needGlobbing(length - 1, length)) {
             sql.append(qs[3]); // and c glob'
             sql.append(ziLock, length - 1, length);
             sql.append('\'');
@@ -275,24 +289,18 @@ public class Engine {
                 for (int j = 0; j < end; j++)
                     candidateLeft.add(list.get(j));
             }
-//                for (StringBuilder sb : queryResult[i][0])
-//                    candidateLeft.add(sb);
     }
 
     public static void makeCandidateRight() {
         int length = getLength();
         candidateRight.clear();
         for (int i = getLength(); i > 0; i--)
-            if (queryResult[i][length - i] != null){
+            if (queryResult[i][length - i] != null) {
                 ArrayList<StringBuilder> list = queryResult[i][length - i];
                 int end = list.size();
                 for (int j = 0; j < end; j++)
                     candidateRight.add(list.get(j));
             }
-//                for (StringBuilder sb : queryResult[i][length - i])
-//                    candidateRight.add(sb);
-//                candidateRight.addAll(queryResult[i][length - i]);
-//                Collections.addAll(candidateRight, queryResult[i][length - i]);
     }
 
     public static String pop(final int popLength) {
@@ -365,6 +373,52 @@ public class Engine {
         } else {
             pinyin.delete(length - 1, length);
         }
+    }
+
+    public static void queryPrediction() {
+        if (pinyin.length() < 3) return;
+        Timer.t(847);
+        int resultCount = 0;
+        pSQL.setLength(0);
+        for (int i = 0; i < 3; i++)
+            predictionResults.get(i).setLength(0);
+
+        int len = pinyin.length();
+        for (int start = 0; start < len; start += 2) {
+            pSQL.setLength(0);
+            for (int end = len + 1; end <= 18; end += 2) {
+                if (end == len + 1) pSQL.append(pq[0]);
+                else pSQL.append(pq[4]); // ' union all
+                pSQL.append(pq[1]); // select c, o from s
+                pSQL.append((end - start) / 2);
+                pSQL.append(pq[2]); //  where p glob '
+                pSQL.append(pinyin, start, len);
+                for (int i = len; i < end; i++)
+                    pSQL.append('?');
+                pSQL.append(pq[3]); // ' and c glob '
+                pSQL.append(ziOrig, start / 2, len / 2);
+                for (int i = len; i < end; i += 2)
+                    pSQL.append('?');
+            }
+            pSQL.append(pq[5]);
+
+//            System.out.println(pSQL);
+            Cursor pCursor = db.rawQuery(pSQL.toString(), null);
+            boolean shouldBreak = false;
+            while (pCursor.moveToNext()) {
+                predictionResults.get(resultCount++).append(pCursor.getString(0));
+                if (resultCount >= 3) {
+                    shouldBreak = true;
+                    break;
+                }
+            }
+            if (shouldBreak) break;
+        }
+        Timer.t(847, "Query prediction");
+
+        for (int i = 0; i < 3; i++)
+            System.out.print(" " + predictionResults.get(i));
+        System.out.println();
     }
 }
 
