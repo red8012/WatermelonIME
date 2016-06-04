@@ -1,6 +1,7 @@
 package co.watermelonime.InputView.Chinese.Candidate;
 
 import android.text.DynamicLayout;
+import android.text.Layout;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class DynamicLayoutPool {
         if (p.isEmpty()) {
             StringBuilder content = new StringBuilder(text);
             dynamicLayout = Font.candidate.makeDynamic(content, (int) (Size.FCandidate * length));
-            Log.e("dynamic layout pool", "empty");
+            Log.e("dynamic layout pool", "empty: " + length);
         } else {
             dynamicLayout = p.remove(p.size() - 1);
             StringBuilder content = s.remove(s.size() - 1);
@@ -50,10 +51,10 @@ public class DynamicLayoutPool {
         return dynamicLayout;
     }
 
-    public static void release(DynamicLayout dynamicLayout) {
+    public static void release(Layout dynamicLayout) {
         StringBuilder sb = (StringBuilder) dynamicLayout.getText();
         int length = sb.length();
         span[length].add(sb);
-        pool[length].add(dynamicLayout);
+        pool[length].add((DynamicLayout) dynamicLayout);
     }
 }

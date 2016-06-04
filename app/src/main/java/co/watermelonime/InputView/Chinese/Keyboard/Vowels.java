@@ -63,8 +63,13 @@ public class Vowels {
         C.threadPool.submit(() -> {
             Timer.t(14);
             Process.setThreadPriority(Process.THREAD_PRIORITY_DISPLAY);
-            buildKeys();
-            Consonants.addListeners();
+            try{
+                buildKeys();
+                Consonants.addListeners();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
             Timer.t(14, "build keys async");
         });
     }

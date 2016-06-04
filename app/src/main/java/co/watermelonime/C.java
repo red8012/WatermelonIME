@@ -29,6 +29,8 @@ public class C {
     public static EmojiKeyboard emojiKeyboard;
     public static NumberKeyboard numberKeyboard;
     public static EnglishKeyboard englishKeyboard;
+    public static StringBuilder commitBuffer = new StringBuilder(9);
+
 
     public static void commit(CharSequence text) {
         if (MainService.inputConnection != null)
@@ -37,5 +39,9 @@ public class C {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+    }
+
+    public static void commit() {
+        commit(commitBuffer);
     }
 }

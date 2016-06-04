@@ -18,7 +18,7 @@ public class OnTouchEnter implements View.OnTouchListener {
                 if (Engine.isEmpty()) {
                     C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_ENTER);
                 } else {
-                    C.commit(Engine.getSentence());
+                    C.commit(Engine.sentence);
                     Engine.clear();
                     C.sentenceView.display();
                     Controller.displayCandidates();

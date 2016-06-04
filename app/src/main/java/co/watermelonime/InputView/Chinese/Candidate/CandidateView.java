@@ -29,8 +29,6 @@ public class CandidateView extends ViewGroup {
                 ((DictButton) child).release();
             else if (cls == DictTitle.class)
                 ((DictTitle) child).release();
-//            else if (cls == CharacterKey.class)
-//                ((CharacterKey) child).release();
             else if (cls == CandidateButton.class)
                 ((CandidateButton) child).release();
         }
@@ -57,7 +55,6 @@ public class CandidateView extends ViewGroup {
             c.setText(list.get(j), padding, j < end - 1, type);
             C.candidateView.addView(c);
         }
-
         Timer.t(8, "set candidate" + type);
     }
 

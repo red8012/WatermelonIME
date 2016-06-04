@@ -9,15 +9,18 @@ import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 
 public class OnClickCandidate implements View.OnClickListener {
-
     @Override
     public void onClick(View v) {
         if (ChineseKeyboard.currentKeys != Consonants.keys) return;
         CharSequence zi = ((CandidateButton) v).text;
         if (((CandidateButton) v).type == CandidateButton.BOTTOM) {
-            String sentence = Engine.getSentence();
-            sentence = sentence.substring(0, sentence.length() - zi.length()) + zi;
-            C.commit(sentence);
+            C.commitBuffer.setLength(0);
+            C.commitBuffer.append(Engine.sentence, 0, Engine.sentence.length()- zi.length());
+            C.commitBuffer.append(zi);
+            C.commit();
+//            String sentence = Engine.getSentence();
+//            sentence = sentence.substring(0, sentence.length() - zi.length()) + zi;
+//            C.commit(sentence);
             Engine.clear();
         } else {
             C.commit(zi);

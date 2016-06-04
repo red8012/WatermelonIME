@@ -1,19 +1,29 @@
 package co.watermelonime.Core;
 
-import java.util.ArrayList;
-
 import co.watermelonime.C;
 import co.watermelonime.Common.Timer;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Candidate.NavigationKey;
+import co.watermelonime.InputView.Chinese.Candidate.PredictionArea;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 import co.watermelonime.InputView.Chinese.Keyboard.OnTouchConsonant;
 import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
 
 public class Controller {
-    private static ArrayList<String> arrayList = new ArrayList<>(16);
+    public static Runnable predict = () -> {
+        try {
+            Engine.queryPrediction();
+            C.candidateView.post(() -> {
+                PredictionArea.setPrediction(
+                        Engine.predictionResults, Engine.predictionStartPosition
+                );
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    };
 
     public static void init() {
 
@@ -34,32 +44,32 @@ public class Controller {
                 C.sentenceView.display();
             }
             Engine.add(pinyin);
-        } else {
+            return;
+        }
+        try {
             Engine.add(pinyin, characterLock);
             Engine.queryDB();
 
             Timer.t(111);
             Engine.readQueryResult();
             Timer.t(111, "read");
-            try {
-                Engine.makeSeparator();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Engine.clear();
-                C.sentenceView.display();
-                displayCandidates();
-                return;
-            }
-
-            Engine.makeSentence();
-            Engine.makeCandidateLeft();
-            Engine.makeCandidateRight();
-
+            Engine.makeSeparator();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Engine.clear();
             C.sentenceView.display();
-            Timer.t(444);
             displayCandidates();
-            Timer.t(444, "candidate display");
+            return;
         }
+
+        Engine.makeSentence();
+        Engine.makeCandidateLeft();
+        Engine.makeCandidateRight();
+
+        C.sentenceView.display();
+        Timer.t(444);
+        displayCandidates();
+        Timer.t(444, "candidate display");
     }
 
     /**
@@ -123,6 +133,7 @@ public class Controller {
                     OnTouchConsonant.fillInPredictionAndCharacterKeys(id);
                     return;
                 }
+            return;
         }
 
         if (Engine.getLength() == 1) { // candidate should fill both when only one character typed

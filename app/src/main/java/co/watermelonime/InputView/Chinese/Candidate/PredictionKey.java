@@ -1,18 +1,40 @@
 package co.watermelonime.InputView.Chinese.Candidate;
 
-import co.watermelonime.Common.Size;
+import android.view.MotionEvent;
+
+import co.watermelonime.C;
+import co.watermelonime.Core.Controller;
+import co.watermelonime.Core.Engine;
+import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 
 public class PredictionKey extends CandidateButton {
-    public static PredictionKey placeholder;
+    public final static OnTouchListener onTouchListener = (v, event) -> {
+        if (event.getActionMasked() != MotionEvent.ACTION_DOWN) return true;
+        if (event.getPointerCount() != 1) return true;
+        PredictionKey key = ((PredictionKey) v);
+        CharSequence text = key.text;
+        int position = key.startPosition;
+        C.commitBuffer.setLength(0);
+        C.commitBuffer.append(Engine.sentence, 0, position);
+        C.commitBuffer.append(text);
+        C.commit();
+        Engine.clear();
+        C.chineseKeyboard.setKeys(Consonants.keys);
+        C.sentenceView.display();
+        Controller.displayCandidates();
+        return true;
+    };
+    public static PredictionKey[] keys = new PredictionKey[3];
+    public int startPosition;
 
     public PredictionKey() {
         super();
     }
 
     public static void init() {
-        placeholder = new PredictionKey();
-        placeholder.setOnTouchListener(null);
-        placeholder.setMeasuredDimension(Size.WCandidateView, Size.HCandidateVisible / 2);
+        for (int i = 0; i < 3; i++) {
+            keys[i] = new PredictionKey();
+            keys[i].setOnTouchListener(onTouchListener);
+        }
     }
-
 }

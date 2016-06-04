@@ -2,7 +2,6 @@ package co.watermelonime.InputView.Chinese.Candidate;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.text.DynamicLayout;
 import android.text.Layout;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +19,6 @@ public class CandidateButton extends View {
     public float dx, dy;
     int type = 0;
     int width;
-//    String text;
     CharSequence text;
     Layout textLayout;
     boolean needSeparator = true;
@@ -31,6 +29,8 @@ public class CandidateButton extends View {
     }
 
     public static void init() {
+        CandidateButton.separatorPaint.setColor(0xFF666666);
+        CandidateButton.separatorPaint.setStrokeWidth(Size.WSeparator);
         for (int i = 0; i < 16; i++) {
             pool.add(new CandidateButton());
         }
@@ -41,8 +41,7 @@ public class CandidateButton extends View {
         if (pool.isEmpty()) {
             d = new CandidateButton();
             Log.e("pool", "empty");
-        }
-        else
+        } else
             d = pool.remove(pool.size() - 1);
         return d;
     }
@@ -60,7 +59,8 @@ public class CandidateButton extends View {
 
     public void release() {
         pool.add(this);
-        DynamicLayoutPool.release((DynamicLayout) textLayout);
+        DynamicLayoutPool.release(textLayout);
+        textLayout = null;
     }
 
     public void setText(CharSequence s, int padding, boolean separator, int paddingTopBottom) {
@@ -69,10 +69,12 @@ public class CandidateButton extends View {
         this.type = paddingTopBottom;
         needSeparator = separator;
         setMeasuredDimension(width, (int) (Size.HCandidateRow + (paddingTopBottom == 0 ? 0 : Size.u / 2)));
+        // should not release textLayout here!!!
+
         if (s == null) textLayout = null;
         else {
-//            textLayout = Font.candidate.make(text, width);
             textLayout = DynamicLayoutPool.get(s);
+
             dx = width / 2;
             dy = (Size.HCandidateRow - textLayout.getHeight()) / 2 +
                     (paddingTopBottom == TOP ? Size.u / 2 : 0);

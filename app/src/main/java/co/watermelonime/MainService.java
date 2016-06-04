@@ -31,7 +31,6 @@ import co.watermelonime.InputView.Chinese.Candidate.DynamicLayoutPool;
 import co.watermelonime.InputView.Chinese.Candidate.NavigationKey;
 import co.watermelonime.InputView.Chinese.Candidate.PredictionKey;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
-import co.watermelonime.InputView.Chinese.Common;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
@@ -101,11 +100,13 @@ public class MainService extends InputMethodService {
 
         Timer.t(1);
         C.context = TintContextWrapper.wrap(C.mainService);
-        Common.initialize();
+        Consonants.buildKeys();
+        Timer.t(1, "Build consonants");
 
         // async task 2
         Future f2= C.threadPool.submit(() -> {
             Timer.t(22);
+            Process.setThreadPriority(Process.THREAD_PRIORITY_DISPLAY);
             C.numberKeyboard = new NumberKeyboard();
             C.englishKeyboard = new EnglishKeyboard();
             C.emojiKeyboard = new EmojiKeyboard();
@@ -119,6 +120,7 @@ public class MainService extends InputMethodService {
         // async task 4
         C.threadPool.submit(() -> {
             Timer.t(24);
+            Process.setThreadPriority(Process.THREAD_PRIORITY_DISPLAY);
             CharacterKey.init();
             PredictionKey.init();
             DynamicLayoutPool.init();
@@ -129,10 +131,6 @@ public class MainService extends InputMethodService {
             return null;
         });
 
-
-
-        Consonants.buildKeys();
-        Timer.t(1, "Build consonants");
 
         Timer.t(3);
         C.chineseKeyboard = new ChineseKeyboard();
