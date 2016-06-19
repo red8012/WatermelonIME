@@ -2,23 +2,24 @@ package co.watermelonime.Core;
 
 public class Transform {
     private static final char[][] targets = {
-            {'a', 'e'} ,
-            {'a', 'f'} ,
-            {'a', 'f', 'b'} ,
-            {'c', 'b'} ,
-            {'c', 'b', 'i'} ,
-            {'c', 'f'} ,
-            {'c', 'g', 'v', 'b'} ,
-            {'c', 'j'} ,
-            {'c', 's'} ,
-            {'c', 'u'} ,
-            {'e', 'm'} ,
-            {'f', 'b'} ,
+            {'a', 'e'},
+            {'a', 'f'},
+            {'a', 'f', 'b'},
+            {'c', 'b'},
+            {'c', 'b', 'i'},
+            {'c', 'f'},
+            {'c', 'g', 'v', 'b'},
+            {'c', 'j'},
+            {'c', 's'},
+            {'c', 'u'},
+            {'e', 'm'},
+            {'f', 'b'},
     };
     private static final char[][] alphabets = new char[52][];
     private static final char[][] data = new char[18][]; // stores possible pinyin codes at each position
     private static final int[] lengths = new int[18]; // stores number of possible pinyin expansion at that position
     private static final int[] indices = new int[18]; // stores current index that represents the combination
+    static StringBuilder sb = new StringBuilder(18);
     private static int end;
 
     public static void init() {
@@ -30,8 +31,30 @@ public class Transform {
             alphabets[i] = new char[]{(char) (i + 71)}; // a~z
     }
 
-    public static void expandQuery(final StringBuilder pinyin, final int start) {
-        StringBuilder result = Engine.sql;
+    public static String toGlob(final CharSequence pinyin, final int start) {
+        sb.setLength(0);
+        int len = pinyin.length();
+        for (int i = start; i < len; i++) {
+            char code = pinyin.charAt(i);
+            if ('+' <= code && code <= '9')
+                code = '?';
+            sb.append(code);
+        }
+        return sb.toString();
+    }
+
+    public static boolean needTransform(CharSequence pinyin) {
+        int len = pinyin.length();
+        for (int i = 0; i < len; i++) {
+            char code = pinyin.charAt(i);
+            if ('+' <= code && code <= '9')
+                return true;
+        }
+        return false;
+    }
+
+    public static void expandQuery(CharSequence pinyin, int start, StringBuilder result) {
+//        StringBuilder result = Engine.sql;
         end = pinyin.length() - 1 - start;
 
         // fill in data, lengths, indices
@@ -57,7 +80,7 @@ public class Transform {
             if (isHead) {
                 result.append('\'');
                 isHead = false;
-            } else result.append("', '");
+            } else result.append("','");
             for (int i = 0; i <= end; i++)
                 result.append(data[i][indices[i]]);
         }

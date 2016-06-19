@@ -1,6 +1,5 @@
 package co.watermelonime.InputView.Chinese.Candidate;
 
-import android.text.Layout;
 import android.util.Log;
 
 import co.watermelonime.Common.Size;
@@ -13,14 +12,15 @@ public class PredictionArea extends CandidateView {
         setMeasuredDimension(Size.WCandidateView, Size.HCandidateVisible / 2);
     }
 
-    public static void setPrediction(StringBuilder[] list, int[] startPositions) {
+    public static void setPrediction(String[] list, int[] startPositions, StringBuilder[] pinyin) {
         area.removeAllViews();
         int totalWidth = 0;
         int count = 0;
         for (int i = 0; i < 3; i++) {
-            Layout layout = PredictionKey.keys[i].textLayout;
-            if (layout != null) DynamicLayoutPool.release(layout);
-            StringBuilder s = list[i];
+//            Layout layout = PredictionKey.keys[i].textLayout;
+//            if (layout != null) DynamicLayoutPool.release(layout);
+            String s = list[i];
+            if (s == null) break;
             if (s.length() == 0) break;
             int w = CandidateButton.calculateMinWidth(s);
             if (totalWidth + w > Size.WCandidateView) break;
@@ -32,8 +32,9 @@ public class PredictionArea extends CandidateView {
         for (int i = 0; i < count; i++) {
             PredictionKey k = PredictionKey.keys[i];
             k.startPosition = startPositions[i];
+            k.pinyin = pinyin[i];
             k.setText(list[i], padding, i < count - 1, CandidateButton.TOP);
-            System.out.println("setPrediction: "+ list[i]);
+//            System.out.println("setPrediction: "+ list[i]);
             area.addView(k);
         }
         area.layout(0, 0, 0, 0);

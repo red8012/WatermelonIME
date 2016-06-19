@@ -9,6 +9,7 @@ import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Core.Controller;
 import co.watermelonime.Core.Engine;
+import co.watermelonime.Core.Learner;
 
 public class OnTouchDel implements OnTouchListener {
     static int lastX;
@@ -28,6 +29,8 @@ public class OnTouchDel implements OnTouchListener {
                     e.printStackTrace();
                 }
                 Engine.makeSentence();
+            } else {
+                Learner.clear();
             }
             C.sentenceView.display();
             Controller.displayCandidates();

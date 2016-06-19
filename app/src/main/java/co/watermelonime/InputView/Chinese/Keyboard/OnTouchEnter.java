@@ -18,10 +18,18 @@ public class OnTouchEnter implements View.OnTouchListener {
                 if (Engine.isEmpty()) {
                     C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_ENTER);
                 } else {
-                    C.commit(Engine.sentence);
-                    Engine.clear();
-                    C.sentenceView.display();
-                    Controller.displayCandidates();
+                    Controller.commitAll();
+//                    C.commit(Engine.sentence);
+//                    Learner.learnWord(Engine.sentence.toString(), Engine.pinyin);
+//
+//                    if (Learner.wordBuffer.length() != 0) {
+//                        Learner.wordBuffer.append(Engine.sentence);
+//                        Learner.pinyinBuffer.append(Engine.pinyin);
+//                        Learner.learnFromBuffer();
+//                    }
+//                    Engine.clear();
+//                    C.sentenceView.display();
+//                    Controller.displayCandidates();
                 }
         }
         return true;

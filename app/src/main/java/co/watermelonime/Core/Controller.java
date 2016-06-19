@@ -17,7 +17,9 @@ public class Controller {
             Engine.queryPrediction();
             C.candidateView.post(() -> {
                 PredictionArea.setPrediction(
-                        Engine.predictionResults, Engine.predictionStartPosition
+                        Engine.predictionResults,
+                        Engine.predictionStartPosition,
+                        Engine.predictionPinyin
                 );
             });
         } catch (Exception e) {
@@ -153,5 +155,45 @@ public class Controller {
                 0, Engine.candidateLeft.size(), CandidateButton.TOP);
         CandidateView.setCandidate(Engine.candidateRight,
                 0, Engine.candidateRight.size(), CandidateButton.BOTTOM);
+    }
+
+    /**
+     *
+     */
+    public static void commitAll() {
+        Timer.t(419);
+        C.commit(Engine.sentence);
+//        Logger.d("Sentence: %s, ZiLock: %s, ZiOrig: %s", Engine.sentence, Engine.ziLock, Engine.ziOrig);
+
+        boolean existedAsAWhole = Learner.learnWord(Engine.sentence.toString(), Engine.pinyin);
+
+        if (!existedAsAWhole) {
+            int start, end = 0;
+            for (int i : Engine.separatorAnswer) { // learn each word
+                end += i;
+                start = end - i;
+                if (i == 1) continue;
+                boolean dirty = false;
+                for (int j = start; j < end; j++)
+                    if (Engine.ziLock.charAt(j) != Engine.ziOrig.charAt(j)) {
+                        dirty = true;
+                        break;
+                    }
+                if (dirty) continue; // new word, do not know word boundary, skip update
+
+                Learner.learnWord(Engine.sentence.substring(start, end),
+                        Engine.pinyin.substring(start * 2, end * 2));
+            }
+        }
+
+        if (Learner.wordBuffer.length() != 0) {
+            Learner.wordBuffer.append(Engine.sentence);
+            Learner.pinyinBuffer.append(Engine.pinyin);
+            Learner.learnFromBuffer();
+        }
+        Engine.clear();
+        C.sentenceView.display();
+        Controller.displayCandidates();
+        Timer.t(419, "commit all");
     }
 }

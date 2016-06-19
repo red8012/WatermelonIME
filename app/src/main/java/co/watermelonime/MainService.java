@@ -14,6 +14,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
@@ -127,6 +129,7 @@ public class MainService extends InputMethodService {
             CandidateButton.init();
             DictTitle.init();
             DictButton.init();
+            Logger.init();
             Timer.t(24, "f4");
             return null;
         });
@@ -157,6 +160,7 @@ public class MainService extends InputMethodService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         System.out.println("Service startup (includes getting future) takes " +
                 String.valueOf((System.nanoTime() - initializationTimer) / 1e6) + " ms");
     }

@@ -43,18 +43,25 @@ public class DynamicLayoutPool {
             dynamicLayout = Font.candidate.makeDynamic(content, (int) (Size.FCandidate * length));
             Log.e("dynamic layout pool", "empty: " + length);
         } else {
-            dynamicLayout = p.remove(p.size() - 1);
-            StringBuilder content = s.remove(s.size() - 1);
+            int last = p.size() - 1;
+            dynamicLayout = p.remove(last);
+            StringBuilder content = s.remove(last);
             content.setLength(0);
             content.append(text);
         }
+//        System.out.println("get "+ dynamicLayout);
         return dynamicLayout;
     }
 
     public static void release(Layout dynamicLayout) {
         StringBuilder sb = (StringBuilder) dynamicLayout.getText();
         int length = sb.length();
+
+        if (pool[length].contains(dynamicLayout))
+            System.err.println("Warn: double release " + dynamicLayout);
+
         span[length].add(sb);
         pool[length].add((DynamicLayout) dynamicLayout);
+//        System.out.println("release "+ dynamicLayout);
     }
 }

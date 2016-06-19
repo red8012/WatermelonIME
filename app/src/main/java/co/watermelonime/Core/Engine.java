@@ -35,25 +35,26 @@ public class Engine {
     final static ArrayList<StringBuilder> candidateLeft = new ArrayList<>(16);
     final static ArrayList<StringBuilder> candidateRight = new ArrayList<>(16);
     final static String[] qs = {
-            "select * from(",
-            "select group_concat(c)from(select c from s",
-            " where p in(",
-            "and c glob'",
-            "order by o)union all select group_concat(c)from(select c from s",
-            "order by o))",
-            "select group_concat(c)from(select distinct c from s"
+            "select * from(", //0
+            "select group_concat(c),group_concat(o<1000,'')from(select c,o from s", //1
+            " where p in(", //2
+            "and c glob'", //3
+            "group by c order by o)union all ", //4
+            "group by c order by o))", //5
     };
     final static int qs0Length = qs[0].length();
     final static String[] pq = {
-            "select c from(",
-            "select c,o from s",
+            "select c,p from(",
+            "select c,p,o from s",
             " where p glob'",
             "'and c glob'",
-            "'union all ",
-            "')order by o limit 3"
+            "'and o<1000 union all ",
+            "'and o<1000)group by c order by o,length(c) limit 3"
     };
     final static int pq0Length = pq[0].length();
-    final static StringBuilder[] predictionResults = new StringBuilder[3];
+    final static String[]
+            predictionResults = new String[3];
+    final static StringBuilder[] predictionPinyin = new StringBuilder[3];
     final static int[] predictionStartPosition = new int[3];
     final static String[] arg = new String[1];
     static SQLiteDatabase db;
@@ -63,18 +64,21 @@ public class Engine {
     public static void init() throws Exception {
         // open DB
         android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_DISPLAY);
+        for (int i = 0; i < predictionPinyin.length; i++) {
+            predictionPinyin[i] = new StringBuilder(18);
+        }
         sql.append(qs[0]);
         pSQL.append(pq[0]);
-        for (int i = 0; i < 3; i++)
-            predictionResults[i] = new StringBuilder(9);
+//        for (int i = 0; i < 3; i++)
+//            predictionResults[i] = new StringBuilder(9);
 
         if (db != null && db.isOpen()) return;
         SQLiteDatabase.loadLibs(C.mainService);
         db = SQLiteDatabase.openDatabase(
-                C.mainService.getDatabasePath("magician.db").getAbsolutePath(),
+                C.mainService.getDatabasePath(C.DBVersion).getAbsolutePath(),
                 "",
                 null,
-                SQLiteDatabase.OPEN_READONLY | SQLiteDatabase.NO_LOCALIZED_COLLATORS
+                SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.NO_LOCALIZED_COLLATORS
         );
 //        db.setMaxSqlCacheSize(SQLiteDatabase.MAX_SQL_CACHE_SIZE);
         db.execSQL("PRAGMA synchronous = OFF;");
@@ -107,6 +111,7 @@ public class Engine {
             }
             Engine.clear();
         }
+        Learner.init();
     }
 
     public static void clear() {
@@ -151,21 +156,6 @@ public class Engine {
 
     /**
      * STEP 1: select database
-     * <p>
-     * select * from (
-     * select group_concat(c) from (
-     * select c from s1
-     * where p in ('AaAa')
-     * and c glob '??'
-     * )
-     * union all
-     * select group_concat(c) from (
-     * select c from s1
-     * where p in ('Aa')
-     * and c glob '?'
-     * )
-     * )
-     * <p>
      * select * from(select group_concat(c)from(select distinct c from s1 where p in('Qp')and c glob'?'order by o))
      * select * from(select group_concat(c)from(select distinct c from s1 where p in('Ln')and c glob'?'order by o)union all select group_concat(c)from(select c from s2 where p in('QpLn')and c glob'??'order by o))
      */
@@ -173,10 +163,10 @@ public class Engine {
         sql.setLength(qs0Length);
         final int length = getLength(), pinyinLength = length + length;
 
-        sql.append(qs[6]); // select group_concat(c)from(select distinct c from s
+        sql.append(qs[1]); // select group_concat(c)from(select distinct c from s
         sql.append('1');
         sql.append(qs[2]); //  where p in(
-        Transform.expandQuery(pinyin, pinyinLength - 2);
+        Transform.expandQuery(pinyin, pinyinLength - 2, Engine.sql);
         sql.append(')');
         if (needGlobbing(length - 1, length)) {
             sql.append(qs[3]); // and c glob'
@@ -185,10 +175,11 @@ public class Engine {
         }
 
         for (int i = length - 2; i >= 0; i--) {
-            sql.append(qs[4]); // order by o)union all select group_concat(c)from(select c from s
+            sql.append(qs[4]); // order by o)union all
+            sql.append(qs[1]);
             sql.append(length - i);
             sql.append(qs[2]); //  where p in(
-            Transform.expandQuery(pinyin, i + i);
+            Transform.expandQuery(pinyin, i + i, Engine.sql);
             sql.append(')');
             if (needGlobbing(i, length)) {
                 sql.append(qs[3]); // and c glob'
@@ -380,20 +371,20 @@ public class Engine {
 
     public static void queryPrediction() {
         for (int i = 0; i < 3; i++)
-            predictionResults[i].setLength(0);
+            predictionResults[i] = null;
         if (pinyin.length() < 3) return;
         Timer.t(847);
         int resultCount = 0;
 
         int len = pinyin.length();
-        for (int start = 0; start < len; start += 2) {
+        for (int start = 0; start < len - 1; start += 2) {
             pSQL.setLength(pq0Length);
             for (int end = len + 1; end <= 18; end += 2) {
                 if (end != len + 1) pSQL.append(pq[4]); // ' union all
                 pSQL.append(pq[1]); // select c, o from s
                 pSQL.append((end - start) / 2);
                 pSQL.append(pq[2]); //  where p glob '
-                pSQL.append(pinyin, start, len);
+                pSQL.append(Transform.toGlob(pinyin, start));
                 for (int i = len; i < end; i++) pSQL.append('?');
                 pSQL.append(pq[3]); // ' and c glob '
                 pSQL.append(ziOrig, start / 2, len / 2);
@@ -406,7 +397,10 @@ public class Engine {
             boolean shouldBreak = false;
             while (pCursor.moveToNext()) {
                 predictionStartPosition[resultCount] = start / 2;
-                predictionResults[resultCount++].append(pCursor.getString(0));
+                predictionResults[resultCount] = pCursor.getString(0);
+                StringBuilder pp = predictionPinyin[resultCount++];
+                pp.setLength(0);
+                pp.append(pCursor.getString(1));
                 if (resultCount >= 3) {
                     shouldBreak = true;
                     pCursor.close();
@@ -420,7 +414,7 @@ public class Engine {
 
 //        for (int i = 0; i < 3; i++)
 //            System.out.print(" " + predictionResults[i]);
-        System.out.println();
+//        System.out.println();
     }
 }
 

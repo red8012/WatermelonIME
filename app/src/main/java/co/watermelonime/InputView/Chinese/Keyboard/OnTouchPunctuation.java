@@ -13,11 +13,14 @@ public class OnTouchPunctuation implements View.OnTouchListener {
         if (event.getPointerCount() != 1) return true;
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
             C.chineseKeyboard.setKeys(Consonants.keys);
-            C.commit(Engine.sentence);
-            Engine.clear();
-            C.sentenceView.display();
-            Controller.displayCandidates();
+            Engine.delConsonant(); // prevent learner error
+//            C.commit(Engine.sentence);
+//            Engine.clear();
+//            C.sentenceView.display();
+//            Controller.displayCandidates();
+            Controller.commitAll();
             C.commit(String.valueOf(((ChineseKey) v).character));
+
         }
         return true;
     }

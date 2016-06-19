@@ -18,7 +18,7 @@ July	Release
 5. [5/29]~~optimize drawing (candidate 2274~2365, size=110300~120856)~~
 6. [5/29] ~~Or (學), Nr~~
 7. [5/19]~~bug fix(displaySentence, displayPreview), monkey test~~
-8. [5/20] Chinese hint
+8. [~~5/20~~6/4] ~~Chinese hint~~
 9. [ok] ~~Navigation keys~~
 10. [5/18] Deutsch
 11. [5/16 ok] ~~auto switch language depending on context~~
@@ -26,26 +26,25 @@ July	Release
 13. URL prediction
 14. ~~English bi/tri-gram~~
 15. [low priority] gestures
-16. ​
-17. Chinese learning 
-18. Contact learning
-19. Settings
-20. Remove from database (long press)
-21. [] clean up code
-22. __Landscape Input View__
+16. Chinese learning 
+17. Contact learning
+18. Settings
+19. Remove from database (long press)
+20. [] clean up code
+21. __Landscape Input View__
     1. Chinese
     2. English
-23. [low priority] Floating input window
-24. Getting started guide
-25. Improve accuracy
-26. Website
-27. http://pinyin4j.sourceforge.net
-28. 繪
+22. [low priority] Floating input window
+23. Getting started guide
+24. Improve accuracy
+25. Website
+26. http://pinyin4j.sourceforge.net
+27. 繪
 
 ## Optimization Opportunities
 
-1. Commit without toString().
-2. Don't set sql StringBuilder to empty.
+1. ~~Commit without toString().~~
+2. ~~Don't set sql StringBuilder to empty.~~
 
 ## Settings
 
@@ -56,10 +55,17 @@ July	Release
 
 ## Meaning of Priority
 
-|    Priority    |                   < 0                    |                   >= 0                   |                  > 100                   |
+|    Priority    |                   < 0                    |                   >= 0                   |                  > 1000                  |
 | :------------: | :--------------------------------------: | :--------------------------------------: | :--------------------------------------: |
 | odd (learned)  | sentence, candidate, prediction (confirmed on 3rd time) | sentence, candidate (confirmed 2nd time on commit) | sentence, (newly learned, not in sX table) |
-| even (factory) | sentence, candidate, prediction (selected from candidate) | sentence, candidate, prediction (originally shipped in database) |                   nope                   |
+| even (factory) | sentence, candidate, prediction (selected from candidate) | sentence, candidate, prediction (originally shipped in database) |                not a word                |
+
+## Learning Tasks
+
+- [ ] Click on candidate
+- [ ] Click on dictionary
+- [ ] Click on prediction
+- [ ] On pop
 
 ## Dex optimization
 

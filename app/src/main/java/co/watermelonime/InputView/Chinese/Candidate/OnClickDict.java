@@ -5,6 +5,7 @@ import android.view.View;
 import co.watermelonime.C;
 import co.watermelonime.Core.Controller;
 import co.watermelonime.Core.Engine;
+import co.watermelonime.Core.Learner;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceButton;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
 
@@ -19,6 +20,8 @@ public class OnClickDict implements View.OnClickListener {
         DictController.closeDict();
         SentenceView.setSelected(index);
         C.chineseKeyboard.show();
+
+        Learner.learnWord(text.toString(), Engine.pinyin.substring(index * 2, index * 2 + 2));
 
         CandidateView.clearCandidates();
         Controller.displayCandidates();

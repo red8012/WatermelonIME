@@ -15,6 +15,7 @@ import co.watermelonime.InputView.English.EnglishKeyboard;
 import co.watermelonime.InputView.Number.NumberKeyboard;
 
 public class C {
+    public final static String DBVersion = "v4.db";
     public final static TimeInterpolator
             decelerate = new DecelerateInterpolator(2f);
     public static MainService mainService;
@@ -30,7 +31,6 @@ public class C {
     public static NumberKeyboard numberKeyboard;
     public static EnglishKeyboard englishKeyboard;
     public static StringBuilder commitBuffer = new StringBuilder(9);
-
 
     public static void commit(CharSequence text) {
         if (MainService.inputConnection != null)

@@ -69,12 +69,12 @@ public class CandidateButton extends View {
         this.type = paddingTopBottom;
         needSeparator = separator;
         setMeasuredDimension(width, (int) (Size.HCandidateRow + (paddingTopBottom == 0 ? 0 : Size.u / 2)));
-        // should not release textLayout here!!!
+        if (textLayout != null) DynamicLayoutPool.release(textLayout);
 
-        if (s == null) textLayout = null;
-        else {
+        if (s == null) {
+            textLayout = null;
+        } else {
             textLayout = DynamicLayoutPool.get(s);
-
             dx = width / 2;
             dy = (Size.HCandidateRow - textLayout.getHeight()) / 2 +
                     (paddingTopBottom == TOP ? Size.u / 2 : 0);
