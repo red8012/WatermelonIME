@@ -32,11 +32,12 @@ public class Engine {
             ziOrig = new StringBuilder(16),   // before dict select
             sentence = new StringBuilder(16);
     final static ArrayList<StringBuilder>[][] queryResult = new ArrayList[10][]; // [length][start at][i]
+    final static String[][] resultPriority = new String[10][];
     final static ArrayList<StringBuilder> candidateLeft = new ArrayList<>(16);
     final static ArrayList<StringBuilder> candidateRight = new ArrayList<>(16);
     final static String[] qs = {
             "select * from(", //0
-            "select group_concat(c),group_concat(o<1000,'')from(select c,o from s", //1
+            "select group_concat(c),group_concat((o<1000)+abs(o%2<<1)+((o<0)<<2),'')from(select c,o from s", //1
             " where p in(", //2
             "and c glob'", //3
             "group by c order by o)union all ", //4
@@ -52,8 +53,7 @@ public class Engine {
             "'and o<1000)group by c order by o,length(c) limit 3"
     };
     final static int pq0Length = pq[0].length();
-    final static String[]
-            predictionResults = new String[3];
+    final static String[] predictionResults = new String[3];
     final static StringBuilder[] predictionPinyin = new StringBuilder[3];
     final static int[] predictionStartPosition = new int[3];
     final static String[] arg = new String[1];
@@ -94,8 +94,10 @@ public class Engine {
         c.close();
 
         Transform.init();
-        for (int i = 1; i <= 9; i++)
+        for (int i = 1; i <= 9; i++) {
             queryResult[i] = new ArrayList[9 - i + 1];
+            resultPriority[i] = new String[9 - i + 1];
+        }
         // warm up engine
         final String[]
                 p = {"GuLbFaTiKhLnLrWbLu", "E4SuCaH3KjAaMt", "GuLbFaTiKhLnLrWbLu"},
@@ -220,13 +222,13 @@ public class Engine {
             ArrayList<StringBuilder> list = queryResult[i][end - i];
             BufferedSplitter.releaseArrayList(list);
             queryResult[i][end - i] = result == null ? null : BufferedSplitter.split(result);
-
+            resultPriority[i][end - i] = result == null ? null : cursor.getString(1);
+//            Logger.d("S: %s, F: %s", result, cursor.getString(1));
 //            if (result != null) {
 //                for (CharSequence s : queryResult[i][end - i])
 //                    System.out.print(s + "/");
 //                System.out.println("#");
 //            }
-
             i++;
         }
         cursor.close();
@@ -262,15 +264,24 @@ public class Engine {
         int counter = 0;
         sentence.setLength(0);
         for (int i : separatorAnswer) {
-//            sentence.append(queryResult[i][counter][0]);
-            sentence.append(queryResult[i][counter].get(0));
+            // find proper index for get
+            String priority = resultPriority[i][counter];
+            int selectedIndex = 0, len = priority.length();
+            for (int j = 0; j < len; j++)
+                if (priority.charAt(j) > '1') {
+                    selectedIndex = j;
+                    break;
+                }
+
+            // get word
+            sentence.append(queryResult[i][counter].get(selectedIndex));
             counter += i;
         }
         // force apply character lock
-        for (int i = 0; i < getLength(); i++) {
+        int len = getLength();
+        for (int i = 0; i < len; i++) {
             char c = ziLock.charAt(i);
-            if (c != '?')
-                sentence.setCharAt(i, c);
+            if (c != '?') sentence.setCharAt(i, c);
         }
     }
 
@@ -279,9 +290,13 @@ public class Engine {
         for (int i = getLength() - 1; i > 0; i--)
             if (queryResult[i][0] != null) {
                 ArrayList<StringBuilder> list = queryResult[i][0];
+                String priority = resultPriority[i][0];
                 int end = list.size();
-                for (int j = 0; j < end; j++)
+                for (int j = 0; j < end; j++) {
+                    char p = priority.charAt(j);
+                    if (p == '2' || p == '0') continue;
                     candidateLeft.add(list.get(j));
+                }
             }
     }
 
@@ -291,9 +306,13 @@ public class Engine {
         for (int i = getLength(); i > 0; i--)
             if (queryResult[i][length - i] != null) {
                 ArrayList<StringBuilder> list = queryResult[i][length - i];
+                String priority = resultPriority[i][length - i];
                 int end = list.size();
-                for (int j = 0; j < end; j++)
+                for (int j = 0; j < end; j++) {
+                    char p = priority.charAt(j);
+                    if (p == '2' || p == '0') continue;
                     candidateRight.add(list.get(j));
+                }
             }
     }
 

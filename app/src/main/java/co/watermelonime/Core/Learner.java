@@ -92,67 +92,71 @@ public class Learner {
             return false;
         }
         int len = word.length();
-        db.beginTransaction();
-        // check if word & pinyin exist
-        SQLiteStatement sql = queryCurrentOrder[len];
-        sql.bindString(1, pinyinString);
-        sql.bindString(2, word);
-
-        long currentOrder = NOT_EXISTED;
+        long currentOrder;
         try {
-            currentOrder = sql.simpleQueryForLong();
-        } catch (Exception e) {
-        }
-        System.out.println("current order: " + currentOrder);
+            db.beginTransaction();
+            // check if word & pinyin exist
+            SQLiteStatement sql = queryCurrentOrder[len];
+            sql.bindString(1, pinyinString);
+            sql.bindString(2, word);
 
-        if (currentOrder == NOT_EXISTED) {
-            System.out.println("newOrder: " + 1001);
-            sql = insert[len];
-            if (Transform.needTransform(pinyin)) {
-                transformBuffer.setLength(0);
-                Transform.expandQuery(pinyin, 0, transformBuffer);
-                String[] pinyins = transformBuffer.toString().replaceAll("'", "").split(",");
-                System.err.print("transformed Pinyins: ");
-                for (String i : pinyins) System.out.print(i + "|");
-                System.err.println();
+            currentOrder = NOT_EXISTED;
+            try {
+                currentOrder = sql.simpleQueryForLong();
+            } catch (Exception e) {
+            }
+            System.out.println("current order: " + currentOrder);
 
-                sql.bindString(2, word);
-                sql.bindLong(3, 1001);
-                for (String i : pinyins) {
-                    makeRoomForNewWord(i, len);
-                    sql.bindString(1, i);
+            if (currentOrder == NOT_EXISTED) {
+                System.out.println("newOrder: " + 1001);
+                sql = insert[len];
+                if (Transform.needTransform(pinyin)) {
+                    transformBuffer.setLength(0);
+                    Transform.expandQuery(pinyin, 0, transformBuffer);
+                    String[] pinyins = transformBuffer.toString().replaceAll("'", "").split(",");
+                    System.err.print("transformed Pinyins: ");
+                    for (String i : pinyins) System.out.print(i + "|");
+                    System.err.println();
+
+                    sql.bindString(2, word);
+                    sql.bindLong(3, 1001);
+                    for (String i : pinyins) {
+                        makeRoomForNewWord(i, len);
+                        sql.bindString(1, i);
+                        sql.executeInsert();
+                    }
+                } else {
+                    makeRoomForNewWord(pinyinString, len);
+                    sql.bindString(1, pinyinString); // should expand pinyin
+                    sql.bindString(2, word);
+                    sql.bindLong(3, 1001);
                     long modifiedRowCount = sql.executeInsert();
                     System.out.println("modifiedRowCount: " + modifiedRowCount);
                 }
-            } else {
-                makeRoomForNewWord(pinyinString, len);
-                sql.bindString(1, pinyinString); // should expand pinyin
-                sql.bindString(2, word);
-                sql.bindLong(3, 1001);
-                long modifiedRowCount = sql.executeInsert();
+
+            } else { // if exist, update order
+                sql = queryMinOrder[len];
+                sql.bindString(1, pinyinString);
+                long minOrder = sql.simpleQueryForLong();
+                System.out.println("min order: " + minOrder);
+                // don't do this, there can be different word with same priority and same prefix
+
+                long newOrder = -2 + currentOrder % 2;
+                if (currentOrder > 1000) newOrder = minOrder / 2 * 2 - 2 + currentOrder % 2;
+                else if (currentOrder < 0) newOrder = minOrder / 2 * 2 - 2 + currentOrder % 2;
+
+                System.out.println("newOrder: " + newOrder);
+                sql = update[len];
+                sql.bindLong(1, newOrder);
+                sql.bindString(2, pinyinString);
+                sql.bindString(3, word);
+                int modifiedRowCount = sql.executeUpdateDelete();
                 System.out.println("modifiedRowCount: " + modifiedRowCount);
             }
-
-        } else { // if exist, update order
-            sql = queryMinOrder[len];
-            sql.bindString(1, pinyinString);
-            long minOrder = sql.simpleQueryForLong();
-            System.out.println("min order: " + minOrder);
-            // don't do this, there can be different word with same priority and same prefix
-
-            long newOrder = -2 + currentOrder % 2;
-            if (currentOrder > 1000) newOrder = minOrder / 2 * 2 - 2 + currentOrder % 2;
-            else if (currentOrder < 0) newOrder = minOrder / 2 * 2 - 2 + currentOrder % 2;
-
-            System.out.println("newOrder: " + newOrder);
-            sql = update[len];
-            sql.bindLong(1, newOrder);
-            sql.bindString(2, pinyinString);
-            sql.bindString(3, word);
-            int modifiedRowCount = sql.executeUpdateDelete();
-            System.out.println("modifiedRowCount: " + modifiedRowCount);
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
         }
-        db.endTransaction();
         return currentOrder != NOT_EXISTED;
     }
 

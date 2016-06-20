@@ -56,6 +56,7 @@ public class MainService extends InputMethodService {
         Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_DISPLAY);
         C.threadPool = Executors.newFixedThreadPool(3);
         BufferedSplitter.init();
+        Logger.init("L@");
     }
 
     public static View getStartupView() {
@@ -129,7 +130,6 @@ public class MainService extends InputMethodService {
             CandidateButton.init();
             DictTitle.init();
             DictButton.init();
-            Logger.init();
             Timer.t(24, "f4");
             return null;
         });
