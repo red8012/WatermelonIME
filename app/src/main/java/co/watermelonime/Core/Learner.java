@@ -75,8 +75,12 @@ public class Learner {
     public static void learnFromBuffer() {
         if (wordBuffer.length() == 0) return;
         Logger.d("learn from buffer: " + wordBuffer);
-        learnWord(wordBuffer.toString(), pinyinBuffer);
+        learnWordAsync(wordBuffer.toString(), pinyinBuffer.toString());
         clear();
+    }
+
+    public static void learnWordAsync(String word, String pinyin) {
+        thread.submit(()->learnWord(word, pinyin));
     }
 
     /**
@@ -86,7 +90,7 @@ public class Learner {
      */
     public static boolean learnWord(String word, CharSequence pinyin) {
         String pinyinString = Transform.toGlob(pinyin, 0);
-        System.out.println("learnWord: " + word + pinyinString);
+        System.out.println("learnWord: " + word + pinyin);
         if (word.length() > 9) {
             System.out.println("word over-length");
             return false;

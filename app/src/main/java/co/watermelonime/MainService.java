@@ -97,6 +97,7 @@ public class MainService extends InputMethodService {
         if (Font.sans == null) {
             Timer.t(0);
             Font.sans = Typeface.createFromAsset(getAssets(), "normal.otf");
+            Font.notoEmoji = Typeface.createFromAsset(getAssets(), "NotoColorEmoji.ttf");
             Timer.t(0, "Load fonts");
         }
         Font.init();

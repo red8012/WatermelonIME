@@ -35,27 +35,37 @@ public class CandidateView extends ViewGroup {
         C.candidateView.removeAllViews();
     }
 
-    public static void setCandidate(ArrayList<StringBuilder> list, int start, int end, int type) {
+    public static int setCandidate(ArrayList<StringBuilder> list, int start, int end, int type) {
         Timer.t(8);
-        if (end - start == 0) return;
+        if (end - start == 0) return end;
         int totalWidth = 0;
 
         int i = start;
-        for (; i < end; i++) {
+        for (; i < end; i++) { // todo: may lost one?
             int w = CandidateButton.calculateMinWidth(list.get(i));
             if (totalWidth + w > Size.WCandidateView) break;
             totalWidth += w;
         }
+        int paddingTopBottom = type;
+        if (type == CandidateButton.DICT)
+            if (start == 0) paddingTopBottom = CandidateButton.TOP;
+            else if (end == i) paddingTopBottom = CandidateButton.BOTTOM;
+            else paddingTopBottom = 0;
+
         end = i;
 
         int padding = (Size.WCandidateView - totalWidth - 1) / (end - start);
 
+//        System.out.print("Type: " + type + " paddingTopBottom: " + paddingTopBottom + "|");
         for (int j = start; j < end; j++) {
             CandidateButton c = CandidateButton.get();
-            c.setText(list.get(j), padding, j < end - 1, type);
+            c.setText(list.get(j), padding, j < end - 1, type, paddingTopBottom);
             C.candidateView.addView(c);
+//            System.out.print(list.get(j));
         }
+//        System.out.println();
         Timer.t(8, "set candidate" + type);
+        return end;
     }
 
     @Override
@@ -72,27 +82,31 @@ public class CandidateView extends ViewGroup {
         final int end = getChildCount();
         l = 0;
         t = 0;
-
+        int lastH = 0;
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
             int w = v.getMeasuredWidth(), h = v.getMeasuredHeight();
 
             if (v.getClass() == DictTitle.class) {
-                if (l > 0) t += h;
+                if (l > 0) t += lastH;
+//                if (l > 0) t += h;
                 l = 0;
             }
             if (l + w > Size.WKeyboard + Size.u) {
                 l = 0;
-                t += v.getMeasuredHeight();
+                t += lastH;
+//                t += v.getMeasuredHeight();
             }
             if (w > Size.WKeyboard) {
                 v.layout(l, t, l + w, t + h);
                 l = 0;
-                t += h;
+                t += lastH;
+//                t += h;
             } else {
                 v.layout(l, t, l + w, t + h);
                 l += w;
             }
+            lastH = h;
         }
     }
 

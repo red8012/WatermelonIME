@@ -11,7 +11,25 @@ import co.watermelonime.InputView.Chinese.ChineseInputView;
 public class DictController {
     public static ArrayList<String> currentDict;
 
-    public static void showDictionary() {
+    public static void showLayer2Dictionary(int index) {
+        String characters = currentDict.get(index);
+        int len = characters.length();
+        int counter = 0;
+        for (int i = 0; i < len; i++) {
+            char text = characters.charAt(i);
+            if (text == '@') continue;
+            DictButton d = DictButton.get();
+            int padding = Size.W2ndLayerDictButton - CandidateButton.calculateMinWidth();
+            counter++;
+            d.setText(String.valueOf(text), padding, counter % 8 != 0, 0, 0);
+            C.candidateView.addView(d);
+        }
+        CandidateView.height = (counter / 8 + 1) * Size.HCandidateRow;
+        if (CandidateView.height < Size.HCandidateView)
+            CandidateView.height = Size.HCandidateView;
+    }
+
+    public static void openDict() {
         ArrayList<String> d = Engine.dictResult;
         currentDict = d;
         for (int i = 0; i < d.size(); i += 2) {
@@ -24,34 +42,14 @@ public class DictController {
                 String text = String.valueOf(characters.charAt(j));
                 DictButton dictButton = DictButton.get();
                 int padding = Size.WDictButton - CandidateButton.calculateMinWidth(" ");
-                dictButton.setText(text, padding, j != len - 1, 0);
+                dictButton.setText(text, padding, j != len - 1, 0, 0);
                 C.candidateView.addView(dictButton);
             }
         }
         CandidateView.height = d.size() / 2 * Size.HCandidateRow;
         if (CandidateView.height < Size.HCandidateView)
             CandidateView.height = Size.HCandidateView;
-    }
 
-    public static void showLayer2Dictionary(int index) {
-        String characters = currentDict.get(index);
-        int len = characters.length();
-        int counter = 0;
-        for (int i = 0; i < len; i++) {
-            char text = characters.charAt(i);
-            if (text == '@') continue;
-            DictButton d = DictButton.get();
-            int padding = Size.W2ndLayerDictButton - CandidateButton.calculateMinWidth();
-            counter++;
-            d.setText(String.valueOf(text), padding, counter % 8 != 0, 0);
-            C.candidateView.addView(d);
-        }
-        CandidateView.height = (counter / 8 + 1) * Size.HCandidateRow;
-        if (CandidateView.height < Size.HCandidateView)
-            CandidateView.height = Size.HCandidateView;
-    }
-
-    public static void openDict() {
         CandidateView.isDictionaryMode = true;
         C.chineseInputView.invalidate();
     }
@@ -62,5 +60,21 @@ public class DictController {
         ChineseInputView.scrollView.removeAllViews(); // todo: why do I have to do this?
         ChineseInputView.scrollView.addView(C.candidateView);
         C.chineseInputView.invalidate();
+    }
+
+    public static void fillInWordsInDict(int position) {
+        ArrayList<StringBuilder> list = Engine.getWordsInDictRight(position);
+        System.out.print("WordInDictRight: ");
+        for (CharSequence s : list)
+            System.out.print(s + "|");
+        System.out.println();
+
+        int end = list.size(), start = 0;
+        while (start < end)
+            start = CandidateView.setCandidate(list, start, end, CandidateButton.DICT);
+//        for (CharSequence s : list){
+//
+//        }
+
     }
 }

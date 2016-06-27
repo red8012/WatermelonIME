@@ -23,11 +23,13 @@ public class ChineseKey extends View {
         this.subText = subText;
 
         dx = mainText.getWidth() / 2;
-        dy = (Size.u * 9 - mainText.getHeight()) / 2; // TODO: 2016/3/6 Size.u ?
+//        dy = (Size.u * 9 - mainText.getHeight()) / 2; // TODO: 2016/3/6 Size.u ?
+        dy = (Size.u * 9 - mainText.getHeight() * (1 + 0.5f / mainText.getLineCount())) / 2;
         if (subText != null) {
             dy -= subText.getHeight() / 2;
             dxSub = subText.getWidth() / 2;
-            dySub = (Size.u * 8 - subText.getHeight());
+//            dySub = (Size.u * 8 - subText.getHeight());
+            dySub = (Size.u * 9 - subText.getHeight() * 1.5f);
         }
         setBackgroundColor(backgroundColor);
         setMeasuredDimension(Size.WKey, Size.HKey);

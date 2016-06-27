@@ -43,7 +43,7 @@ public class EmojiKey extends View {
         super(C.mainService);
         setMeasuredDimension(Size.WKey, Size.HEmojiKey);
         text = s;
-        textLayout = Font.fr.make(s);
+        textLayout = Font.emoji.make(s);
 
         dx = textLayout.getWidth() / 2;
         dy = (Size.HEmojiKey - textLayout.getHeight()) / 2;

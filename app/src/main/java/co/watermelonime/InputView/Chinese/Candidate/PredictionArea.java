@@ -33,7 +33,7 @@ public class PredictionArea extends CandidateView {
             PredictionKey k = PredictionKey.keys[i];
             k.startPosition = startPositions[i];
             k.pinyin = pinyin[i];
-            k.setText(list[i], padding, i < count - 1, CandidateButton.TOP);
+            k.setText(list[i], padding, i < count - 1, CandidateButton.TOP, CandidateButton.TOP);
 //            System.out.println("setPrediction: "+ list[i]);
             area.addView(k);
         }

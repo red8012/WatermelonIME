@@ -162,6 +162,12 @@ public class Controller {
      */
     public static void commitAll() {
         Timer.t(419);
+        if (Engine.isEmpty()) {
+            Engine.clear();
+            C.sentenceView.display();
+            Controller.displayCandidates();
+            return;
+        }
         C.commit(Engine.sentence);
 //        Logger.d("Sentence: %s, ZiLock: %s, ZiOrig: %s", Engine.sentence, Engine.ziLock, Engine.ziOrig);
 
@@ -181,7 +187,7 @@ public class Controller {
                     }
                 if (dirty) continue; // new word, do not know word boundary, skip update
 
-                Learner.learnWord(Engine.sentence.substring(start, end),
+                Learner.learnWordAsync(Engine.sentence.substring(start, end),
                         Engine.pinyin.substring(start * 2, end * 2));
             }
         }

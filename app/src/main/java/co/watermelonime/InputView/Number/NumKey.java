@@ -43,7 +43,7 @@ public class NumKey extends View {
         textLayout = Font.big.make(s);
 
         dx = textLayout.getWidth() / 2;
-        dy = (Size.HNumKey - textLayout.getHeight()) / 2;
+        dy = (Size.HNumKey - textLayout.getHeight() * 1.5f) / 2;
         setOnTouchListener(ontouchListener);
         setBackgroundColor(isDigit ? Colour.CHARACTER : Colour.NORMAL);
         this.isDigit = isDigit;

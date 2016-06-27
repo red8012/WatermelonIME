@@ -21,7 +21,7 @@ public class OnClickDict implements View.OnClickListener {
         SentenceView.setSelected(index);
         C.chineseKeyboard.show();
 
-        Learner.learnWord(text.toString(), Engine.pinyin.substring(index * 2, index * 2 + 2));
+        Learner.learnWordAsync(text.toString(), Engine.pinyin.substring(index * 2, index * 2 + 2));
 
         CandidateView.clearCandidates();
         Controller.displayCandidates();

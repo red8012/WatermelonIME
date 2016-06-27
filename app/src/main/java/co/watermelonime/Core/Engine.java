@@ -33,8 +33,11 @@ public class Engine {
             sentence = new StringBuilder(16);
     final static ArrayList<StringBuilder>[][] queryResult = new ArrayList[10][]; // [length][start at][i]
     final static String[][] resultPriority = new String[10][];
-    final static ArrayList<StringBuilder> candidateLeft = new ArrayList<>(16);
-    final static ArrayList<StringBuilder> candidateRight = new ArrayList<>(16);
+    final static ArrayList<StringBuilder>
+            candidateLeft = new ArrayList<>(16),
+            candidateRight = new ArrayList<>(16),
+            wordsInDictLeft = new ArrayList<>(24),
+            wordsInDictRight = new ArrayList<>(24);
     final static String[] qs = {
             "select * from(", //0
             "select group_concat(c),group_concat((o<1000)+abs(o%2<<1)+((o<0)<<2),'')from(select c,o from s", //1
@@ -335,11 +338,14 @@ public class Engine {
                 BufferedSplitter.releaseArrayList(queryResult[i][j]);
                 queryResult[i][j] = queryResult[i][j + popLength];
                 queryResult[i][j + popLength] = null;
+                resultPriority[i][j] = resultPriority[i][j + popLength];
+                resultPriority[i][j + popLength] = null;
             }
         for (int i = 1; i <= originalLength; i++)
             for (int j = Math.max(newLength - i + 1, 0); j <= originalLength - i; j++) {
                 BufferedSplitter.releaseArrayList(queryResult[i][j]);
                 queryResult[i][j] = null;
+                resultPriority[i][j] = null;
             }
 
         makeCandidateLeft();
@@ -434,6 +440,30 @@ public class Engine {
 //        for (int i = 0; i < 3; i++)
 //            System.out.print(" " + predictionResults[i]);
 //        System.out.println();
+    }
+
+//    public static ArrayList<StringBuilder> getWordsInDictLeft(int position) {
+//        wordsInDictLeft.clear();
+//        for (int len = position + 1; len > 1; len--) {
+//            int startAt = position + 1 - len;
+//            copyArrayList(queryResult[len][startAt], wordsInDictLeft);
+//        }
+//        return wordsInDictLeft;
+//    }
+
+    public static ArrayList<StringBuilder> getWordsInDictRight(int position) {
+        wordsInDictRight.clear();
+        for (int len = getLength() - position; len > 1; len--) {
+            copyArrayList(queryResult[len][position], wordsInDictRight);
+        }
+        return wordsInDictRight;
+    }
+
+    static void copyArrayList(ArrayList<StringBuilder> from, ArrayList<StringBuilder> to) {
+        if (from == null) return;
+        int len = from.size();
+        for (int i = 0; i < len; i++)
+            to.add(from.get(i));
     }
 }
 

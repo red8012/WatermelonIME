@@ -30,7 +30,7 @@ public class PredictionKey extends CandidateButton {
         Controller.displayCandidates();
 
         Timer.t(1029);
-        Learner.learnWord(text.toString(), key.pinyin);
+        Learner.learnWordAsync(text.toString(), key.pinyin.toString());
 
         Learner.learnFromBuffer();
         Timer.t(1029, "learnWord");

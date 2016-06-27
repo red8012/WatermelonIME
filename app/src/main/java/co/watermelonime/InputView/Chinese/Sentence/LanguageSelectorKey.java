@@ -37,7 +37,7 @@ public class LanguageSelectorKey extends View {
         setSize();
         textLayout = Font.sentence.make(text, Size.WSentenceView);
         dx = Size.WSentenceView / 2;
-        dy = (Size.HKey - textLayout.getHeight()) / 2;
+        dy = (Size.HKey - textLayout.getHeight() * 1.5f) / 2;
     }
 
     public LanguageSelectorKey(final int language, int resource) {

@@ -13,7 +13,7 @@ import co.watermelonime.Common.Size;
 
 public class CandidateButton extends View {
     public static final Paint separatorPaint = new Paint();
-    public static final int BOTTOM = -1, TOP = 1;
+    public static final int BOTTOM = -1, TOP = 1, DICT = 2;
     static final OnClickCandidate onClickCandidate = new OnClickCandidate();
     static ArrayList<CandidateButton> pool = new ArrayList<>(16);
     public float dx, dy;
@@ -63,10 +63,11 @@ public class CandidateButton extends View {
         textLayout = null;
     }
 
-    public void setText(CharSequence s, int padding, boolean separator, int paddingTopBottom) {
+    public void setText(CharSequence s, int padding, boolean separator, int type, int paddingTopBottom) {
         text = s;
         width = calculateMinWidth(s) + padding;
-        this.type = paddingTopBottom;
+
+        this.type = type;
         needSeparator = separator;
         setMeasuredDimension(width, (int) (Size.HCandidateRow + (paddingTopBottom == 0 ? 0 : Size.u / 2)));
         if (textLayout != null) DynamicLayoutPool.release(textLayout);
@@ -76,7 +77,7 @@ public class CandidateButton extends View {
         } else {
             textLayout = DynamicLayoutPool.get(s);
             dx = width / 2;
-            dy = (Size.HCandidateRow - textLayout.getHeight()) / 2 +
+            dy = (Size.HCandidateRow - textLayout.getHeight() * 1.5f) / 2 +
                     (paddingTopBottom == TOP ? Size.u / 2 : 0);
         }
     }
@@ -89,7 +90,8 @@ public class CandidateButton extends View {
         textLayout.draw(canvas);
         canvas.restore();
         if (needSeparator) {
-            float center = dy + Size.FCandidate / 2;
+//            float center = dy + Size.FCandidate / 2;
+            float center = dy + Size.FCandidate / 2 + textLayout.getHeight() * 0.25f;
             canvas.drawLine(width, center - Size.HSeparator / 2,
                     width, center + Size.HSeparator / 2, separatorPaint);
         }

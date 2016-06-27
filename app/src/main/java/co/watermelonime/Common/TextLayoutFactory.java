@@ -23,16 +23,16 @@ public class TextLayoutFactory {
 
     public Layout make(CharSequence text) {
         return new StaticLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
-                1.0f, 0.0f, false);
+                .67f, 0.0f, false);
     }
 
     public Layout make(CharSequence text, int width) {
         return new StaticLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
-                1.0f, 0.0f, false);
+                .67f, 0.0f, false);
     }
 
     public DynamicLayout makeDynamic(CharSequence text, int width) {
         return new DynamicLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
-                1.0f, 0.0f, false);
+                .67f, 0.0f, false);
     }
 }

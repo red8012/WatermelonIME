@@ -43,7 +43,7 @@ public class SentenceButton extends View {
             text.append(s);
             textLayout = whiteTextLayout;
             dx = Size.WSentenceView / 2;
-            dy = (Size.HSentenceButton - textLayout.getHeight()) / 2;
+            dy = (Size.HSentenceButton - textLayout.getHeight() * 1.5f) / 2;
         }
         invalidate();
     }
