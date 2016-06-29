@@ -63,7 +63,8 @@ public class MainService extends InputMethodService {
         try {
             Engine.init();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            Engine.close();
             WaitingView.me = new WaitingView();
             DBCopy.start();
             return WaitingView.me;

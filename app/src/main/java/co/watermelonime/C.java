@@ -15,7 +15,8 @@ import co.watermelonime.InputView.English.EnglishKeyboard;
 import co.watermelonime.InputView.Number.NumberKeyboard;
 
 public class C {
-    public final static String DBVersion = "v4.db";
+    public final static String DBFileName = "v5.db";
+    public final static int DBVersion = 5;
     public final static TimeInterpolator
             decelerate = new DecelerateInterpolator(2f);
     public static MainService mainService;

@@ -2,6 +2,8 @@ package co.watermelonime;
 
 import android.content.Context;
 
+import com.orhanobut.logger.Logger;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -16,9 +18,8 @@ public class DBCopy {
             try {
                 final Context c = C.mainService;
 
-                InputStream in = c.getApplicationContext().getAssets().open(C.DBVersion);
-                File output = c.getDatabasePath(C.DBVersion);
-
+                InputStream in = c.getApplicationContext().getAssets().open(C.DBFileName);
+                File output = c.getDatabasePath("newDB.db");
 
                 output.mkdirs();
                 output.delete();
@@ -32,6 +33,15 @@ public class DBCopy {
                 }
                 in.close();
                 out.close();
+
+                // Rename
+                File to = c.getDatabasePath(C.DBFileName);
+                to.mkdirs();
+                to.delete();
+                output.renameTo(to);
+
+                Logger.d("DB upgrade finished");
+
                 MainService.handler.post(() -> {
                     try {
                         Engine.init();
@@ -40,7 +50,6 @@ public class DBCopy {
                     }
                     C.mainService.setInputView(C.chineseInputView);
                 });
-                System.out.println("Copy finished!");
             } catch (Exception e) {
                 e.printStackTrace();
             }

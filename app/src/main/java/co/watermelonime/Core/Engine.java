@@ -78,23 +78,28 @@ public class Engine {
         if (db != null && db.isOpen()) return;
         SQLiteDatabase.loadLibs(C.mainService);
         db = SQLiteDatabase.openDatabase(
-                C.mainService.getDatabasePath(C.DBVersion).getAbsolutePath(),
+                C.mainService.getDatabasePath(C.DBFileName).getAbsolutePath(),
                 "",
                 null,
                 SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.NO_LOCALIZED_COLLATORS
         );
-//        db.setMaxSqlCacheSize(SQLiteDatabase.MAX_SQL_CACHE_SIZE);
+
+        cursor = db.rawQuery("select v from meta where k='version'", null);
+        cursor.moveToNext();
+        if (cursor.getLong(0) != C.DBVersion) throw new Exception("Database upgrade needed");
+        cursor.close();
+
         db.execSQL("PRAGMA synchronous = OFF;");
         db.execSQL("PRAGMA temp_store = MEMORY;");
-        Cursor c = db.rawQuery("PRAGMA mmap_size=16777216;", null);
-        c.moveToNext();
-        c.close();
-        c = db.rawQuery("PRAGMA journal_mode = OFF;", null);
-        c.moveToNext();
-        c.close();
-        c = db.rawQuery("PRAGMA locking_mode = EXCLUSIVE;", null);
-        c.moveToNext();
-        c.close();
+        cursor = db.rawQuery("PRAGMA mmap_size=16777216;", null);
+        cursor.moveToNext();
+        cursor.close();
+        cursor = db.rawQuery("PRAGMA journal_mode = OFF;", null);
+        cursor.moveToNext();
+        cursor.close();
+        cursor = db.rawQuery("PRAGMA locking_mode = EXCLUSIVE;", null);
+        cursor.moveToNext();
+        cursor.close();
 
         Transform.init();
         for (int i = 1; i <= 9; i++) {
@@ -117,6 +122,17 @@ public class Engine {
             Engine.clear();
         }
         Learner.init();
+    }
+
+    public static void close() {
+        try {
+            cursor.close();
+        } catch (Exception e) {
+        }
+        try {
+            db.close();
+        } catch (Exception e) {
+        }
     }
 
     public static void clear() {
