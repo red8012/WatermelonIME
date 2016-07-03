@@ -26,14 +26,14 @@ July	Release
 13. URL prediction
 14. ~~English bi/tri-gram~~
 15. [low priority] gestures
-16. Chinese learning 
-17. Contact learning
+16. ~~Chinese learning~~
+17. ~~Contact learning~~
 18. Settings
 19. Remove from database (long press)
 20. [] clean up code
 21. __Landscape Input View__
-    1. Chinese
-    2. English
+   1. Chinese
+   2. English
 22. [low priority] Floating input window
 23. Getting started guide
 24. Improve accuracy
@@ -55,10 +55,14 @@ July	Release
 
 ## Meaning of Priority
 
-|    Priority    |                   < 0                    |                   >= 0                   |                  > 1000                  |
-| :------------: | :--------------------------------------: | :--------------------------------------: | :--------------------------------------: |
-| odd (learned)  | sentence, candidate, prediction (confirmed on 3rd time) | sentence, candidate (confirmed 2nd time on commit) | sentence, (newly learned, not in sX table) |
-| even (factory) | sentence, candidate, prediction (selected from candidate) | sentence, candidate, prediction (originally shipped in database) |                not a word                |
+|      Priority      |                 < 0 (+5)                 |                >= 0 (+1)                 |                  > 1000                  |
+| :----------------: | :--------------------------------------: | :--------------------------------------: | :--------------------------------------: |
+| odd (learned) (+2) | (7)sentence, candidate, prediction (confirmed on 3rd time) | (3)sentence, candidate (confirmed 2nd time on commit) | (2)sentence, (newly learned, not in sX table) |
+| even (factory)(+0) | (5)sentence, candidate, prediction (selected from candidate) | (1)sentence, candidate, prediction (originally shipped in database) |              (0)not a word               |
+
+```
+(o<1000)+abs(o%2<<1)+((o<0)<<2)
+```
 
 ## Learning Tasks
 

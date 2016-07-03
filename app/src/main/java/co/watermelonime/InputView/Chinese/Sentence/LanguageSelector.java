@@ -1,7 +1,7 @@
 package co.watermelonime.InputView.Chinese.Sentence;
 
 import co.watermelonime.C;
-import co.watermelonime.Core.Benchmark2;
+import co.watermelonime.DBCopy;
 import co.watermelonime.InputView.Chinese.ChineseInputView;
 import co.watermelonime.MainService;
 import co.watermelonime.R;
@@ -33,7 +33,9 @@ public class LanguageSelector {
         }
         if (inputLanguage == SETTINGS) {
             try {
-                Benchmark2.run();
+//                Benchmark2.run();
+//                ContactsLearner.start();
+                DBCopy.start();
             } catch (Exception e) {
                 e.printStackTrace();
             }

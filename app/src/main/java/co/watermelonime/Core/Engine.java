@@ -36,7 +36,6 @@ public class Engine {
     final static ArrayList<StringBuilder>
             candidateLeft = new ArrayList<>(16),
             candidateRight = new ArrayList<>(16),
-            wordsInDictLeft = new ArrayList<>(24),
             wordsInDictRight = new ArrayList<>(24);
     final static String[] qs = {
             "select * from(", //0
@@ -60,7 +59,7 @@ public class Engine {
     final static StringBuilder[] predictionPinyin = new StringBuilder[3];
     final static int[] predictionStartPosition = new int[3];
     final static String[] arg = new String[1];
-    static SQLiteDatabase db;
+    public static SQLiteDatabase db;
     static Cursor cursor = null;
     static int separatorAnswer[];
 
