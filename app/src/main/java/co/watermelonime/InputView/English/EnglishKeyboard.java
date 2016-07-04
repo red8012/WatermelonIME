@@ -24,7 +24,8 @@ public class EnglishKeyboard extends ViewGroup {
             "~", "`", "_", "-", "+", "=", "{", "}", "|", "\\",
             "£", "€", "¥", ":", ";", "\"", "'", "[", "]",
             "°", "<", ">", "?", ",", ".", "/"};
-    public final static int LOWER = 0, UPPER = 1, PUNCTUATION = 2, CAPSLOCK = 3;
+    public final static int LOWER = 0, UPPER = 1, PUNCTUATION = 2,
+            CAPSLOCK = 3, PUNCTUATION_LOCK = 4;
     static final OnTouchListener functionKeyListener = (v, event) -> {
         NumKey key = (NumKey) v;
         switch (event.getActionMasked()) {
@@ -38,14 +39,18 @@ public class EnglishKeyboard extends ViewGroup {
         }
         return false;
     };
-    final static EnglishKey[][] keys = new EnglishKey[][]{new EnglishKey[36], new EnglishKey[36], new EnglishKey[36]};
     final static View[] bottomRow = new View[6];
     final static EnglishKey[] leftPunctuation = new EnglishKey[3];
     final static int COMMA = 0, SLASH = 1, AT = 2;
     final static int QWERTY = 0, DVORAK = 1, COLEMAK = 2;
+    static EnglishKey[][] keys = new EnglishKey[][]{
+            new EnglishKey[36], new EnglishKey[36], new EnglishKey[36], new EnglishKey[36], null};
     static int mode = LOWER, type = QWERTY, modeBeforePunctuation;
-    static EnglishKey shiftKey, backspace;
-    static boolean isShiftPressed = false, committed = false;
+    static EnglishKey shiftKey, backspace, punctuationKey;
+    static boolean
+            isShiftPressed = false,
+            isPunctuationPressed = false,
+            committed = false;
 
 
     public EnglishKeyboard() {
@@ -57,6 +62,8 @@ public class EnglishKeyboard extends ViewGroup {
             keys[UPPER][i] = new EnglishKey(lowercase[i].toUpperCase());
             keys[PUNCTUATION][i] = new EnglishKey(punctuation[i]);
         }
+        keys[CAPSLOCK] = keys[UPPER];
+        keys[PUNCTUATION_LOCK] = keys[PUNCTUATION];
 
         shiftKey = new EnglishKey(R.drawable.arrow_bold_up, Size.WEnglishKey * 4 / 3);
         shiftKey.setOnTouchListener((v, event) -> {
@@ -73,7 +80,7 @@ public class EnglishKeyboard extends ViewGroup {
                     }
                     return true;
                 case MotionEvent.ACTION_UP:
-                    if (committed) {
+                    if (committed && mode == UPPER) {
                         changeMode(LOWER);
                     }
                     isShiftPressed = false;
@@ -93,18 +100,38 @@ public class EnglishKeyboard extends ViewGroup {
             return false;
         });
 
-        EnglishKey toPunctuation = new EnglishKey(";!?", Size.WEnglishKey);
-        toPunctuation.setOnTouchListener((v, event) -> {
-            if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                if (mode != PUNCTUATION) {
-                    modeBeforePunctuation = mode;
-                    changeMode(PUNCTUATION);
-                    v.setBackgroundColor(Colour.CANDIDATE_SELECTED);
-                } else {
-                    changeMode(modeBeforePunctuation);
-                    v.setBackgroundColor(Colour.FUNCTION);
-                }
-                return true;
+        punctuationKey = new EnglishKey(";!?", Size.WEnglishKey);
+        punctuationKey.setOnTouchListener((v, event) -> {
+//            if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+//                if (mode != PUNCTUATION) {
+//                    modeBeforePunctuation = mode;
+//                    changeMode(PUNCTUATION);
+//                    v.setBackgroundColor(Colour.CANDIDATE_SELECTED);
+//                } else {
+//                    changeMode(modeBeforePunctuation);
+//                    v.setBackgroundColor(Colour.FUNCTION);
+//                }
+//                return true;
+//            }
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN:
+                    isPunctuationPressed = true;
+                    if (mode != PUNCTUATION && mode != PUNCTUATION_LOCK) {
+                        modeBeforePunctuation = mode;
+                        changeMode(PUNCTUATION);
+                        committed = false;
+                    } else if (mode == PUNCTUATION) {
+                        changeMode(PUNCTUATION_LOCK);
+                    } else if (mode == PUNCTUATION_LOCK) {
+                        changeMode(modeBeforePunctuation);
+                    }
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    if (committed && mode == PUNCTUATION) {
+                        changeMode(modeBeforePunctuation);
+                    }
+                    isPunctuationPressed = false;
+                    return true;
             }
             return false;
         });
@@ -117,7 +144,7 @@ public class EnglishKeyboard extends ViewGroup {
         enter.setOnTouchListener(Listeners.enter);
 
         bottomRow[0] = toChinese;
-        bottomRow[1] = toPunctuation;
+        bottomRow[1] = punctuationKey;
         bottomRow[2] = leftPunctuation[COMMA];
         bottomRow[3] = new SpaceBar();
         bottomRow[4] = new EnglishKey(".");
@@ -127,17 +154,21 @@ public class EnglishKeyboard extends ViewGroup {
 
     public void changeMode(int m) {
         mode = m;
-        if (m == CAPSLOCK) m = UPPER;
         if (mode == LOWER) shiftKey.setBackgroundColor(Colour.FUNCTION);
         else if (mode == UPPER) shiftKey.setBackgroundColor(Colour.CANDIDATE_SELECTED);
         else if (mode == CAPSLOCK) shiftKey.setBackgroundColor(Colour.CHARACTER);
+
+        if (mode == PUNCTUATION) punctuationKey.setBackgroundColor(Colour.CANDIDATE_SELECTED);
+        else if (mode == PUNCTUATION_LOCK) punctuationKey.setBackgroundColor(Colour.CHARACTER);
+        else punctuationKey.setBackgroundColor(Colour.FUNCTION);
+
         removeAllViews();
-        for (EnglishKey i : keys[m])
+        for (EnglishKey i : keys[mode])
             addView(i);
         for (View v : bottomRow)
             if (v != null)
                 addView(v);
-        if (mode != PUNCTUATION)
+        if (mode != PUNCTUATION && mode != PUNCTUATION_LOCK)
             addView(shiftKey);
         addView(backspace);
         layout(0, 0, 0, 0);
@@ -150,7 +181,7 @@ public class EnglishKeyboard extends ViewGroup {
         t = Size.HEnglishKey;
         r = Size.WEnglishKey;
         for (int i = 0; i < 36; ++i) {
-            EnglishKey k = keys[mode == CAPSLOCK ? UPPER : mode][i];
+            EnglishKey k = keys[mode][i];
             k.layout(r - Size.WEnglishKey, t, r, t + Size.HEnglishKey);
             r += Size.WEnglishKey;
             if (i == 9 || i == 19 || i == 28) {

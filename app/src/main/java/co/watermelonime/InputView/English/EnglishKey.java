@@ -21,12 +21,17 @@ public class EnglishKey extends View {
                 case MotionEvent.ACTION_DOWN:
                     C.commit(key.text);
                     EnglishKeyboard.committed = true;
-                    if (EnglishKeyboard.mode == EnglishKeyboard.UPPER && !EnglishKeyboard.isShiftPressed)
-                        C.englishKeyboard.changeMode(EnglishKeyboard.LOWER);
+
                     key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
                     return true;
-//                    break;
                 case MotionEvent.ACTION_UP:
+                    if (EnglishKeyboard.mode == EnglishKeyboard.UPPER &&
+                            !EnglishKeyboard.isShiftPressed)
+                        C.englishKeyboard.changeMode(EnglishKeyboard.LOWER);
+
+                    if (EnglishKeyboard.mode == EnglishKeyboard.PUNCTUATION &&
+                            !EnglishKeyboard.isPunctuationPressed)
+                        C.englishKeyboard.changeMode(EnglishKeyboard.modeBeforePunctuation);
                     key.setBackgroundColor(Colour.NORMAL);
                     return true;
             }
