@@ -68,7 +68,7 @@ public class CharacterKey extends CandidateButton {
         setMeasuredDimension(width, (int) (Size.HCandidateRow + (paddingTopBottom == 0 ? 0 : Size.u / 2)));
         textLayout = Font.character.make(String.valueOf(character), width);
         dx = width / 2;
-        dy = (Size.HCandidateRow - textLayout.getHeight() * 1.5f) / 2 +
+        dy = (Size.HCandidateRow - textLayout.getHeight()) / 2 +
                 (paddingTopBottom == TOP ? Size.u / 2 : 0);
     }
 

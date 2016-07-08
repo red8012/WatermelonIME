@@ -69,7 +69,7 @@ public class Size {
         HSeparator = HCandidateRow * 4 / 5;
         HCandidateVisible = HCandidateRow * 2 + WScreen / 60;
         HInputView = HKeyboard + HCandidateVisible;
-        HEnglishKey = HInputView / 6;
+        HEnglishKey = HInputView / 6 + 1;
         HNumKey = HInputView / 6;
         HEmojiKey = HInputView / 8;
         HSentenceView = HInputView;
