@@ -13,35 +13,13 @@ import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 
 public class EnglishKey extends View {
-    static final OnTouchListener ontouchListener = new OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            EnglishKey key = (EnglishKey) v;
-            switch (event.getActionMasked()) {
-                case MotionEvent.ACTION_DOWN:
-                    C.commit(key.text);
-                    EnglishKeyboard.committed = true;
-
-                    key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
-                    return true;
-                case MotionEvent.ACTION_UP:
-                    if (EnglishKeyboard.mode == EnglishKeyboard.UPPER &&
-                            !EnglishKeyboard.isShiftPressed)
-                        C.englishKeyboard.changeMode(EnglishKeyboard.LOWER);
-
-                    if (EnglishKeyboard.mode == EnglishKeyboard.PUNCTUATION &&
-                            !EnglishKeyboard.isPunctuationPressed)
-                        C.englishKeyboard.changeMode(EnglishKeyboard.modeBeforePunctuation);
-                    key.setBackgroundColor(Colour.NORMAL);
-                    return true;
-            }
-            return false;
-        }
-    };
+    static final OnTouchListener ontouchListener = new OnTouchEnglishKey();
     public String text;
     public Layout textLayout;
     public Drawable image;
     public float dx, dy;
+    public boolean displayUmlaut = false;
+    public Umlaut umlaut;
 
 
     public EnglishKey(final String s, int width) {
@@ -65,6 +43,8 @@ public class EnglishKey extends View {
         dy = (Size.HEnglishKey - textLayout.getHeight() * 1.5f) / 2;
         setOnTouchListener(ontouchListener);
         setBackgroundColor(Colour.NORMAL);
+
+        umlaut = new Umlaut();
     }
 
     public EnglishKey(int resource, int width) {

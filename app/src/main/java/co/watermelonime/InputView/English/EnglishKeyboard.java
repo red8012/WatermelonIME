@@ -5,6 +5,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.orhanobut.logger.Logger;
+
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Listeners;
@@ -57,6 +59,7 @@ public class EnglishKeyboard extends ViewGroup {
         super(C.mainService);
         setBackgroundColor(Colour.NORMAL);
         setMeasuredDimension(Size.WInputView, Size.HInputView);
+
         for (int i = 0; i < 36; i++) {
             keys[LOWER][i] = new EnglishKey(lowercase[i]);
             keys[UPPER][i] = new EnglishKey(lowercase[i].toUpperCase());
@@ -183,6 +186,25 @@ public class EnglishKeyboard extends ViewGroup {
         for (int i = 0; i < 36; ++i) {
             EnglishKey k = keys[mode][i];
             k.layout(r - Size.WEnglishKey, t, r, t + Size.HEnglishKey);
+
+            if (k.displayUmlaut) {
+                Umlaut u = k.umlaut;
+                int m = r - Size.WEnglishKey / 2,
+                        w2 = u.getMeasuredWidth() / 2,
+                        height = u.getMeasuredHeight();
+                int left = m - w2, right = m + w2;
+
+                if (left < 0) {
+                    right -= left;
+                    left = 0;
+                } else if (right > Size.WScreen) {
+                    left -= right - Size.WScreen;
+                    right = Size.WScreen;
+                }
+
+                k.umlaut.layout(left, t - height, right, t);
+            }
+
             r += Size.WEnglishKey;
             if (i == 9 || i == 19 || i == 28) {
                 r = Size.WEnglishKey;

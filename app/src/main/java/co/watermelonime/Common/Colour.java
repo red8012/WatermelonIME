@@ -18,5 +18,7 @@ public class Colour {
             textCharacter = Color.rgb(75, 80, 145), // メリイ
             reached = Color.rgb(140, 200, 70),
             unreached = Color.rgb(70, 70, 70),
-            DICT_TITLE = Color.rgb(87, 146, 116);
+            DICT_TITLE = Color.rgb(87, 146, 116),
+            UMLAUT = Color.rgb(59, 66, 72),
+            UMLAUT_SELECTED = Color.rgb(120, 175, 170);
 }
