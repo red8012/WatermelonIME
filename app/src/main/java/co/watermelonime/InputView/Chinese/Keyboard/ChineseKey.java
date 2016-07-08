@@ -2,6 +2,7 @@ package co.watermelonime.InputView.Chinese.Keyboard;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.view.View;
@@ -23,13 +24,14 @@ public class ChineseKey extends View {
         this.subText = subText;
 
         dx = mainText.getWidth() / 2;
-//        dy = (Size.u * 9 - mainText.getHeight()) / 2; // TODO: 2016/3/6 Size.u ?
-        dy = (Size.u * 9 - mainText.getHeight() * (1 + 0.5f / mainText.getLineCount())) / 2;
+        float delta = 0;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP && mainText.getText().length() > 1)
+            delta = Size.FMid / 2.5f;
+        dy = (Size.HKey - mainText.getHeight() - delta) / 2;
         if (subText != null) {
             dy -= subText.getHeight() / 2;
             dxSub = subText.getWidth() / 2;
-//            dySub = (Size.u * 8 - subText.getHeight());
-            dySub = (Size.u * 9 - subText.getHeight() * 1.5f);
+            dySub = (Size.HKey - subText.getHeight() * 1.2f);
         }
         setBackgroundColor(backgroundColor);
         setMeasuredDimension(Size.WKey, Size.HKey);

@@ -19,20 +19,30 @@ public class TextLayoutFactory {
         textPaint.setTypeface(typeface);
         textPaint.setColor(color);
         textPaint.setAntiAlias(true);
+//        Logger.d("Build.VERSION.SDK_INT: %d, Build.VERSION_CODES.LOLLIPOP: %d",
+//                Build.VERSION.SDK_INT, Build.VERSION_CODES.LOLLIPOP);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            textPaint.setElegantTextHeight(true);
+//        }
     }
 
     public Layout make(CharSequence text) {
         return new StaticLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
-                .67f, 0.0f, false);
+                1f, 0.0f, false);
+    }
+
+    public Layout makeMultiLine(CharSequence text) {
+        return new StaticLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
+                1f, -textPaint.getTextSize() / 2.5f, false);
     }
 
     public Layout make(CharSequence text, int width) {
         return new StaticLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
-                .67f, 0.0f, false);
+                1f, 0.0f, false);
     }
 
     public DynamicLayout makeDynamic(CharSequence text, int width) {
         return new DynamicLayout(text, textPaint, width, Layout.Alignment.ALIGN_NORMAL,
-                .67f, 0.0f, false);
+                1f, 0.0f, false);
     }
 }

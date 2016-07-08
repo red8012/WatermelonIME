@@ -63,10 +63,10 @@ public class Vowels {
         C.threadPool.submit(() -> {
             Timer.t(14);
             Process.setThreadPriority(Process.THREAD_PRIORITY_DISPLAY);
-            try{
+            try {
                 buildKeys();
                 Consonants.addListeners();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -82,12 +82,14 @@ public class Vowels {
             TextLayoutFactory
                     te = s.length() > 1 ? Font.mid : Font.big,
                     td = s.length() > 1 ? Font.midDisabled : Font.bigDisabled;
-            ChineseKey key = new ChineseKey(te.make(s), null, Colour.NORMAL);
+            ChineseKey key = new ChineseKey(s.length() > 1 ? te.makeMultiLine(s) : te.make(s),
+                    null, Colour.NORMAL);
             enabledKeys[i] = key;
             key.pinyin = code[i];
             key.character = '?';
             key.setOnTouchListener(onTouchVowel);
-            disabledKeys[i] = new ChineseKey(td.make(s), null, Colour.DISABLED);
+            disabledKeys[i] = new ChineseKey(s.length() > 1 ? td.makeMultiLine(s) : td.make(s),
+                    null, Colour.DISABLED);
         }
 
         backspace = new ChineseKey(R.drawable.level_up, Colour.FUNCTION);

@@ -77,7 +77,7 @@ public class CandidateButton extends View {
         } else {
             textLayout = DynamicLayoutPool.get(s);
             dx = width / 2;
-            dy = (Size.HCandidateRow - textLayout.getHeight() * 1.5f) / 2 +
+            dy = (Size.HCandidateRow - textLayout.getHeight()) / 2 +
                     (paddingTopBottom == TOP ? Size.u / 2 : 0);
         }
     }

@@ -51,7 +51,8 @@ public class EnglishKey extends View {
         textLayout = Font.fr.make(s, width);
 
         dx = textLayout.getWidth() / 2;
-        dy = (Size.HEnglishKey - textLayout.getHeight() * 1.5f) / 2;
+//        dy = (Size.HEnglishKey - textLayout.getHeight() * 1.5f) / 2;
+        dy = (Size.HEnglishKey - textLayout.getHeight()) / 2;
         setBackgroundColor(Colour.SENTENCE);
     }
 
@@ -62,7 +63,7 @@ public class EnglishKey extends View {
         textLayout = Font.fr.make(s, Size.WEnglishKey);
 
         dx = textLayout.getWidth() / 2;
-        dy = (Size.HEnglishKey - textLayout.getHeight() * 1.5f) / 2;
+        dy = (Size.HEnglishKey - textLayout.getHeight() * 1.2f) / 2;
         setOnTouchListener(ontouchListener);
         setBackgroundColor(Colour.NORMAL);
     }
