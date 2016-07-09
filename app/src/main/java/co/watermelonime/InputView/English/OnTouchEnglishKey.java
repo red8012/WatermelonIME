@@ -3,57 +3,90 @@ package co.watermelonime.InputView.English;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.orhanobut.logger.Logger;
-
 import java.util.concurrent.Future;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
+import co.watermelonime.Common.Size;
 
 public class OnTouchEnglishKey implements View.OnTouchListener {
     Future<Integer> future;
+    int lastX, lastY;
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         EnglishKey key = (EnglishKey) v;
+        final int x = (int) event.getRawX(), y = (int) event.getRawY();
+
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                C.commit(key.text);
-                EnglishKeyboard.committed = true;
                 key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
+                if (key.umlaut != null && event.getPointerCount() == 1)
+                    future = C.threadPool.submit(() -> {
+                        try {
+                            Thread.sleep(400);
+                            C.englishKeyboard.post(() -> {
+                                key.displayUmlaut = true;
+                                try {
+                                    C.englishKeyboard.addView(key.umlaut);
+                                } catch (Exception e) {
+                                    C.englishKeyboard.removeView(key.umlaut);
+                                    C.englishKeyboard.addView(key.umlaut);
+                                }
+                                C.englishKeyboard.layout(0, 0, 0, 0);
+                                key.umlaut.reset();
+                                lastX = x;
+                                lastY = y;
+                            });
+                        } catch (Exception e) {
+//                            e.printStackTrace();
+                        }
+                        return 0;
+                    });
+                return true;
 
-                future = C.threadPool.submit(() -> {
+            case MotionEvent.ACTION_MOVE:
+                if (key.umlaut == null) return false;
+
+                if (x > lastX + Size.WEnglishKey) {
+                    if (key.umlaut.move(1, 0))
+                        lastX = x;
+                } else if (x < lastX - Size.WEnglishKey) {
+                    if (key.umlaut.move(-1, 0))
+                        lastX = x;
+                }
+                if (y > lastY + Size.HEnglishKey) {
+                    if (key.umlaut.move(0, 1))
+                        lastY = y;
+                } else if (y < lastY - Size.HEnglishKey) {
+                    if (key.umlaut.move(0, -1))
+                        lastY = y;
+                }
+                return true;
+
+            case MotionEvent.ACTION_UP:
+                if (future != null) {
+                    future.cancel(true);
+                    future = null;
+                }
+
+                if (key.displayUmlaut) {
+                    key.displayUmlaut = false;
+                    C.commit(key.umlaut.currentText);
                     try {
-                        Thread.sleep(400);
-                        C.englishKeyboard.post(() -> {
-                            key.displayUmlaut = true;
-                            C.englishKeyboard.addView(key.umlaut);
-                            C.englishKeyboard.layout(0, 0, 0, 0);
-                        });
-
+                        C.englishKeyboard.removeView(key.umlaut);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    Logger.d("show umlaut");
-                    return 0;
-                });
+                    C.englishKeyboard.invalidate();
+                } else
+                    C.commit(key.text);
+                EnglishKeyboard.committed = true;
 
-                return true;
-            case MotionEvent.ACTION_UP:
                 if (EnglishKeyboard.mode == EnglishKeyboard.UPPER &&
                         !EnglishKeyboard.isShiftPressed)
                     C.englishKeyboard.changeMode(EnglishKeyboard.LOWER);
 
-                if (future != null) {
-                    if (future.isDone()) {
-                        Logger.d("dismiss umlaut");
-                        key.displayUmlaut = false;
-                        C.englishKeyboard.removeView(key.umlaut);
-                        C.englishKeyboard.invalidate();
-                    }
-                    future.cancel(true);
-                    future = null;
-                }
 
                 if (EnglishKeyboard.mode == EnglishKeyboard.PUNCTUATION &&
                         !EnglishKeyboard.isPunctuationPressed)

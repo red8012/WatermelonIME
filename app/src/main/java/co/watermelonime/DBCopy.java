@@ -47,7 +47,7 @@ public class DBCopy {
         C.threadPool.submit(() -> {
             try {
                 final Context c = C.mainService;
-
+                Thread.sleep(1000);
                 InputStream in = c.getApplicationContext().getAssets().open(C.DBFileName);
                 File output = c.getDatabasePath("newDB.db");
 

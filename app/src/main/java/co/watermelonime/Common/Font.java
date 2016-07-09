@@ -6,8 +6,8 @@ import android.graphics.Typeface;
 public class Font {
     public static TextLayoutFactory
             big, fr, mid, small, bigDisabled, midDisabled,
-            sentence, sentenceSelected, candidate, dictTitle, character, emoji;
-    public static Typeface sans, notoEmoji;
+            sentence, sentenceSelected, candidate, dictTitle, character, emoji, english;
+    public static Typeface sans, notoEmoji, latin;
 
     public static void init() {
         big = new TextLayoutFactory(Size.FBig, sans, Colour.textKeyboard, Size.WKey);
@@ -25,5 +25,6 @@ public class Font {
         dictTitle = new TextLayoutFactory(Size.FMid, sans, Colour.DICT_TITLE, (int) (Size.WDictTitle + Size.u));
 
         emoji = new TextLayoutFactory(Size.FFr, notoEmoji, Colour.textKeyboard, Size.WKey);
+        english = new TextLayoutFactory(Size.FFr, latin, Colour.textKeyboard, Size.WKey);
     }
 }
