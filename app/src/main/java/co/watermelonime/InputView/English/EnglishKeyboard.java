@@ -5,14 +5,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.orhanobut.logger.Logger;
-
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
-import co.watermelonime.Common.Listeners;
 import co.watermelonime.Common.Size;
 import co.watermelonime.InputView.Chinese.Sentence.LanguageSelector;
-import co.watermelonime.InputView.Number.NumKey;
 import co.watermelonime.R;
 
 public class EnglishKeyboard extends ViewGroup {
@@ -28,19 +24,19 @@ public class EnglishKeyboard extends ViewGroup {
             "°", "<", ">", "?", ",", ".", "/"};
     public final static int LOWER = 0, UPPER = 1, PUNCTUATION = 2,
             CAPSLOCK = 3, PUNCTUATION_LOCK = 4;
-    static final OnTouchListener functionKeyListener = (v, event) -> {
-        NumKey key = (NumKey) v;
-        switch (event.getActionMasked()) {
-            case MotionEvent.ACTION_DOWN:
-                C.mainService.sendDownUpKeyEvents(key.keyCode);
-                key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
-                return true;
-            case MotionEvent.ACTION_UP:
-                key.setBackgroundColor(Colour.FUNCTION);
-                return true;
-        }
-        return false;
-    };
+    //    static final OnTouchListener functionKeyListener = (v, event) -> {
+//        NumKey key = (NumKey) v;
+//        switch (event.getActionMasked()) {
+//            case MotionEvent.ACTION_DOWN:
+//                C.mainService.sendDownUpKeyEvents(key.keyCode);
+//                key.setBackgroundColor(Colour.CANDIDATE_SELECTED);
+//                return true;
+//            case MotionEvent.ACTION_UP:
+//                key.setBackgroundColor(Colour.FUNCTION);
+//                return true;
+//        }
+//        return false;
+//    };
     final static View[] bottomRow = new View[6];
     final static EnglishKey[] leftPunctuation = new EnglishKey[3];
     final static int COMMA = 0, SLASH = 1, AT = 2;
@@ -49,6 +45,7 @@ public class EnglishKeyboard extends ViewGroup {
             new EnglishKey[36], new EnglishKey[36], new EnglishKey[36], new EnglishKey[36], null};
     static int mode = LOWER, type = QWERTY, modeBeforePunctuation;
     static EnglishKey shiftKey, backspace, punctuationKey;
+    static CandidateBar candidateBar;
     static boolean
             isShiftPressed = false,
             isPunctuationPressed = false,
@@ -59,6 +56,8 @@ public class EnglishKeyboard extends ViewGroup {
         super(C.mainService);
         setBackgroundColor(Colour.NORMAL);
         setMeasuredDimension(Size.WInputView, Size.HInputView);
+
+        candidateBar = new CandidateBar();
 
         for (int i = 0; i < 36; i++) {
             keys[LOWER][i] = new EnglishKey(lowercase[i]);
@@ -105,17 +104,6 @@ public class EnglishKeyboard extends ViewGroup {
 
         punctuationKey = new EnglishKey(";!?", Size.WEnglishKey);
         punctuationKey.setOnTouchListener((v, event) -> {
-//            if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-//                if (mode != PUNCTUATION) {
-//                    modeBeforePunctuation = mode;
-//                    changeMode(PUNCTUATION);
-//                    v.setBackgroundColor(Colour.CANDIDATE_SELECTED);
-//                } else {
-//                    changeMode(modeBeforePunctuation);
-//                    v.setBackgroundColor(Colour.FUNCTION);
-//                }
-//                return true;
-//            }
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
                     isPunctuationPressed = true;
@@ -166,6 +154,8 @@ public class EnglishKeyboard extends ViewGroup {
         else punctuationKey.setBackgroundColor(Colour.FUNCTION);
 
         removeAllViews();
+        addView(candidateBar);
+
         for (EnglishKey i : keys[mode])
             addView(i);
         for (View v : bottomRow)
@@ -180,6 +170,7 @@ public class EnglishKeyboard extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         Log.i("EnglishKeyboard", "onLayout");
+        candidateBar.layout(0, 0, Size.WInputView, Size.HEnglishKey);
         l = 0;
         t = Size.HEnglishKey;
         r = Size.WEnglishKey;
@@ -217,7 +208,6 @@ public class EnglishKeyboard extends ViewGroup {
         if (mode != PUNCTUATION)
             shiftKey.layout(0, t, Size.WEnglishKey * 4 / 3, t + Size.HEnglishKey);
         backspace.layout(Size.WInputView - Size.WEnglishKey * 5 / 3, t, Size.WInputView, t + Size.HEnglishKey);
-
 
         t += Size.HEnglishKey;
         for (View v : bottomRow) {

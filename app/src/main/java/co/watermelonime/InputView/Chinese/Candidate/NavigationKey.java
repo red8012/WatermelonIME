@@ -15,7 +15,7 @@ import co.watermelonime.R;
 public class NavigationKey extends View {
     public static NavigationKey[] keys;
     public Drawable image;
-    float dx, dy;
+    public float dx, dy;
 
     public NavigationKey(int icon, int type) {
         super(C.mainService);

@@ -8,13 +8,13 @@ import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 import co.watermelonime.InputView.Chinese.Sentence.LanguageSelector;
 
-public class ChineseInputView extends ViewGroup {
+public class InputView extends ViewGroup {
 
 
     //    public static int mode = LanguageSelector.CHINESE;
     public static ScrollView scrollView;
 
-    public ChineseInputView() {
+    public InputView() {
         super(C.mainService);
 
         scrollView = new ScrollView(C.mainService);

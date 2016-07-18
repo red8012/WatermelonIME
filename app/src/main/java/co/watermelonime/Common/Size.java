@@ -24,15 +24,16 @@ public class Size {
             WKeyboard,
             WKey,
             WEnglishKey,
-            WSpace;
+            WSpace,
+            WEnglishCandidateUsableSpace;
     public static int
             HScreen,
             HInputView,
             HSentenceView,
             HSentencePaddingTop,
             HSentenceButton,
-//            HLanguageSelectorKey,
-            HCandidateView,
+    //            HLanguageSelectorKey,
+    HCandidateView,
             HCandidateVisible,
             HCandidateRow,
             HSeparator,
@@ -87,5 +88,7 @@ public class Size {
         FFr = u * 5;
         FMid = u * 3;
         FSmall = u * 2;
+
+        WEnglishCandidateUsableSpace = (int) (WInputView - WEnglishKey * 3 - u * 2);
     }
 }

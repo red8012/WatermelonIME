@@ -22,6 +22,9 @@ public class EnglishKey extends View {
             "s", "śßš",
             "c", "ćçč",
             "n", "ñń",
+            "l", "ł",
+            "y", "ÿ",
+            "z", "žźż",
             "A", "ÆÃÅĀÄÀÁÂ",
             "E", "ĒÊËĖĘÉÈ",
             "I", "ĪĮÌÎÏÍ",
@@ -29,11 +32,14 @@ public class EnglishKey extends View {
             "U", "ÙÚŪÛÜ",
             "S", "ŚßŠ",
             "C", "ĆÇČ",
-            "N", "ÑŃ"
+            "N", "ÑŃ",
+            "L", "Ł",
+            "Y", "Ÿ",
+            "Z", "ŽŹŻ",
     };
     static int[] umlautInitialIndices = {
-            4, 5, 4, 6, 4, 1, 1, 0,
-            4, 5, 4, 6, 4, 1, 1, 0
+            4, 5, 4, 6, 4, 1, 1, 0, 0, 0, 1,
+            4, 5, 4, 6, 4, 1, 1, 0, 0, 0, 1,
     };
     public String text;
     public Layout textLayout;
@@ -60,7 +66,7 @@ public class EnglishKey extends View {
         textLayout = Font.english.make(s, Size.WEnglishKey);
 
         dx = textLayout.getWidth() / 2;
-        dy = (Size.HEnglishKey - textLayout.getHeight() * 1.2f) / 2;
+        dy = (Size.HEnglishKey - textLayout.getHeight()) / 2;
         setOnTouchListener(ontouchListener);
         setBackgroundColor(Colour.NORMAL);
 

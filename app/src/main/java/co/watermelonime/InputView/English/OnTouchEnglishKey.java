@@ -72,7 +72,7 @@ public class OnTouchEnglishKey implements View.OnTouchListener {
 
                 if (key.displayUmlaut) {
                     key.displayUmlaut = false;
-                    C.commit(key.umlaut.currentText);
+                    CandidateBar.commit(key.umlaut.currentText);
                     try {
                         C.englishKeyboard.removeView(key.umlaut);
                     } catch (Exception e) {
@@ -80,7 +80,7 @@ public class OnTouchEnglishKey implements View.OnTouchListener {
                     }
                     C.englishKeyboard.invalidate();
                 } else
-                    C.commit(key.text);
+                    CandidateBar.commit(key.text);
                 EnglishKeyboard.committed = true;
 
                 if (EnglishKeyboard.mode == EnglishKeyboard.UPPER &&
@@ -96,4 +96,6 @@ public class OnTouchEnglishKey implements View.OnTouchListener {
         }
         return false;
     }
+
+
 }

@@ -88,7 +88,7 @@ public class DBCopy {
 //                    inputViewShown = true;
 //                    if (shouldCopyContacts)
 //                        ContactsLearner.start();
-                    C.mainService.setInputView(C.chineseInputView);
+                    C.mainService.setInputView(C.inputView);
 //                    showAlert();
                 });
             } catch (Exception e) {

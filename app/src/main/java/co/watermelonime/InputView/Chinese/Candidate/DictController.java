@@ -6,7 +6,7 @@ import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Core.Controller;
 import co.watermelonime.Core.Engine;
-import co.watermelonime.InputView.Chinese.ChineseInputView;
+import co.watermelonime.InputView.Chinese.InputView;
 
 public class DictController {
     public static ArrayList<String> currentDict;
@@ -51,15 +51,15 @@ public class DictController {
             CandidateView.height = Size.HCandidateView;
 
         CandidateView.isDictionaryMode = true;
-        C.chineseInputView.invalidate();
+        C.inputView.invalidate();
     }
 
     public static void closeDict() {
         CandidateView.isDictionaryMode = false;
         Controller.displayCandidates();
-        ChineseInputView.scrollView.removeAllViews(); // todo: why do I have to do this?
-        ChineseInputView.scrollView.addView(C.candidateView);
-        C.chineseInputView.invalidate();
+        InputView.scrollView.removeAllViews(); // todo: why do I have to do this?
+        InputView.scrollView.addView(C.candidateView);
+        C.inputView.invalidate();
     }
 
     public static void fillInWordsInDict(int position) {

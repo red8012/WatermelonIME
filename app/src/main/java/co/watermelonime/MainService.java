@@ -10,6 +10,7 @@ import android.support.v7.widget.TintContextWrapper;
 import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.CursorAnchorInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
@@ -32,13 +33,14 @@ import co.watermelonime.InputView.Chinese.Candidate.DictTitle;
 import co.watermelonime.InputView.Chinese.Candidate.DynamicLayoutPool;
 import co.watermelonime.InputView.Chinese.Candidate.NavigationKey;
 import co.watermelonime.InputView.Chinese.Candidate.PredictionKey;
-import co.watermelonime.InputView.Chinese.ChineseInputView;
+import co.watermelonime.InputView.Chinese.InputView;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
 import co.watermelonime.InputView.Chinese.Sentence.LanguageSelector;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
 import co.watermelonime.InputView.Emoji.EmojiKeyboard;
+import co.watermelonime.InputView.English.CandidateBar;
 import co.watermelonime.InputView.English.EnglishKeyboard;
 import co.watermelonime.InputView.Number.NumberKeyboard;
 import co.watermelonime.InputView.WaitingView;
@@ -109,7 +111,7 @@ public class MainService extends InputMethodService {
         Timer.t(1, "Build consonants");
 
         // async task 2
-        Future f2= C.threadPool.submit(() -> {
+        Future f2 = C.threadPool.submit(() -> {
             Timer.t(22);
             Process.setThreadPriority(Process.THREAD_PRIORITY_DISPLAY);
             C.numberKeyboard = new NumberKeyboard();
@@ -152,7 +154,7 @@ public class MainService extends InputMethodService {
         Timer.t(325, "Build SentenceView");
 
         Timer.t(5);
-        C.chineseInputView = new ChineseInputView();
+        C.inputView = new InputView();
         Timer.t(5, "Build ChineseInputView");
 
         v = null;
@@ -170,7 +172,7 @@ public class MainService extends InputMethodService {
     @Override
     public View onCreateInputView() {
         System.out.println("onCreateInputView");
-        if (v == null) return C.chineseInputView;
+        if (v == null) return C.inputView;
         else return v;
     }
 
@@ -204,5 +206,22 @@ public class MainService extends InputMethodService {
                 if (LanguageSelector.inputLanguage == LanguageSelector.ENGLISH && C.initialCapsMode > 0)
                     C.englishKeyboard.changeMode(EnglishKeyboard.UPPER);
         }
+
+
+    }
+
+    @Override
+    public void onViewClicked(boolean focusChanged) {
+        CandidateBar.reset();
+    }
+
+    @Override
+    public void onUpdateCursorAnchorInfo(CursorAnchorInfo cursorAnchorInfo) {
+        CandidateBar.reset();
+    }
+
+    @Override
+    public void onBindInput (){
+        CandidateBar.reset();
     }
 }

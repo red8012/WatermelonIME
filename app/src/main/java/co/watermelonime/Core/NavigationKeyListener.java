@@ -9,6 +9,7 @@ import java.util.concurrent.Future;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
+import co.watermelonime.InputView.English.CandidateBar;
 
 public class NavigationKeyListener implements View.OnTouchListener {
     public static final ExecutorService thread = Executors.newFixedThreadPool(1);
@@ -50,6 +51,7 @@ public class NavigationKeyListener implements View.OnTouchListener {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 v.setBackgroundColor(Colour.CANDIDATE_SELECTED);
+                CandidateBar.reset();
                 try {
                     if (future != null && !future.isDone() && !future.isCancelled())
                         future.cancel(true);
@@ -64,6 +66,7 @@ public class NavigationKeyListener implements View.OnTouchListener {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_OUTSIDE:
                 v.setBackgroundColor(Colour.CANDIDATE);
+                CandidateBar.reset();
                 if (needRepeat && future != null && !future.isDone() && !future.isCancelled())
                     future.cancel(true);
         }
