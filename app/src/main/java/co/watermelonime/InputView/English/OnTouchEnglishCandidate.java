@@ -10,12 +10,26 @@ public class OnTouchEnglishCandidate implements View.OnTouchListener {
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getActionMasked() != MotionEvent.ACTION_DOWN) return true;
+
+        if (EnglishKeyboard.needAddSpaceBeforeCommit) {
+            EnglishKeyboard.needAddSpaceBeforeCommit = false;
+            C.commit(" ");
+        }
+
+        if (EnglishKeyboard.mode == EnglishKeyboard.UPPER &&
+                !EnglishKeyboard.isShiftPressed)
+            C.englishKeyboard.changeMode(EnglishKeyboard.LOWER);
+
         CandidateButton button = ((CandidateButton) v);
         int start = EnglishPredictor.completionBuffer.length();
         CharSequence text = button.layout.getText();
         C.commit(text.subSequence(start, text.length()));
-        C.commit(" ");
+        EnglishKeyboard.needAddSpaceBeforeCommit = true;
         CandidateBar.reset();
+        CandidateBar.setApplicable(true);
+
+        CandidateBar.predict(text.toString());
+
         return true;
     }
 }

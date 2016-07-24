@@ -87,7 +87,6 @@ public class OnTouchEnglishKey implements View.OnTouchListener {
                         !EnglishKeyboard.isShiftPressed)
                     C.englishKeyboard.changeMode(EnglishKeyboard.LOWER);
 
-
                 if (EnglishKeyboard.mode == EnglishKeyboard.PUNCTUATION &&
                         !EnglishKeyboard.isPunctuationPressed)
                     C.englishKeyboard.changeMode(EnglishKeyboard.modeBeforePunctuation);

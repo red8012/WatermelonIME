@@ -4,8 +4,6 @@ import android.graphics.Canvas;
 import android.text.Layout;
 import android.view.View;
 
-import com.orhanobut.logger.Logger;
-
 import co.watermelonime.C;
 import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
@@ -36,7 +34,7 @@ public class CandidateButton extends View {
     }
 
     public void setText(String text, int w, int padding) {
-        Logger.d("%s %d %d", text, w, padding);
+//        Logger.d("%s %d %d", text, w, padding);
         layout = Font.englishCandidate.make(text, w);
         int width = w + padding;
         int height = layout.getHeight();

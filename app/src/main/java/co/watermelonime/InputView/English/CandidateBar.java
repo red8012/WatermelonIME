@@ -55,13 +55,27 @@ public class CandidateBar extends ViewGroup {
     }
 
     public static void commit(CharSequence text) {
+        char c = text.charAt(0);
+        if (EnglishKeyboard.needAddSpaceBeforeCommit) {
+            EnglishKeyboard.needAddSpaceBeforeCommit = false;
+            if (!(EnglishKeyboard.mode == EnglishKeyboard.PUNCTUATION ||
+                    c == '.' || c == ',' || c == '@'))
+                C.commit(" ");
+        }
+        if (EnglishKeyboard.mode == EnglishKeyboard.PUNCTUATION ||
+                c == '.' || c == ',' || c == '@')
+            reset();
         C.commit(text);
         if (!Character.isLetter(text.charAt(0))) {
             learn();
             return;
         }
-        if (!applicable) return;
+        if (!applicable) {
+
+            return;
+        }
         if (EnglishPredictor.completionBuffer.length() > 16) {
+            Logger.d(">16 set not applicable");
             setApplicable(false);
             return;
         }
@@ -71,8 +85,20 @@ public class CandidateBar extends ViewGroup {
     }
 
     public static void predict() {
+        predict(null);
+    }
+
+    public static void predict(String previousWord) {
+        if (!applicable) {
+            clear();
+            return;
+        }
         try {
-            String[] predictions = EnglishPredictor.getPredictions();
+            String[] predictions;
+            if (previousWord == null)
+                predictions = EnglishPredictor.getPredictions();
+            else predictions = EnglishPredictor.getNextPredictions(previousWord);
+
             int i, totalWidth = 0, end = 0;
 
             for (; end < predictions.length; end++) {
@@ -100,14 +126,24 @@ public class CandidateBar extends ViewGroup {
 //            me.invalidate();
 //            button.invalidate();
         } catch (Exception e) {
+            clear();
             e.printStackTrace();
         }
     }
 
+    public static void clear() {
+        for (int i = 0; i < 3; i++)
+            me.removeView(CandidateButton.pool[i]);
+        me.onLayout(true, 0, 0, Size.WInputView, Size.HEnglishKey);
+    }
+
     public static void setApplicable(boolean b) {
         applicable = b;
-        if (!b)
+        Logger.d("applicable: %b", b);
+        if (!b) {
             EnglishPredictor.completionBuffer.setLength(0);
+            clear();
+        }
     }
 
     public static void reset() {
@@ -117,6 +153,7 @@ public class CandidateBar extends ViewGroup {
             InputConnection connection = C.mainService.getCurrentInputConnection();
             try {
                 CharSequence textBefore = connection.getTextBeforeCursor(1, 0);
+                Logger.d("text before: |%s", textBefore);
                 setApplicable(!Character.isLetter(textBefore.charAt(0)));
             } catch (Exception e) {
                 setApplicable(true);

@@ -41,15 +41,16 @@ public class EnglishKeyboard extends ViewGroup {
     final static EnglishKey[] leftPunctuation = new EnglishKey[3];
     final static int COMMA = 0, SLASH = 1, AT = 2;
     final static int QWERTY = 0, DVORAK = 1, COLEMAK = 2;
+    public static int mode = LOWER, type = QWERTY, modeBeforePunctuation;
     static EnglishKey[][] keys = new EnglishKey[][]{
             new EnglishKey[36], new EnglishKey[36], new EnglishKey[36], new EnglishKey[36], null};
-    static int mode = LOWER, type = QWERTY, modeBeforePunctuation;
     static EnglishKey shiftKey, backspace, punctuationKey;
     static CandidateBar candidateBar;
     static boolean
             isShiftPressed = false,
             isPunctuationPressed = false,
-            committed = false;
+            committed = false,
+            needAddSpaceBeforeCommit = false;
 
 
     public EnglishKeyboard() {
@@ -80,6 +81,7 @@ public class EnglishKeyboard extends ViewGroup {
                     } else if (mode == CAPSLOCK) {
                         changeMode(LOWER);
                     }
+                    CandidateBar.predict();
                     return true;
                 case MotionEvent.ACTION_UP:
                     if (committed && mode == UPPER) {

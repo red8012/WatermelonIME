@@ -19,7 +19,8 @@ public class SpaceBar extends View {
                 rectPaint.setColor(Colour.textKeyboard);
                 C.mainService.sendDownUpKeyEvents(KeyEvent.KEYCODE_SPACE);
                 CandidateBar.reset();
-//                CandidateBar.setApplicable(true);
+                EnglishKeyboard.needAddSpaceBeforeCommit = false;
+                CandidateBar.setApplicable(true);
                 v.invalidate();
                 return true;
             case MotionEvent.ACTION_UP:
