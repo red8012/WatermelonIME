@@ -2,6 +2,8 @@ package co.watermelonime.InputView.English;
 
 import android.view.ViewGroup;
 
+import com.orhanobut.logger.Logger;
+
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Size;
@@ -11,15 +13,12 @@ public class Umlaut extends ViewGroup {
     int startsAt, x, y, keysPerRow;
     CharSequence currentText;
 
-    public Umlaut(String umlauts, int startsAt) {
+    public Umlaut(String[] umlauts, int startsAt) {
         super(C.mainService);
         setBackgroundColor(Colour.UMLAUT);
-        int len = umlauts.length();
+        int len = umlauts.length;
         this.startsAt = startsAt;
-//        switch (len){
-//            case 1:
-//                setMeasuredDimension(Size.WEnglishKey * 1, Size.HEnglishKey * 1);
-//        }
+
         if (len == 1) keysPerRow = 1;
         else if (len > 6) keysPerRow = 4;
         else if (len > 4) keysPerRow = 3;
@@ -29,7 +28,7 @@ public class Umlaut extends ViewGroup {
 
         keys = new EnglishKey[len];
         for (int i = 0; i < len; i++) {
-            EnglishKey key = new EnglishKey(umlauts.substring(i, i + 1));
+            EnglishKey key = new EnglishKey(umlauts[i]);
             key.setBackgroundColor(Colour.UMLAUT);
             keys[i] = key;
             addView(key);
@@ -69,6 +68,7 @@ public class Umlaut extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        Logger.d("umlaut onLayout");
         int len = keys.length;
         l = 0;
         t = 0;

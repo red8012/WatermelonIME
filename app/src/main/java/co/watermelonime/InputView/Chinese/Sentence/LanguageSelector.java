@@ -53,7 +53,7 @@ public class LanguageSelector {
                 v.addView(C.chineseKeyboard);
                 break;
             case ENGLISH:
-                v.addView(C.englishKeyboard);
+                v.addView(C.englishKeyboard); // todo: possibly null
                 break;
             case NUMBER:
                 v.addView(C.numberKeyboard);

@@ -24,12 +24,13 @@ public class OnTouchEnglishCandidate implements View.OnTouchListener {
         int start = EnglishPredictor.completionBuffer.length();
         CharSequence text = button.layout.getText();
         C.commit(text.subSequence(start, text.length()));
+
+        EnglishPredictor.learn(text.toString());
+
         EnglishKeyboard.needAddSpaceBeforeCommit = true;
         CandidateBar.reset();
         CandidateBar.setApplicable(true);
-
         CandidateBar.predict(text.toString());
-
         return true;
     }
 }

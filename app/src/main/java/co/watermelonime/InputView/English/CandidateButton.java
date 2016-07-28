@@ -7,6 +7,7 @@ import android.view.View;
 import co.watermelonime.C;
 import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
+import co.watermelonime.Common.TextLayoutFactory;
 
 public class CandidateButton extends View {
     public static int[] width = {0, 0, 0};
@@ -34,8 +35,11 @@ public class CandidateButton extends View {
     }
 
     public void setText(String text, int w, int padding) {
-//        Logger.d("%s %d %d", text, w, padding);
-        layout = Font.englishCandidate.make(text, w);
+        setText(text, w, padding, Font.englishCandidate);
+    }
+
+    public void setText(String text, int w, int padding, TextLayoutFactory style) {
+        layout = style.make(text, w);
         int width = w + padding;
         int height = layout.getHeight();
         dx = width / 2;

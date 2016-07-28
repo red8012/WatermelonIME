@@ -13,29 +13,32 @@ import co.watermelonime.Common.Size;
 
 public class EnglishKey extends View {
     static final OnTouchListener ontouchListener = new OnTouchEnglishKey();
-    static String[] umlautCandidates = {
-            "a", "æãåāäàáâ",
-            "e", "ēêëėęéè",
-            "i", "īįìîïí",
-            "o", "œøōõòóöô",
-            "u", "ùúūûü",
-            "s", "śßš",
-            "c", "ćçč",
-            "n", "ñń",
-            "l", "ł",
-            "y", "ÿ",
-            "z", "žźż",
-            "A", "ÆÃÅĀÄÀÁÂ",
-            "E", "ĒÊËĖĘÉÈ",
-            "I", "ĪĮÌÎÏÍ",
-            "O", "ŒØŌÕÒÓÖÔ",
-            "U", "ÙÚŪÛÜ",
-            "S", "ŚßŠ",
-            "C", "ĆÇČ",
-            "N", "ÑŃ",
-            "L", "Ł",
-            "Y", "Ÿ",
-            "Z", "ŽŹŻ",
+    static String[] alphabetsNeedsUmlaut = {
+            "a", "e", "i", "o", "u", "s", "c", "n", "l", "y", "z",
+            "A", "E", "I", "O", "U", "S", "C", "N", "L", "Y", "Z",};
+    static String[][] umlautCandidates = {
+            {"æ", "ã", "å", "ā", "ä", "à", "á", "â",},
+            {"ē", "ê", "ë", "ė", "ę", "é", "è",},
+            {"ī", "į", "ì", "î", "ï", "í"},
+            {"œ", "ø", "ō", "õ", "ò", "ó", "ö", "ô",},
+            {"ù", "ú", "ū", "û", "ü"},
+            {"ś", "ß", "š"},
+            {"ć", "ç", "č"},
+            {"ñ", "ń"},
+            {"ł"},
+            {"ÿ"},
+            {"ž", "ź", "ż"},
+            {"Æ", "Ã", "Å", "Ā", "Ä", "À", "Á", "Â",},
+            {"Ē", "Ê", "Ë", "Ė", "Ę", "É", "È",},
+            {"Ī", "Į", "Ì", "Î", "Ï", "Í"},
+            {"Œ", "Ø", "Ō", "Õ", "Ò", "Ó", "Ö", "Ô",},
+            {"Ù", "Ú", "Ū", "Û", "Ü"},
+            {"Ś", "ß", "Š"},
+            {"Ć", "Ç", "Č"},
+            {"Ñ", "Ń"},
+            {"Ł"},
+            {"Ÿ"},
+            {"Ž", "Ź", "Ż"},
     };
     static int[] umlautInitialIndices = {
             4, 5, 4, 6, 4, 1, 1, 0, 0, 0, 1,
@@ -63,16 +66,18 @@ public class EnglishKey extends View {
         super(C.mainService);
         setMeasuredDimension(Size.WEnglishKey, Size.HEnglishKey);
         text = s;
-        textLayout = Font.english.make(s, Size.WEnglishKey);
+        textLayout = s.length() > 1 ?
+                Font.mid.make(s, Size.WEnglishKey) :
+                Font.english.make(s, Size.WEnglishKey);
 
         dx = textLayout.getWidth() / 2;
         dy = (Size.HEnglishKey - textLayout.getHeight()) / 2;
         setOnTouchListener(ontouchListener);
         setBackgroundColor(Colour.NORMAL);
 
-        for (int i = 0; i < umlautCandidates.length; i += 2) {
-            if (s.equals(umlautCandidates[i])) {
-                umlaut = new Umlaut(umlautCandidates[i + 1], umlautInitialIndices[i / 2]);
+        for (int i = 0; i < umlautCandidates.length; i++) {
+            if (s.equals(alphabetsNeedsUmlaut[i])) {
+                umlaut = new Umlaut(umlautCandidates[i], umlautInitialIndices[i]);
                 break;
             }
         }

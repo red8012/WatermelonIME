@@ -9,6 +9,7 @@ import com.orhanobut.logger.Logger;
 
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
+import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Core.EnglishPredictor;
 import co.watermelonime.Core.NavigationKeyListener;
@@ -47,11 +48,15 @@ public class CandidateBar extends ViewGroup {
         predict();
     }
 
-    public static void learn() {
+    public static void learn(String s) {
         if (!applicable) return;
         if (EnglishPredictor.completionBuffer.length() == 0) return;
         Logger.d("learn: %s", EnglishPredictor.completionBuffer);
-        EnglishPredictor.completionBuffer.setLength(0);
+        EnglishPredictor.learn(s);
+    }
+
+    public static void learn() {
+        learn(EnglishPredictor.completionBuffer.toString());
     }
 
     public static void commit(CharSequence text) {
@@ -62,18 +67,18 @@ public class CandidateBar extends ViewGroup {
                     c == '.' || c == ',' || c == '@'))
                 C.commit(" ");
         }
-        if (EnglishKeyboard.mode == EnglishKeyboard.PUNCTUATION ||
-                c == '.' || c == ',' || c == '@')
-            reset();
         C.commit(text);
+        if (!applicable) {
+            return;
+        }
         if (!Character.isLetter(text.charAt(0))) {
             learn();
+            reset();
             return;
         }
-        if (!applicable) {
-
-            return;
-        }
+//        if (EnglishKeyboard.mode == EnglishKeyboard.PUNCTUATION ||
+//                c == '.' || c == ',' || c == '@')
+//            reset();
         if (EnglishPredictor.completionBuffer.length() > 16) {
             Logger.d(">16 set not applicable");
             setApplicable(false);
@@ -95,9 +100,24 @@ public class CandidateBar extends ViewGroup {
         }
         try {
             String[] predictions;
-            if (previousWord == null)
+            if (previousWord == null) {
                 predictions = EnglishPredictor.getPredictions();
-            else predictions = EnglishPredictor.getNextPredictions(previousWord);
+                if (predictions == null) {
+                    CandidateButton button = CandidateButton.pool[0];
+                    String text = EnglishPredictor.completionBuffer.toString();
+                    int w = (int) CandidateButton.measureText(text);
+                    int padding = Size.WEnglishCandidateUsableSpace - w;
+                    button.setText(text, w, padding, Font.englishCandidateBlue);
+                    me.removeView(button);
+                    me.addView(button, me.getChildCount() - 1);
+                    button.needSeparator = false;
+                    me.removeView(CandidateButton.pool[1]);
+                    me.removeView(CandidateButton.pool[2]);
+                    me.onLayout(true, 0, 0, Size.WInputView, Size.HEnglishKey);
+                    return;
+                }
+            } else predictions = EnglishPredictor.getNextPredictions(previousWord);
+
 
             int i, totalWidth = 0, end = 0;
 

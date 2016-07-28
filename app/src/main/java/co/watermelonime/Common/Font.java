@@ -7,7 +7,7 @@ public class Font {
     public static TextLayoutFactory
             big, fr, mid, small, bigDisabled, midDisabled,
             sentence, sentenceSelected, candidate, dictTitle, character, emoji,
-            english, englishCandidate;
+            english, englishCandidate, englishCandidateBlue;
     public static Typeface sans, notoEmoji, latin;
 
     public static void init() {
@@ -28,5 +28,6 @@ public class Font {
         emoji = new TextLayoutFactory(Size.FFr, notoEmoji, Colour.textKeyboard, Size.WKey);
         english = new TextLayoutFactory(Size.FFr, latin, Colour.textKeyboard, Size.WKey);
         englishCandidate = new TextLayoutFactory(Size.FCandidate, latin, Colour.textCandidate, 0);
+        englishCandidateBlue = new TextLayoutFactory(Size.FCandidate, latin, Colour.textCharacter, 0);
     }
 }

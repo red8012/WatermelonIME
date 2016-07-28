@@ -22,6 +22,9 @@ public class EnglishKeyboard extends ViewGroup {
             "~", "`", "_", "-", "+", "=", "{", "}", "|", "\\",
             "£", "€", "¥", ":", ";", "\"", "'", "[", "]",
             "°", "<", ">", "?", ",", ".", "/"};
+    public static final String[] domains = {
+            ".edu", ".tw", ".gov", ".org", ".com", ".net",
+    };
     public final static int LOWER = 0, UPPER = 1, PUNCTUATION = 2,
             CAPSLOCK = 3, PUNCTUATION_LOCK = 4;
     //    static final OnTouchListener functionKeyListener = (v, event) -> {
@@ -140,8 +143,12 @@ public class EnglishKeyboard extends ViewGroup {
         bottomRow[1] = punctuationKey;
         bottomRow[2] = leftPunctuation[COMMA];
         bottomRow[3] = new SpaceBar();
-        bottomRow[4] = new EnglishKey(".");
+        EnglishKey dot = new EnglishKey(".");
+        dot.umlaut = new Umlaut(domains, 4);
+        bottomRow[4] = dot;
         bottomRow[5] = enter;
+
+
         changeMode(LOWER);
     }
 
@@ -218,6 +225,15 @@ public class EnglishKeyboard extends ViewGroup {
                 v.layout(l, t, l + w, t + h);
                 l += w;
             }
+        }
+
+        EnglishKey dot = (EnglishKey) bottomRow[4];
+        if (dot.displayUmlaut) {
+            Umlaut u = dot.umlaut;
+            l -= Size.WEnglishKey * 2 / 3;
+            int w = u.getMeasuredWidth(),
+                    height = u.getMeasuredHeight();
+            dot.umlaut.layout(l - w, t - height, l, t);
         }
 
     }
