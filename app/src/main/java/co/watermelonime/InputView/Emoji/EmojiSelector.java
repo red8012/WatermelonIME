@@ -10,8 +10,8 @@ import co.watermelonime.C;
  */
 public class EmojiSelector extends View{
     public static final int
-            RECENT = 0,
-            EMOTICON = 1;
+            RECENT = 1,
+            EMOTICON = 0;
 
     static final EmojiSelectorKey[] keys = new EmojiSelectorKey[2];
     public static int inputEmoji = EMOTICON, lastInputEmoji = EMOTICON;
