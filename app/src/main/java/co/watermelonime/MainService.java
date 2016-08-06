@@ -117,6 +117,9 @@ public class MainService extends InputMethodService {
             C.numberKeyboard = new NumberKeyboard();
             C.englishKeyboard = new EnglishKeyboard();
             C.emojiKeyboard = new EmojiKeyboard();
+            C.inputView.addView(C.numberKeyboard);
+            C.inputView.addView(C.englishKeyboard);
+            C.inputView.addView(C.emojiKeyboard);
             Timer.t(22, "f2");
             return null;
         });
