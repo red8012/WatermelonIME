@@ -1,5 +1,6 @@
 package co.watermelonime.InputView.Emoji;
 
+import android.graphics.Color;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,15 +35,12 @@ public class EmojiKeyboard extends ViewGroup {
     };
 
     public static final String recent[] = {
-            "\ue415","\ue056","\ue057","\ue414","\ue405","\ue106",
-            "\ue418","\ue417","\ue40d","\ue40a","\ue404","\ue105",
-            "\ue409","\ue40e","\ue402","\ue108","\uD83D\uDE00","\uD83D\uDE2C",
             ":-)",";-)",":-(",":-o",":-D",":-P",
             ":@",":-S",":$","B-)",":'(",":-*",
             ">:)","O:)",":-/",":|",":-B",":-SS",
-//            ":-))","|-O","8-)",":-&",":-?","/:-)",
-//            "<3","@):-","~o)",")-|","*-:-)","(b)",
-//            "(u)"
+            ":-))","|-O","8-)",":-&",":-?","/:-)",
+            "<3","@):-","~o)",")-|","*-:-)","(b)",
+            "(u)",":-)",";-)",":-(",":-o",":-D"
     };
 
     public static final String game[] = {
@@ -53,7 +51,7 @@ public class EmojiKeyboard extends ViewGroup {
     };
     final static int EMOTICON = 0, RECENT = 1;
 
-    final static int[] colors = new int[]{Colour.FUNCTION, Colour.reached, Colour.CANDIDATE_SELECTED};
+//    final static int[] colors = new int[]{Colour.FUNCTION, Colour.reached, Colour.CANDIDATE_SELECTED};
     final static EmojiKey[][] keys = new EmojiKey[][]{new EmojiKey[36], new EmojiKey[36]};
     static int mode = EMOTICON;
     public static EmojiSelector emojiSelector;
@@ -68,14 +66,31 @@ public class EmojiKeyboard extends ViewGroup {
             EmojiKey k;
             switch (i) {
                 case 0:
-                    k = new EmojiKey("\uD83D\uDE00");
+                    k = new EmojiKey("A");
                     k.setOnTouchListener((v, event) -> {
                         EmojiKey key = (EmojiKey) v;
                         switch (event.getActionMasked()) {
                             case MotionEvent.ACTION_DOWN:
                                 C.emojiKeyboard.removeAllViews();
-                                mode = (mode + 1) % 2;
-                                key.setBackgroundColor(colors[mode]);
+                                mode = EMOTICON;
+                                key.setBackgroundColor(Color.rgb(70,100,160));
+                                for (EmojiKey j : keys[mode])
+                                    addView(j);
+                                layout(0, 0, 0, 0);
+                                return true;
+                        }
+                        return false;
+                    });
+                    break;
+                case 1:
+                    k = new EmojiKey("B");
+                    k.setOnTouchListener((v, event) -> {
+                        EmojiKey key = (EmojiKey) v;
+                        switch (event.getActionMasked()) {
+                            case MotionEvent.ACTION_DOWN:
+                                C.emojiKeyboard.removeAllViews();
+                                mode = RECENT;
+                                key.setBackgroundColor(Color.rgb(70,100,160));
                                 for (EmojiKey j : keys[mode])
                                     addView(j);
                                 layout(0, 0, 0, 0);
@@ -132,7 +147,7 @@ public class EmojiKeyboard extends ViewGroup {
                     keys[RECENT][i] = new EmojiKey(recent[i]);
             }
             keys[EMOTICON][i] = k;
-            if (i == 0 || i == 34 || i == 35) {
+            if (i == 0 || i ==1 || i == 34 || i == 35) {
                 keys[RECENT][i] = k;
             }
         }
