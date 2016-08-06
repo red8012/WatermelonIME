@@ -6,7 +6,7 @@ import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Core.Controller;
 import co.watermelonime.Core.Engine;
-import co.watermelonime.InputView.Chinese.InputView;
+import co.watermelonime.InputView.InputView;
 
 public class DictController {
     public static ArrayList<String> currentDict;

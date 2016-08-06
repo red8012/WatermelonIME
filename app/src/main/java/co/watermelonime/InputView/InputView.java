@@ -1,4 +1,4 @@
-package co.watermelonime.InputView.Chinese;
+package co.watermelonime.InputView;
 
 import android.util.Log;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ public class InputView extends ViewGroup {
 
     public InputView() {
         super(C.mainService);
-
         scrollView = new ScrollView(C.mainService);
         scrollView.addView(C.candidateView);
 //        LanguageSelector.setInputLanguage(LanguageSelector.CHINESE);

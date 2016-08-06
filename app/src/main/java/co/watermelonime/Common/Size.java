@@ -2,6 +2,8 @@ package co.watermelonime.Common;
 
 import android.graphics.Point;
 
+import co.watermelonime.C;
+
 public class Size {
     public static final float phi = 1.618034f;
     public static int keyIcon;
@@ -32,8 +34,7 @@ public class Size {
             HSentenceView,
             HSentencePaddingTop,
             HSentenceButton,
-    //            HLanguageSelectorKey,
-    HCandidateView,
+            HCandidateView,
             HCandidateVisible,
             HCandidateRow,
             HSeparator,
@@ -51,14 +52,16 @@ public class Size {
     public static void calculate(Point size) {
         WScreen = size.x;
         HScreen = size.y;
-        u = WScreen / 70f;
+        C.isLandscape = WScreen > HScreen;
+        final boolean p = !C.isLandscape;
+        u = p ? WScreen / 70f : WScreen / 140f;
         WSeparator = WScreen / 240;
         WInputView = WScreen;
         WEnglishKey = WInputView / 10;
         WSentenceView = (int) (WScreen * 0.12);
         WKeyboard = round(WScreen - WSentenceView, 6);
-        WKey = WKeyboard / 6;
-        HKeyboard = round(WKeyboard / phi, 4);
+        WKey = p ? WKeyboard / 6 : WKeyboard / 12;
+        HKeyboard = p ? round(WKeyboard / phi, 4) : round(WKeyboard / phi / 2, 4);
         HKey = HKeyboard / 4;
         WSentenceView = WScreen - WKeyboard;
         WCandidateView = WKeyboard;
@@ -66,20 +69,19 @@ public class Size {
         WDictButton = (WCandidateView - WDictTitle) / 7;
         W2ndLayerDictButton = WCandidateView / 8;
         WNavigationKey = WCandidateView / 6;
-        HCandidateRow = WScreen / 10;
+        HCandidateRow = p ? WScreen / 10 : WScreen / 20;
         HSeparator = HCandidateRow * 4 / 5;
         HCandidateVisible = HCandidateRow * 2 + WScreen / 60;
-        HInputView = HKeyboard + HCandidateVisible;
-        HEnglishKey = HInputView / 6 + 1;
+        HInputView = p ? HKeyboard + HCandidateVisible : HKeyboard;
+        HEnglishKey = p ? HInputView / 6 + 1 : HInputView / 5 + 1;
         HNumKey = HInputView / 6;
         HEmojiKey = HInputView / 8;
         HSentenceView = HInputView;
         HCandidateView = HInputView;
         HSentenceButton = (int) ((HSentenceView - u - u) / 9);
-//        HLanguageSelectorKey = (int) ((HSentenceView - u - u) / 6);
         HSentencePaddingTop = (HInputView - HSentenceButton * 9) / 2;
 
-        WSpace = WInputView * 4 / 10;
+        WSpace = WEnglishKey * 4;
 
         keyIcon = HKey * 4 / 5;
         FSentence = u * 4.5f;

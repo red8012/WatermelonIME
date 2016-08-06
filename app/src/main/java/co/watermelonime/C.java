@@ -7,11 +7,11 @@ import android.view.animation.DecelerateInterpolator;
 import java.util.concurrent.ExecutorService;
 
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
-import co.watermelonime.InputView.Chinese.InputView;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
 import co.watermelonime.InputView.Emoji.EmojiKeyboard;
 import co.watermelonime.InputView.English.EnglishKeyboard;
+import co.watermelonime.InputView.InputView;
 import co.watermelonime.InputView.Number.NumberKeyboard;
 
 public class C {

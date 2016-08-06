@@ -38,11 +38,9 @@ public class SpaceBar extends View {
         setMeasuredDimension(Size.WSpace, Size.HEnglishKey);
         setOnTouchListener(ontouchListener);
         setBackgroundColor(Colour.NORMAL);
-        if (rect == null) {
-            rectPaint.setColor(Colour.SPACE);
-            rect = new RectF(Size.u * 2, Size.u * 2, Size.WSpace - Size.u * 2, Size.HEnglishKey - Size.u * 2);
-            setMeasuredDimension(Size.WSpace, Size.HEnglishKey);
-        }
+        rectPaint.setColor(Colour.SPACE);
+        rect = new RectF(Size.u * 2, Size.u * 2, Size.WSpace - Size.u * 2, Size.HEnglishKey - Size.u * 2);
+        setMeasuredDimension(Size.WSpace, Size.HEnglishKey);
     }
 
     @Override

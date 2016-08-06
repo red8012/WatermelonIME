@@ -33,7 +33,6 @@ import co.watermelonime.InputView.Chinese.Candidate.DictTitle;
 import co.watermelonime.InputView.Chinese.Candidate.DynamicLayoutPool;
 import co.watermelonime.InputView.Chinese.Candidate.NavigationKey;
 import co.watermelonime.InputView.Chinese.Candidate.PredictionKey;
-import co.watermelonime.InputView.Chinese.InputView;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
@@ -42,6 +41,7 @@ import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
 import co.watermelonime.InputView.Emoji.EmojiKeyboard;
 import co.watermelonime.InputView.English.CandidateBar;
 import co.watermelonime.InputView.English.EnglishKeyboard;
+import co.watermelonime.InputView.InputView;
 import co.watermelonime.InputView.Number.NumberKeyboard;
 import co.watermelonime.InputView.WaitingView;
 
@@ -175,6 +175,7 @@ public class MainService extends InputMethodService {
     @Override
     public View onCreateInputView() {
         System.out.println("onCreateInputView");
+        if (C.isLandscape) LanguageSelector.setInputLanguage(LanguageSelector.ENGLISH);
         if (v == null) return C.inputView;
         else return v;
     }

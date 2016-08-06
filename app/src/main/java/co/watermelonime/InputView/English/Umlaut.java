@@ -72,6 +72,7 @@ public class Umlaut extends ViewGroup {
         int len = keys.length;
         l = 0;
         t = 0;
+
         for (int i = 0; i < len; i++) {
             keys[i].layout(l, t, l + Size.WEnglishKey, t + Size.HEnglishKey);
             l += Size.WEnglishKey;

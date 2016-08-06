@@ -2,7 +2,7 @@ package co.watermelonime.InputView.Chinese.Sentence;
 
 import co.watermelonime.C;
 import co.watermelonime.DBCopy;
-import co.watermelonime.InputView.Chinese.InputView;
+import co.watermelonime.InputView.InputView;
 import co.watermelonime.MainService;
 import co.watermelonime.R;
 

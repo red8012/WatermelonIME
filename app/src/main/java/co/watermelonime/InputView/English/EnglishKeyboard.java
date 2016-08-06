@@ -179,9 +179,12 @@ public class EnglishKeyboard extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         Log.i("EnglishKeyboard", "onLayout");
-        candidateBar.layout(0, 0, Size.WInputView, Size.HEnglishKey);
         l = 0;
-        t = Size.HEnglishKey;
+        t = 0;
+        if (!C.isLandscape) {
+            candidateBar.layout(0, 0, Size.WInputView, Size.HEnglishKey);
+            t = Size.HEnglishKey;
+        }
         r = Size.WEnglishKey;
         for (int i = 0; i < 36; ++i) {
             EnglishKey k = keys[mode][i];
@@ -201,8 +204,8 @@ public class EnglishKeyboard extends ViewGroup {
                     left -= right - Size.WScreen;
                     right = Size.WScreen;
                 }
-
-                k.umlaut.layout(left, t - height, right, t);
+                int tClipped = t-height<0?height:t;
+                k.umlaut.layout(left, tClipped - height, right, tClipped);
             }
 
             r += Size.WEnglishKey;
