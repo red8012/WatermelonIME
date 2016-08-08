@@ -36,7 +36,7 @@ public class LanguageSelectorKey extends View {
         this.language = language;
         setSize();
         textLayout = Font.sentence.make(text, Size.WSentenceView);
-        dx = Size.WSentenceView / 2;
+        dx = C.isLandscape ? Size.WKey / 2 : Size.WSentenceView / 2;
         dy = (Size.HKey - textLayout.getHeight()) / 2;
     }
 
@@ -47,9 +47,11 @@ public class LanguageSelectorKey extends View {
         setSize();
 
         image = ContextCompat.getDrawable(C.context, resource);
-        int size = Size.WSentenceView * 3 / 5;
-        dx = Size.WSentenceView * 1 / 5 + Size.u / 5;
+        int size = Size.HKey * 3 / 5;
+        dx = C.isLandscape ? (Size.WKey - size) / 2 : (Size.WSentenceView * 1 / 5 + Size.u / 5);
         dy = (height - size) / 2;
+        if (C.isLandscape && language != LanguageSelector.EMOJI)
+            dy += Size.u / 2;
         image.setBounds(0, 0, size, size);
 
         if (rectPaint == null) {
@@ -59,10 +61,15 @@ public class LanguageSelectorKey extends View {
     }
 
     void setSize() {
-        if (language == LanguageSelector.GLOBE || language == LanguageSelector.SETTINGS)
-            height = Size.HCandidateRow;
-        else height = Size.HKey;
-        setMeasuredDimension(Size.WSentenceView, height);
+        if (!C.isLandscape) {
+            if (language == LanguageSelector.GLOBE || language == LanguageSelector.SETTINGS)
+                height = Size.HCandidateRow;
+            else height = Size.HKey;
+            setMeasuredDimension(Size.WSentenceView, height);
+        } else {
+            height = Size.HKey;
+            setMeasuredDimension(Size.WKey, height);
+        }
     }
 
     @Override
@@ -80,7 +87,10 @@ public class LanguageSelectorKey extends View {
             canvas.restore();
         }
         if (LanguageSelector.inputLanguage == language) {
-            canvas.drawRect(0, 0, Size.u / 2, Size.HKey, rectPaint);
+            if (!C.isLandscape)
+                canvas.drawRect(0, 0, Size.u / 2, Size.HKey, rectPaint);
+            else
+                canvas.drawRect(0, Size.HKey - Size.u / 2, Size.WKey, Size.HKey, rectPaint);
         }
         if (textLayout != null) {
             canvas.save();

@@ -38,24 +38,40 @@ public class InputView extends ViewGroup {
         Log.i("ChineseInputView", "onLayout");
         l = 0;
         t = 0;
-        if (LanguageSelector.inputLanguage != LanguageSelector.ENGLISH) {
-            C.sentenceView.layout(l, t, l + Size.WSentenceView, t + Size.HSentenceView);
-            l += Size.WSentenceView;
-        }
-        switch (LanguageSelector.inputLanguage) {
-            case LanguageSelector.CHINESE:
-                scrollView.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
-                C.chineseKeyboard.layout(l, t + Size.HCandidateVisible, l + Size.WKeyboard, t + Size.HInputView);
-                break;
-            case LanguageSelector.NUMBER:
-                C.numberKeyboard.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
-                break;
-            case LanguageSelector.ENGLISH:
-                C.englishKeyboard.layout(l, t, Size.WInputView, Size.HInputView);
-                break;
-            case LanguageSelector.EMOJI:
-                C.emojiKeyboard.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
-                break;
+        if (!C.isLandscape) {
+            if (LanguageSelector.inputLanguage != LanguageSelector.ENGLISH) {
+                C.sentenceView.layout(l, t, l + Size.WSentenceView, t + Size.HSentenceView);
+                l += Size.WSentenceView;
+            }
+            switch (LanguageSelector.inputLanguage) {
+                case LanguageSelector.CHINESE:
+                    scrollView.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+                    C.chineseKeyboard.layout(l, t + Size.HCandidateVisible, l + Size.WKeyboard, t + Size.HInputView);
+                    break;
+                case LanguageSelector.NUMBER:
+                    C.numberKeyboard.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+                    break;
+                case LanguageSelector.ENGLISH:
+                    C.englishKeyboard.layout(l, t, Size.WInputView, Size.HInputView);
+                    break;
+                case LanguageSelector.EMOJI:
+                    C.emojiKeyboard.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+                    break;
+            }
+        } else {
+            switch (LanguageSelector.inputLanguage) {
+                case LanguageSelector.CHINESE:
+                    C.sentenceView.layout(l, t, l + Size.WChineseLandscapeLeft, t + Size.HKey);
+                    t += Size.HKey;
+                    scrollView.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+                    l += Size.WChineseLandscapeLeft;
+                    t = 0;
+                    C.chineseKeyboard.layout(l, t, l + Size.WKeyboard, t + Size.HInputView);
+                    break;
+                case LanguageSelector.ENGLISH:
+                    C.englishKeyboard.layout(l, t, Size.WInputView, Size.HInputView);
+                    break;
+            }
         }
     }
 }

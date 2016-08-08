@@ -4,6 +4,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.orhanobut.logger.Logger;
+
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Size;
@@ -99,12 +101,18 @@ public class SentenceView extends ViewGroup {
         Log.i("SentenceView", "onLayout");
         final int end = getChildCount();
         t = Size.HSentencePaddingTop;
-
+        l = 0;
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
-            int h = v.getMeasuredHeight();
-            v.layout(0, t, Size.WSentenceView, t + h);
-            t += h;
+            if (!C.isLandscape) {
+                int h = v.getMeasuredHeight();
+                v.layout(0, t, Size.WSentenceView, t + h);
+                t += h;
+            } else {
+                int w = v.getMeasuredWidth();
+                v.layout(l, 0, l + w, Size.HKey);
+                l += w;
+            }
         }
     }
 }

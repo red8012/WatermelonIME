@@ -27,7 +27,8 @@ public class Size {
             WKey,
             WEnglishKey,
             WSpace,
-            WEnglishCandidateUsableSpace;
+            WEnglishCandidateUsableSpace,
+            WChineseLandscapeLeft;
     public static int
             HScreen,
             HInputView,
@@ -59,9 +60,10 @@ public class Size {
         WInputView = WScreen;
         WEnglishKey = WInputView / 10;
         WSentenceView = (int) (WScreen * 0.12);
-        WKeyboard = round(WScreen - WSentenceView, 6);
-        WKey = p ? WKeyboard / 6 : WKeyboard / 12;
-        HKeyboard = p ? round(WKeyboard / phi, 4) : round(WKeyboard / phi / 2, 4);
+        WKeyboard = p ? round(WScreen - WSentenceView, 6) : round(WScreen / 2, 6);
+        WChineseLandscapeLeft = WScreen - WKeyboard;
+        WKey = WKeyboard / 6;
+        HKeyboard = round(WKeyboard / phi * (p ? 1 : .9f), 4);
         HKey = HKeyboard / 4;
         WSentenceView = WScreen - WKeyboard;
         WCandidateView = WKeyboard;
