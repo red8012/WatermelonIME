@@ -53,7 +53,6 @@ public class CharacterKey extends CandidateButton {
             {'u', 'u', 't', 't', 't', 's', 'b', 'r', 'l', 'w', 'p', 'd', },
             {'.', 'v', 'k', 'l', },
     };
-    //    final static ArrayList<CharacterKey> pool = new ArrayList<>(10);
     final static OnTouchListener onTouchListener = new OnTouchCharacterKey();
     char vowel, character;
 
@@ -63,7 +62,6 @@ public class CharacterKey extends CandidateButton {
         needSeparator = false;
         this.vowel = vowel;
         this.character = character;
-//        text = s;
         this.type = paddingTopBottom;
         setMeasuredDimension(width, (int) (Size.HCandidateRow + (paddingTopBottom == 0 ? 0 : Size.u / 2)));
         textLayout = Font.character.make(String.valueOf(character), width);

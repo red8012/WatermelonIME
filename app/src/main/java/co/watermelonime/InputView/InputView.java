@@ -9,19 +9,47 @@ import co.watermelonime.Common.Size;
 import co.watermelonime.InputView.Chinese.Sentence.LanguageSelector;
 
 public class InputView extends ViewGroup {
-
-
-    //    public static int mode = LanguageSelector.CHINESE;
     public static ScrollView scrollView;
+//    public static View vx;
 
     public InputView() {
         super(C.mainService);
         scrollView = new ScrollView(C.mainService);
         scrollView.addView(C.candidateView);
-//        LanguageSelector.setInputLanguage(LanguageSelector.CHINESE);
-        addView(C.sentenceView);
-        addView(scrollView);
-        addView(C.chineseKeyboard);
+        addChildren(LanguageSelector.CHINESE);
+//        addView(C.sentenceView);
+//        addView(scrollView);
+//        addView(C.chineseKeyboard);
+//        C.landscapeLanguageSelectorBar = new LandscapeLanguageSelectorBar();
+
+//        vx = new View(C.mainService);
+//        vx.setBackgroundColor(Color.BLUE);
+//        addView(vx);
+
+//        addView(C.landscapeLanguageSelectorBar);
+    }
+
+    public void addChildren(int inputLanguage) {
+        removeAllViews();
+        if (inputLanguage != LanguageSelector.ENGLISH)
+            addView(C.sentenceView);
+        switch (inputLanguage) {
+            case LanguageSelector.CHINESE:
+                addView(InputView.scrollView);
+                addView(C.chineseKeyboard);
+                if (C.isLandscape) addView(C.landscapeLanguageSelectorBar);
+                break;
+            case LanguageSelector.ENGLISH:
+                addView(C.englishKeyboard); // todo: possibly null
+                break;
+            case LanguageSelector.NUMBER:
+                addView(C.numberKeyboard);
+                break;
+            case LanguageSelector.EMOJI:
+                addView(C.emojiKeyboard);
+                break;
+        }
+        invalidate();
     }
 
     @Override
@@ -61,9 +89,14 @@ public class InputView extends ViewGroup {
         } else {
             switch (LanguageSelector.inputLanguage) {
                 case LanguageSelector.CHINESE:
+//                    vx.layout(0,0,1000,1000);
                     C.sentenceView.layout(l, t, l + Size.WChineseLandscapeLeft, t + Size.HKey);
                     t += Size.HKey;
-                    scrollView.layout(l, t, l + Size.WCandidateView, t + Size.HCandidateView);
+                    scrollView.layout(l, t, l + Size.WChineseLandscapeLeft, t + Size.HCandidateView);
+                    t += Size.HKey * 2;
+//                    Logger.d("%d %d %d %d", l, t, l + Size.WChineseLandscapeLeft, t + Size.HKey);
+                    C.landscapeLanguageSelectorBar.layout(l, t, l + Size.WChineseLandscapeLeft, t + Size.HKey);
+
                     l += Size.WChineseLandscapeLeft;
                     t = 0;
                     C.chineseKeyboard.layout(l, t, l + Size.WKeyboard, t + Size.HInputView);

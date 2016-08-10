@@ -54,16 +54,12 @@ public class CandidateView extends ViewGroup {
 
         end = i;
 
-        int padding = (Size.WCandidateView - totalWidth - 1) / (end - start);
-
-//        System.out.print("Type: " + type + " paddingTopBottom: " + paddingTopBottom + "|");
+        int padding = (Size.WCandidateView - totalWidth) / (end - start);
         for (int j = start; j < end; j++) {
             CandidateButton c = CandidateButton.get();
             c.setText(list.get(j), padding, j < end - 1, type, paddingTopBottom);
             C.candidateView.addView(c);
-//            System.out.print(list.get(j));
         }
-//        System.out.println();
         Timer.t(8, "set candidate" + type);
         return end;
     }
@@ -72,7 +68,9 @@ public class CandidateView extends ViewGroup {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (!isDictionaryMode)
             height = Size.HCandidateVisible;
-        setMeasuredDimension(Size.WCandidateView, height);
+        setMeasuredDimension(
+                C.isLandscape ? Size.WChineseLandscapeLeft : Size.WCandidateView,
+                height);
     }
 
     @Override
@@ -89,19 +87,16 @@ public class CandidateView extends ViewGroup {
 
             if (v.getClass() == DictTitle.class) {
                 if (l > 0) t += lastH;
-//                if (l > 0) t += h;
                 l = 0;
             }
             if (l + w > Size.WKeyboard + Size.u) {
                 l = 0;
                 t += lastH;
-//                t += v.getMeasuredHeight();
             }
             if (w > Size.WKeyboard) {
                 v.layout(l, t, l + w, t + h);
                 l = 0;
                 t += lastH;
-//                t += h;
             } else {
                 v.layout(l, t, l + w, t + h);
                 l += w;

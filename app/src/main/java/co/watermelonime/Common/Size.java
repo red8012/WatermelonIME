@@ -28,7 +28,8 @@ public class Size {
             WEnglishKey,
             WSpace,
             WEnglishCandidateUsableSpace,
-            WChineseLandscapeLeft;
+            WChineseLandscapeLeft,
+            WSentenceButton;
     public static int
             HScreen,
             HInputView,
@@ -56,32 +57,34 @@ public class Size {
         C.isLandscape = WScreen > HScreen;
         final boolean p = !C.isLandscape;
         u = p ? WScreen / 70f : WScreen / 140f;
-        WSeparator = WScreen / 240;
         WInputView = WScreen;
         WEnglishKey = WInputView / 10;
         WSentenceView = (int) (WScreen * 0.12);
         WKeyboard = p ? round(WScreen - WSentenceView, 6) : round(WScreen / 2, 6);
+        WSeparator = WKeyboard / 200;
         WChineseLandscapeLeft = WScreen - WKeyboard;
         WKey = WKeyboard / 6;
         HKeyboard = round(WKeyboard / phi * (p ? 1 : .9f), 4);
         HKey = HKeyboard / 4;
         WSentenceView = WScreen - WKeyboard;
-        WCandidateView = WKeyboard;
+        WSentenceButton = p ? WSentenceView : (WSentenceView / 9);
+        WCandidateView = p ? WKeyboard : WChineseLandscapeLeft;
         WDictTitle = WCandidateView * 3 / 16;
         WDictButton = (WCandidateView - WDictTitle) / 7;
         W2ndLayerDictButton = WCandidateView / 8;
         WNavigationKey = WCandidateView / 6;
-        HCandidateRow = p ? WScreen / 10 : WScreen / 20;
-        HSeparator = HCandidateRow * 4 / 5;
-        HCandidateVisible = HCandidateRow * 2 + WScreen / 60;
+        HCandidateRow = p ? WScreen / 10 : (int) (HKey - Size.u / 2);
+        HCandidateVisible = (int) (HCandidateRow * 2 + (p ? (WScreen / 60) : Size.u));
+        HSeparator = p ? (HCandidateRow * 4 / 5) : (HCandidateRow * 3 / 5);
         HInputView = p ? HKeyboard + HCandidateVisible : HKeyboard;
         HEnglishKey = p ? HInputView / 6 + 1 : HInputView / 5 + 1;
         HNumKey = HInputView / 6;
         HEmojiKey = HInputView / 8;
-        HSentenceView = HInputView;
+        HSentenceView = p ? HInputView : HKey;
         HCandidateView = HInputView;
-        HSentenceButton = (int) ((HSentenceView - u - u) / 9);
-        HSentencePaddingTop = (HInputView - HSentenceButton * 9) / 2;
+        HSentenceButton = p ? (int) ((HSentenceView - u - u) / 9) : HKey;
+        HSentencePaddingTop = p ? ((HInputView - HSentenceButton * 9) / 2)
+                : ((WSentenceView - WSentenceButton * 9) / 2);
 
         WSpace = WEnglishKey * 4;
 

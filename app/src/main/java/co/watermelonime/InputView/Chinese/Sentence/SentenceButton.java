@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.text.Layout;
-import android.util.Log;
 import android.view.View;
 
 import co.watermelonime.C;
@@ -31,7 +30,7 @@ public class SentenceButton extends View {
             rectPaint.setColor(Colour.CANDIDATE);
             rect = new RectF(Size.u / 2, 0, Size.WSentenceView, Size.HSentenceButton);
         }
-        setMeasuredDimension(Size.WSentenceView, Size.HSentenceButton);
+        setMeasuredDimension(Size.WSentenceButton, Size.HSentenceButton);
         whiteTextLayout = Font.sentence.makeDynamic(text, Size.WSentenceView);
         blackTextLayout = Font.sentenceSelected.makeDynamic(text, Size.WSentenceView);
     }
@@ -42,17 +41,17 @@ public class SentenceButton extends View {
             text.setLength(0);
             text.append(s);
             textLayout = whiteTextLayout;
-            dx = Size.WSentenceView / 2;
+            dx = Size.WSentenceButton / 2;
             dy = (Size.HSentenceButton - textLayout.getHeight()) / 2;
         }
         invalidate();
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        Log.i("SentenceButton", "onMeasure");
-        setMeasuredDimension(Size.WSentenceView, Size.HSentenceButton);
-    }
+//    @Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        Log.i("SentenceButton", "onMeasure");
+//        setMeasuredDimension(Size.WSentenceView, Size.HSentenceButton);
+//    }
 
     @Override
     protected void onDraw(Canvas canvas) {

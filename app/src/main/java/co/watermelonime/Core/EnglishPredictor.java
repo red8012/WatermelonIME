@@ -18,6 +18,7 @@ public class EnglishPredictor {
     static SQLiteStatement query, queryNext, update, insert;
 
     public static void init() {
+        if (query != null) return;
         query = Engine.db.compileStatement(
                 "select group_concat(w)from(select w from eng where w glob ? order by o limit 3)"
         );
@@ -70,7 +71,7 @@ public class EnglishPredictor {
     }
 
     public static String[] getNextPredictions(String s) {
-        if (s.length()==0){
+        if (s.length() == 0) {
             setDefaultPredictions();
             return predictions;
         }

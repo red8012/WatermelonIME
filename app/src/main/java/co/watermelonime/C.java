@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutorService;
 
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
+import co.watermelonime.InputView.Chinese.Sentence.LandscapeLanguageSelectorBar;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
 import co.watermelonime.InputView.Emoji.EmojiKeyboard;
 import co.watermelonime.InputView.English.EnglishKeyboard;
@@ -25,6 +26,7 @@ public class C {
     public static int inputType, initialCapsMode;
     public static boolean isLandscape, debug = true;
     public static SentenceView sentenceView;
+    public static LandscapeLanguageSelectorBar landscapeLanguageSelectorBar;
     public static CandidateView candidateView;
     public static ChineseKeyboard chineseKeyboard;
     public static InputView inputView;

@@ -2,7 +2,6 @@ package co.watermelonime.InputView.Chinese.Sentence;
 
 import co.watermelonime.C;
 import co.watermelonime.DBCopy;
-import co.watermelonime.InputView.InputView;
 import co.watermelonime.MainService;
 import co.watermelonime.R;
 
@@ -43,26 +42,7 @@ public class LanguageSelector {
         }
         if (recordLastLanguage) lastInputLanguage = inputLanguage;
         LanguageSelector.inputLanguage = inputLanguage;
-        InputView v = C.inputView;
-        v.removeAllViews();
-        if (inputLanguage != ENGLISH)
-            v.addView(C.sentenceView);
-        switch (inputLanguage) {
-            case CHINESE:
-                v.addView(InputView.scrollView);
-                v.addView(C.chineseKeyboard);
-                break;
-            case ENGLISH:
-                v.addView(C.englishKeyboard); // todo: possibly null
-                break;
-            case NUMBER:
-                v.addView(C.numberKeyboard);
-                break;
-            case EMOJI:
-                v.addView(C.emojiKeyboard);
-                break;
-        }
-        v.invalidate(); // TODO: 2016/3/5 check this
+        C.inputView.addChildren(inputLanguage);
     }
 
     public static void setInputLanguage(final int inputLanguage) {

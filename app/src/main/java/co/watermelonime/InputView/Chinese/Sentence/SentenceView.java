@@ -4,8 +4,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.orhanobut.logger.Logger;
-
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Size;
@@ -20,7 +18,9 @@ public class SentenceView extends ViewGroup {
         setBackgroundColor(Colour.SENTENCE);
         for (int i = 0; i < 9; i++)
             sentenceButtons[i] = new SentenceButton(i);
-        children = LanguageSelector.keys;
+        if (!C.isLandscape)
+            children = LanguageSelector.keys;
+        else children = sentenceButtons;
         for (View i : children)
             addView(i);
     }
@@ -29,20 +29,16 @@ public class SentenceView extends ViewGroup {
         if (SentenceButton.selectedIndex == index) {
             SentenceButton sb = sentenceButtons[SentenceButton.selectedIndex];
             SentenceButton.selectedIndex = -1;
-//            sb.textLayout = Font.sentence.make(sb.text);
             sb.textLayout = sb.whiteTextLayout;
             sb.invalidate();
             return;
         } else if (SentenceButton.selectedIndex >= 0) {
             SentenceButton sb = sentenceButtons[SentenceButton.selectedIndex];
-//            if (sb.originalTextLayout != null) sb.textLayout = sb.originalTextLayout;
             sb.textLayout = sb.whiteTextLayout;
             sb.invalidate();
         }
         SentenceButton.selectedIndex = index;
         SentenceButton sb = sentenceButtons[index];
-//        sb.originalTextLayout = sb.textLayout;
-//        sb.textLayout = Font.sentenceSelected.make(sb.text);
         sb.textLayout = sb.blackTextLayout;
         sb.invalidate();
     }
@@ -58,11 +54,11 @@ public class SentenceView extends ViewGroup {
 
     public void display() {
         if (Engine.isEmpty()) {
-            children = LanguageSelector.keys;
+            if (!C.isLandscape)
+                children = LanguageSelector.keys;
             removeAllViews();
             for (int i = 0; i < 9; i++)
                 sentenceButtons[i].setText('\0');
-//                sentenceButtons[i].setText(null);
             for (View i : children) addView(i);
             return;
         }
@@ -87,7 +83,6 @@ public class SentenceView extends ViewGroup {
         addSentenceButtons();
         final int length = Engine.getLength();
         sentenceButtons[length].setText(text.charAt(0));
-//        sentenceButtons[length].invalidate();
     }
 
     @Override
@@ -100,8 +95,12 @@ public class SentenceView extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         Log.i("SentenceView", "onLayout");
         final int end = getChildCount();
-        t = Size.HSentencePaddingTop;
+
+        t = 0;
         l = 0;
+        if (C.isLandscape) l += Size.HSentencePaddingTop;
+        else t += Size.HSentencePaddingTop;
+
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
             if (!C.isLandscape) {

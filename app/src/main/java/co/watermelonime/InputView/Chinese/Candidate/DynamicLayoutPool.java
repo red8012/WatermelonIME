@@ -25,7 +25,7 @@ public class DynamicLayoutPool {
             for (int i = 0; i < numberOfDefaultLayouts; i++) {
                 StringBuilder content = new StringBuilder("123456789".substring(0, length));
                 DynamicLayout dynamicLayout = Font.candidate.makeDynamic(content,
-                        (int) (Size.FCandidate * length));
+                        (int) (Size.FCandidate * length)+10);
                 span[length].add(content);
                 pool[length].add(dynamicLayout);
             }
@@ -40,7 +40,7 @@ public class DynamicLayoutPool {
 
         if (p.isEmpty()) {
             StringBuilder content = new StringBuilder(text);
-            dynamicLayout = Font.candidate.makeDynamic(content, (int) (Size.FCandidate * length));
+            dynamicLayout = Font.candidate.makeDynamic(content, (int) (Size.FCandidate * length)+10);
             Log.e("dynamic layout pool", "empty: " + length);
         } else {
             int last = p.size() - 1;

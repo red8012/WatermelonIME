@@ -36,6 +36,7 @@ import co.watermelonime.InputView.Chinese.Candidate.PredictionKey;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
 import co.watermelonime.InputView.Chinese.Keyboard.Vowels;
+import co.watermelonime.InputView.Chinese.Sentence.LandscapeLanguageSelectorBar;
 import co.watermelonime.InputView.Chinese.Sentence.LanguageSelector;
 import co.watermelonime.InputView.Chinese.Sentence.SentenceView;
 import co.watermelonime.InputView.Emoji.EmojiKeyboard;
@@ -154,6 +155,8 @@ public class MainService extends InputMethodService {
         Timer.t(325);
         LanguageSelector.init();
         C.sentenceView = new SentenceView();
+        if (C.isLandscape)
+            C.landscapeLanguageSelectorBar = new LandscapeLanguageSelectorBar();
         Timer.t(325, "Build SentenceView");
 
         Timer.t(5);
@@ -225,7 +228,7 @@ public class MainService extends InputMethodService {
     }
 
     @Override
-    public void onBindInput (){
+    public void onBindInput() {
         CandidateBar.reset();
     }
 }
