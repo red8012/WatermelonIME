@@ -35,12 +35,18 @@ public class EmojiKeyboard extends ViewGroup {
     };
 
     public static final String recent[] = {
-            ":-)",";-)",":-(",":-o",":-D",":-P",
-            ":@",":-S",":$","B-)",":'(",":-*",
-            ">:)","O:)",":-/",":|",":-B",":-SS",
-            ":-))","|-O","8-)",":-&",":-?","/:-)",
-            "<3","@):-","~o)",")-|","*-:-)","(b)",
-            "(u)",":-)",";-)",":-(",":-o",":-D"
+    "!", "@", "#", "$", "%", "^",
+            "&", "*", "(", ")", "-", "+",
+            "[", "]", "{", "}", "/", "*",
+            "<", ">", ",", ".", ";", "~",
+            "®", "©", "℗", "™", "℃", "℉",
+            "⨀", "⨁", "⨂", "$", "€", "¥"
+//            ":-)",";-)",":-(",":-o",":-D",":-P",
+//            ":@",":-S",":$","B-)",":'(",":-*",
+//            ">:)","O:)",":-/",":|",":-B",":-SS",
+//            ":-))","|-O","8-)",":-&",":-?","/:-)",
+//            "<3","@):-","~o)",")-|","*-:-)","(b)",
+//            "(u)",":-)",";-)",":-(",":-o",":-D"
     };
 
     public static final String game[] = {
@@ -66,7 +72,7 @@ public class EmojiKeyboard extends ViewGroup {
             EmojiKey k;
             switch (i) {
                 case 0:
-                    k = new EmojiKey("A");
+                    k = new EmojiKey(R.drawable.emoji_happy);
                     k.setOnTouchListener((v, event) -> {
                         EmojiKey key = (EmojiKey) v;
                         switch (event.getActionMasked()) {
@@ -83,7 +89,7 @@ public class EmojiKeyboard extends ViewGroup {
                     });
                     break;
                 case 1:
-                    k = new EmojiKey("B");
+                    k = new EmojiKey(R.drawable.icon);
                     k.setOnTouchListener((v, event) -> {
                         EmojiKey key = (EmojiKey) v;
                         switch (event.getActionMasked()) {
