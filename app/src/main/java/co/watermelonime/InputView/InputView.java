@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 
 import co.watermelonime.C;
+import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Size;
 import co.watermelonime.InputView.Chinese.Sentence.LanguageSelector;
 
@@ -17,16 +18,7 @@ public class InputView extends ViewGroup {
         scrollView = new ScrollView(C.mainService);
         scrollView.addView(C.candidateView);
         addChildren(LanguageSelector.CHINESE);
-//        addView(C.sentenceView);
-//        addView(scrollView);
-//        addView(C.chineseKeyboard);
-//        C.landscapeLanguageSelectorBar = new LandscapeLanguageSelectorBar();
-
-//        vx = new View(C.mainService);
-//        vx.setBackgroundColor(Color.BLUE);
-//        addView(vx);
-
-//        addView(C.landscapeLanguageSelectorBar);
+        setBackgroundColor(Colour.CANDIDATE);
     }
 
     public void addChildren(int inputLanguage) {

@@ -32,6 +32,7 @@ import co.watermelonime.InputView.Chinese.Candidate.DictButton;
 import co.watermelonime.InputView.Chinese.Candidate.DictTitle;
 import co.watermelonime.InputView.Chinese.Candidate.DynamicLayoutPool;
 import co.watermelonime.InputView.Chinese.Candidate.NavigationKey;
+import co.watermelonime.InputView.Chinese.Candidate.PredictionArea;
 import co.watermelonime.InputView.Chinese.Candidate.PredictionKey;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
 import co.watermelonime.InputView.Chinese.Keyboard.Consonants;
@@ -148,7 +149,9 @@ public class MainService extends InputMethodService {
         Timer.t(3, "Build keyboard");
 
         Timer.t(4);
+        PredictionArea.init();
         C.candidateView = new CandidateView();
+        if (C.isLandscape) C.landscapeCandidateViewRight = new CandidateView();
         NavigationKey.init();
         Timer.t(4, "Build CandidateView");
 

@@ -16,6 +16,7 @@ public class SentenceView extends ViewGroup {
     public SentenceView() {
         super(C.mainService);
         setBackgroundColor(Colour.SENTENCE);
+        SentenceButton.init();
         for (int i = 0; i < 9; i++)
             sentenceButtons[i] = new SentenceButton(i);
         if (!C.isLandscape)

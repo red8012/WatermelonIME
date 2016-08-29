@@ -24,9 +24,12 @@ public class DictController {
             d.setText(String.valueOf(text), padding, counter % 8 != 0, 0, 0);
             C.candidateView.addView(d);
         }
-        CandidateView.height = (counter / 8 + 1) * Size.HCandidateRow;
-        if (CandidateView.height < Size.HCandidateView)
-            CandidateView.height = Size.HCandidateView;
+//        CandidateView.height = (counter / 8 + 1) * Size.HCandidateRow;
+//        if (CandidateView.height < Size.HCandidateView)
+//            CandidateView.height = Size.HCandidateView;
+        C.candidateView.height = (counter / 8 + 1) * Size.HCandidateRow;
+        if (C.candidateView.height < Size.HCandidateView)
+            C.candidateView.height = Size.HCandidateView;
     }
 
     public static void openDict() {
@@ -46,9 +49,12 @@ public class DictController {
                 C.candidateView.addView(dictButton);
             }
         }
-        CandidateView.height = d.size() / 2 * Size.HCandidateRow;
-        if (CandidateView.height < Size.HCandidateView)
-            CandidateView.height = Size.HCandidateView;
+//        CandidateView.height = d.size() / 2 * Size.HCandidateRow;
+//        if (CandidateView.height < Size.HCandidateView)
+//            CandidateView.height = Size.HCandidateView;
+        C.candidateView.height = d.size() / 2 * Size.HCandidateRow;
+        if (C.candidateView.height < Size.HCandidateView)
+            C.candidateView.height = Size.HCandidateView;
 
         CandidateView.isDictionaryMode = true;
         C.inputView.invalidate();

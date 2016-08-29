@@ -19,12 +19,13 @@ public class OnTouchSentenceButton implements View.OnTouchListener {
 
                 if (SentenceButton.selectedIndex < 0) {
                     C.chineseKeyboard.show();
+                    if (C.isLandscape) C.landscapeLanguageSelectorBar.show();
                     DictController.closeDict();
                 } else {
                     C.chineseKeyboard.hide();
+                    if (C.isLandscape) C.landscapeLanguageSelectorBar.hide();
                     CandidateView.clearCandidates();
                     Engine.queryDict(index);
-//                    DictController.showDictionary();
                     DictController.fillInWordsInDict(index);
                     DictController.openDict();
                 }

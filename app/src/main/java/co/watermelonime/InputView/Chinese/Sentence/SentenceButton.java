@@ -23,16 +23,18 @@ public class SentenceButton extends View {
 
     public SentenceButton(int index) {
         super(C.mainService);
-        if (index >= 0)
-            setOnTouchListener(onTouchListener);
+        if (index >= 0) setOnTouchListener(onTouchListener);
         this.index = index;
-        if (rect == null) {
-            rectPaint.setColor(Colour.CANDIDATE);
-            rect = new RectF(Size.u / 2, 0, Size.WSentenceView, Size.HSentenceButton);
-        }
         setMeasuredDimension(Size.WSentenceButton, Size.HSentenceButton);
         whiteTextLayout = Font.sentence.makeDynamic(text, Size.WSentenceView);
         blackTextLayout = Font.sentenceSelected.makeDynamic(text, Size.WSentenceView);
+    }
+
+    public static void init() {
+        rectPaint.setColor(Colour.CANDIDATE);
+        if (C.isLandscape)
+            rect = new RectF(0, Size.u / 2, Size.WSentenceButton, Size.HSentenceButton);
+        else rect = new RectF(Size.u / 2, 0, Size.WSentenceView, Size.HSentenceButton);
     }
 
     public void setText(char s) {
@@ -47,19 +49,19 @@ public class SentenceButton extends View {
         invalidate();
     }
 
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        Log.i("SentenceButton", "onMeasure");
-//        setMeasuredDimension(Size.WSentenceView, Size.HSentenceButton);
-//    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         if (textLayout == null) return;
         if (selectedIndex == index) {
-            canvas.drawRoundRect(rect, Size.u, Size.u, rectPaint);
-            canvas.drawRect(Size.WSentenceView - Size.u, 0,
-                    Size.WSentenceView, Size.HSentenceButton, rectPaint);
+            if (C.isLandscape) {
+                canvas.drawRoundRect(rect, Size.u, Size.u, rectPaint);
+                canvas.drawRect(0, Size.HSentenceButton - Size.u,
+                        Size.WSentenceButton, Size.HSentenceButton, rectPaint);
+            } else {
+                canvas.drawRoundRect(rect, Size.u, Size.u, rectPaint);
+                canvas.drawRect(Size.WSentenceView - Size.u, 0,
+                        Size.WSentenceView, Size.HSentenceButton, rectPaint);
+            }
         }
         canvas.save();
         canvas.translate(dx, dy);

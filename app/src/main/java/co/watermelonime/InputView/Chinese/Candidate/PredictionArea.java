@@ -9,11 +9,15 @@ import co.watermelonime.Common.Size;
 
 public class PredictionArea extends ViewGroup {
 
-    public static PredictionArea area = new PredictionArea();
+    public static PredictionArea area;
 
     public PredictionArea() {
         super(C.mainService);
-        setMeasuredDimension(Size.WCandidateView, Size.HCandidateVisible / 2);
+    }
+
+    public static void init() {
+        area = new PredictionArea();
+        area.setMeasuredDimension(Size.WCandidateView, Size.HCandidateVisible / 2);
     }
 
     public static void setPrediction(String[] list, int[] startPositions, StringBuilder[] pinyin) {
@@ -41,10 +45,10 @@ public class PredictionArea extends ViewGroup {
         area.layout(0, 0, 0, 0);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(Size.WCandidateView, Size.HCandidateVisible / 2);
-    }
+//    @Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        setMeasuredDimension(Size.WCandidateView, Size.HCandidateVisible / 2);
+//    }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {

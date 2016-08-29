@@ -12,8 +12,8 @@ import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
 
 public class CandidateView extends ViewGroup {
-    public static int height = Size.HCandidateVisible;
     static boolean isDictionaryMode = false;
+    public int height = Size.HCandidateVisible;
 
     public CandidateView() {
         super(C.mainService);
@@ -84,11 +84,15 @@ public class CandidateView extends ViewGroup {
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
             int w = v.getMeasuredWidth(), h = v.getMeasuredHeight();
-            try {
-                CharSequence cc = ((CandidateButton) v).text;
-                if (cc == null) cc = String.valueOf(((CharacterKey) v).character);
-//                Logger.d("w: %d, h: %d, %s", w, h, cc);
-            } catch (Exception e) {
+//            try {
+//                CharSequence cc = ((CandidateButton) v).text;
+//                if (cc == null) cc = String.valueOf(((CharacterKey) v).character);
+//                Logger.d("w: %d, h: %d, %s, l: %d, t: %d", w, h, cc, l, t);
+//            } catch (Exception e) {
+//            }
+            if (v.getClass() == PredictionArea.class) {
+                lastH = h;
+//                Logger.d("w: %d, h: %d, %s, l: %d, t: %d", w, h, "predictionArea", l, t);
             }
             if (v.getClass() == DictTitle.class) {
                 if (l > 0) t += lastH;

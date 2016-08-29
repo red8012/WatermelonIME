@@ -10,6 +10,7 @@ import co.watermelonime.Common.Size;
 
 public class LandscapeLanguageSelectorBar extends ViewGroup {
     static View[] children;
+    static boolean visible;
     public LandscapeLanguageSelectorBar() {
         super(C.mainService);
         children = LanguageSelector.keys;
@@ -34,5 +35,17 @@ public class LandscapeLanguageSelectorBar extends ViewGroup {
             v.layout(l, 0, l + w, Size.HKey);
             l += w;
         }
+    }
+
+    public void hide() {
+        if (!visible) return;
+        visible = false;
+        animate().translationY(Size.HKey).setDuration(250).setInterpolator(C.decelerate);
+    }
+
+    public void show() {
+        if (visible) return;
+        visible = true;
+        animate().translationY(0f).setDuration(250).setInterpolator(C.decelerate);
     }
 }
