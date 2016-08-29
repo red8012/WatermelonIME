@@ -84,7 +84,12 @@ public class CandidateView extends ViewGroup {
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
             int w = v.getMeasuredWidth(), h = v.getMeasuredHeight();
-
+            try {
+                CharSequence cc = ((CandidateButton) v).text;
+                if (cc == null) cc = String.valueOf(((CharacterKey) v).character);
+//                Logger.d("w: %d, h: %d, %s", w, h, cc);
+            } catch (Exception e) {
+            }
             if (v.getClass() == DictTitle.class) {
                 if (l > 0) t += lastH;
                 l = 0;
@@ -94,10 +99,12 @@ public class CandidateView extends ViewGroup {
                 t += lastH;
             }
             if (w > Size.WKeyboard) {
+//                Logger.d("%d %d %d %d", l, t, l + w, t + h);
                 v.layout(l, t, l + w, t + h);
                 l = 0;
                 t += lastH;
             } else {
+//                Logger.d("%d %d %d %d", l, t, l + w, t + h);
                 v.layout(l, t, l + w, t + h);
                 l += w;
             }

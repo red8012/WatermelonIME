@@ -1,14 +1,18 @@
 package co.watermelonime.InputView.Chinese.Candidate;
 
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
+import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 
-public class PredictionArea extends CandidateView {
+public class PredictionArea extends ViewGroup {
 
     public static PredictionArea area = new PredictionArea();
 
     public PredictionArea() {
+        super(C.mainService);
         setMeasuredDimension(Size.WCandidateView, Size.HCandidateVisible / 2);
     }
 
@@ -17,8 +21,6 @@ public class PredictionArea extends CandidateView {
         int totalWidth = 0;
         int count = 0;
         for (int i = 0; i < 3; i++) {
-//            Layout layout = PredictionKey.keys[i].textLayout;
-//            if (layout != null) DynamicLayoutPool.release(layout);
             String s = list[i];
             if (s == null) break;
             if (s.length() == 0) break;
@@ -34,7 +36,6 @@ public class PredictionArea extends CandidateView {
             k.startPosition = startPositions[i];
             k.pinyin = pinyin[i];
             k.setText(list[i], padding, i < count - 1, CandidateButton.TOP, CandidateButton.TOP);
-//            System.out.println("setPrediction: "+ list[i]);
             area.addView(k);
         }
         area.layout(0, 0, 0, 0);
@@ -47,7 +48,36 @@ public class PredictionArea extends CandidateView {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
         Log.i("PredictionArea", "onLayout");
+        final int end = getChildCount();
+        l = 0;
+        t = 0;
+        int lastH = 0;
+        for (int i = 0; i < end; ++i) {
+            View v = getChildAt(i);
+            int w = v.getMeasuredWidth(), h = v.getMeasuredHeight();
+            try {
+                CharSequence cc = ((CandidateButton) v).text;
+                if (cc == null) cc = String.valueOf(((CharacterKey) v).character);
+//                Logger.d("PA: %d, h: %d, %s", w, h, cc);
+            } catch (Exception e) {
+            }
+
+            if (l + w > Size.WKeyboard + Size.u) {
+                l = 0;
+                t += lastH;
+            }
+            if (w > Size.WKeyboard) {
+//                Logger.d("%d %d %d %d", l, t, l + w, t + h);
+                v.layout(l, t, l + w, t + h);
+                l = 0;
+                t += lastH;
+            } else {
+//                Logger.d("%d %d %d %d", l, t, l + w, t + h);
+                v.layout(l, t, l + w, t + h);
+                l += w;
+            }
+            lastH = h;
+        }
     }
 }
