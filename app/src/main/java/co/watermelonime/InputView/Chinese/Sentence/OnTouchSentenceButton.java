@@ -5,7 +5,6 @@ import android.view.View;
 
 import co.watermelonime.C;
 import co.watermelonime.Core.Engine;
-import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Candidate.DictController;
 
 public class OnTouchSentenceButton implements View.OnTouchListener {
@@ -19,12 +18,11 @@ public class OnTouchSentenceButton implements View.OnTouchListener {
 
                 if (SentenceButton.selectedIndex < 0) {
                     C.chineseKeyboard.show();
-                    if (C.isLandscape) C.landscapeLanguageSelectorBar.show();
                     DictController.closeDict();
                 } else {
                     C.chineseKeyboard.hide();
-                    if (C.isLandscape) C.landscapeLanguageSelectorBar.hide();
-                    CandidateView.clearCandidates();
+                    C.candidateView.clearCandidates();
+                    if (C.isLandscape) C.landscapeCandidateViewRight.clearCandidates();
                     Engine.queryDict(index);
                     DictController.fillInWordsInDict(index);
                     DictController.openDict();

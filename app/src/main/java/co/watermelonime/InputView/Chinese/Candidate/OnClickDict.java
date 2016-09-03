@@ -23,7 +23,7 @@ public class OnClickDict implements View.OnClickListener {
 
         Learner.learnWordAsync(text.toString(), Engine.pinyin.substring(index * 2, index * 2 + 2));
 
-        CandidateView.clearCandidates();
+        CandidateView.getCandidateViewForDict().clearCandidates();
         Controller.displayCandidates();
     }
 }

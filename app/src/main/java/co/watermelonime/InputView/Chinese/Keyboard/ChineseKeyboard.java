@@ -3,10 +3,11 @@ package co.watermelonime.InputView.Chinese.Keyboard;
 import android.util.Log;
 import android.view.ViewGroup;
 
+import com.orhanobut.logger.Logger;
+
 import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
-import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 
 public class ChineseKeyboard extends ViewGroup {
     public static ChineseKey[] currentKeys;
@@ -21,7 +22,7 @@ public class ChineseKeyboard extends ViewGroup {
     public void setKeys(ChineseKey[] k) {
         Timer.t(5);
         if (C.candidateView != null)
-            CandidateView.clearCandidates();
+            C.candidateView.clearCandidates();
         removeAllViews();
         currentKeys = k;
         for (ChineseKey i : k)
@@ -40,7 +41,7 @@ public class ChineseKeyboard extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-//        Log.i("ChineseKeyboard", "onLayout");
+        Log.i("ChineseKeyboard", "onLayout");
         l = 0;
         t = 0;
         r = l + Size.WKey;
@@ -61,12 +62,16 @@ public class ChineseKeyboard extends ViewGroup {
     public void hide() {
         if (!visible) return;
         visible = false;
+        Logger.d("hide~~~~~~~~~~~~");
+        if (C.isLandscape) C.landscapeLanguageSelectorBar.hide();
         animate().translationY(Size.HKeyboard).setDuration(250).setInterpolator(C.decelerate);
     }
 
     public void show() {
         if (visible) return;
         visible = true;
+        Logger.d("show~~~~~~~~~~~~");
+        if (C.isLandscape) C.landscapeLanguageSelectorBar.show();
         animate().translationY(0f).setDuration(250).setInterpolator(C.decelerate);
     }
 }

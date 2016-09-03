@@ -3,7 +3,6 @@ package co.watermelonime.Core;
 import co.watermelonime.C;
 import co.watermelonime.Common.Timer;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
-import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
 import co.watermelonime.InputView.Chinese.Candidate.NavigationKey;
 import co.watermelonime.InputView.Chinese.Candidate.PredictionArea;
 import co.watermelonime.InputView.Chinese.Keyboard.ChineseKeyboard;
@@ -123,7 +122,7 @@ public class Controller {
     }
 
     public static void displayCandidates() {
-        CandidateView.clearCandidates();
+        C.candidateView.clearCandidates();
         if (Engine.isEmpty()) {
             NavigationKey.display();
             return;
@@ -145,15 +144,15 @@ public class Controller {
                 rightLength = totalLength / 2;
                 leftLength = totalLength - rightLength;
             }
-            CandidateView.setCandidate(Engine.candidateRight, 0, leftLength, CandidateButton.TOP);
-            CandidateView.setCandidate(Engine.candidateRight,
+            C.candidateView.setCandidate(Engine.candidateRight, 0, leftLength, CandidateButton.TOP);
+            C.candidateView.setCandidate(Engine.candidateRight,
                     leftLength, leftLength + rightLength, CandidateButton.BOTTOM);
             return;
         }
 
-        CandidateView.setCandidate(Engine.candidateLeft,
+        C.candidateView.setCandidate(Engine.candidateLeft,
                 0, Engine.candidateLeft.size(), CandidateButton.TOP);
-        CandidateView.setCandidate(Engine.candidateRight,
+        C.candidateView.setCandidate(Engine.candidateRight,
                 0, Engine.candidateRight.size(), CandidateButton.BOTTOM);
     }
 

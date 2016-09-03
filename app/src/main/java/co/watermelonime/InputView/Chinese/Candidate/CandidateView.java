@@ -4,6 +4,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.ArrayList;
 
 import co.watermelonime.C;
@@ -18,12 +20,20 @@ public class CandidateView extends ViewGroup {
     public CandidateView() {
         super(C.mainService);
         setBackgroundColor(Colour.CANDIDATE);
+        setOnTouchListener(((v, event) -> {
+            Logger.d("onTouchCandidateView");
+            return false;
+        }));
     }
 
-    public static void clearCandidates() {
-        int len = C.candidateView.getChildCount();
+    public static CandidateView getCandidateViewForDict() {
+        return C.isLandscape ? C.landscapeCandidateViewRight : C.candidateView;
+    }
+
+    public void clearCandidates() {
+        int len = getChildCount();
         for (int i = 0; i < len; i++) {
-            View child = C.candidateView.getChildAt(i);
+            View child = getChildAt(i);
             Class cls = child.getClass();
             if (cls == DictButton.class)
                 ((DictButton) child).release();
@@ -32,13 +42,15 @@ public class CandidateView extends ViewGroup {
             else if (cls == CandidateButton.class)
                 ((CandidateButton) child).release();
         }
-        C.candidateView.removeAllViews();
+        removeAllViews();
     }
 
-    public static int setCandidate(ArrayList<StringBuilder> list, int start, int end, int type) {
+    public int setCandidate(ArrayList<StringBuilder> list, int start, int end, int type) {
         Timer.t(8);
         if (end - start == 0) return end;
         int totalWidth = 0;
+
+        Logger.d("len: %d   end: %d", list.size(), end);
 
         int i = start;
         for (; i < end; i++) { // todo: may lost one?
@@ -71,6 +83,7 @@ public class CandidateView extends ViewGroup {
         setMeasuredDimension(
                 C.isLandscape ? Size.WChineseLandscapeLeft : Size.WCandidateView,
                 height);
+        Logger.d("candidate height: %d", height);
     }
 
     @Override
@@ -84,12 +97,12 @@ public class CandidateView extends ViewGroup {
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
             int w = v.getMeasuredWidth(), h = v.getMeasuredHeight();
-//            try {
-//                CharSequence cc = ((CandidateButton) v).text;
-//                if (cc == null) cc = String.valueOf(((CharacterKey) v).character);
-//                Logger.d("w: %d, h: %d, %s, l: %d, t: %d", w, h, cc, l, t);
-//            } catch (Exception e) {
-//            }
+            try {
+                CharSequence cc = ((CandidateButton) v).text;
+                if (cc == null) cc = String.valueOf(((CharacterKey) v).character);
+                System.out.println(cc);
+            } catch (Exception e) {
+            }
             if (v.getClass() == PredictionArea.class) {
                 lastH = h;
 //                Logger.d("w: %d, h: %d, %s, l: %d, t: %d", w, h, "predictionArea", l, t);
@@ -101,12 +114,13 @@ public class CandidateView extends ViewGroup {
             if (l + w > Size.WKeyboard + Size.u) {
                 l = 0;
                 t += lastH;
+                Logger.d("plus top %d", t);
             }
             if (w > Size.WKeyboard) {
-//                Logger.d("%d %d %d %d", l, t, l + w, t + h);
                 v.layout(l, t, l + w, t + h);
                 l = 0;
                 t += lastH;
+                Logger.d("plus top %d", t);
             } else {
 //                Logger.d("%d %d %d %d", l, t, l + w, t + h);
                 v.layout(l, t, l + w, t + h);

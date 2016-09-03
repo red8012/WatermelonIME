@@ -92,7 +92,7 @@ public class NavigationKey extends View {
     }
 
     public static void display() {
-        CandidateView.clearCandidates();
+        C.candidateView.clearCandidates();
         for (NavigationKey k : keys)
             if (k != null)
                 C.candidateView.addView(k);

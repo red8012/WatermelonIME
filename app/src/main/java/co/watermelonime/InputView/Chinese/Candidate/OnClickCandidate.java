@@ -29,7 +29,7 @@ public class OnClickCandidate implements View.OnClickListener {
             C.chineseKeyboard.show();
             Learner.learnWordAsync(text.toString(),
                     Engine.pinyin.substring(index * 2, (index + len) * 2));
-            CandidateView.clearCandidates();
+            C.candidateView.clearCandidates();
             Controller.displayCandidates();
             return;
         }

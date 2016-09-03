@@ -6,7 +6,7 @@ public class OnClickDictTitle implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 //        DictController.closeDict();
-        CandidateView.clearCandidates();
+        CandidateView.getCandidateViewForDict().clearCandidates();
         int index = ((DictTitle)v).index;
         DictController.showLayer2Dictionary(index);
     }
