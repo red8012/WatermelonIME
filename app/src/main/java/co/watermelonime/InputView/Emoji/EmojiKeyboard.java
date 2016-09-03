@@ -1,6 +1,10 @@
 package co.watermelonime.InputView.Emoji;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.text.Layout;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +19,12 @@ import co.watermelonime.R;
  * Created by din on 2016/3/7.
  */
 public class EmojiKeyboard extends ViewGroup {
+    static final Paint rectPaint = new Paint();
+    public static int selectedIndex = -1; // -1 means nothing selected
+    static RectF rect;
+    public int index;
+    public float dx, dy;
+    Layout textLayout;
 
     public static final String emoticon[] = {
             //the 2 of front is emojitag
@@ -35,24 +45,32 @@ public class EmojiKeyboard extends ViewGroup {
     };
 
     public static final String recent[] = {
-            ":-)",";-)",":-(",":-o",":-D",":-P",
-            ":@",":-S",":$","B-)",":'(",":-*",
-            ">:)","O:)",":-/",":|",":-B",":-SS",
-            ":-))","|-O","8-)",":-&",":-?","/:-)",
-            "<3","@):-","~o)",")-|","*-:-)","(b)",
-            "(u)",":-)",";-)",":-(",":-o",":-D"
+            "", "", "#", "%", "^", "&",
+            "!", "?", "(", ")", "-", "+",
+            "[", "]", "{", "}", "/", "*",
+            "<", ">", ",", ".", ";", "~",
+            "®", "©", "™", "|", "℃", "℉",
+            "⨀", "⨁", "⨂", "$", "€", "¥"
+//            ":-)",";-)",":-(",":-o",":-D",":-P",
+//            ":@",":-S",":$","B-)",":'(",":-*",
+//            ">:)","O:)",":-/",":|",":-B",":-SS",
+//            ":-))","|-O","8-)",":-&",":-?","/:-)",
+//            "<3","@):-","~o)",")-|","*-:-)","(b)",
+//            "(u)",":-)",";-)",":-(",":-o",":-D"
     };
 
-    public static final String game[] = {
-            "","","","","","","","",
-            "","","","","","","","",
-            "","","","","","","","",
-            "","","","","","","",""
+    public static final String latin[] = {
+            "","","","∑","∏","√",
+            "≈","≅","≒","≠","≉","∫",
+            "∴","∵","♠︎","♥︎","♦︎︎","♣",
+            "↑","↓","←","→","↕︎","↔︎",
+            "☼","☽","☁︎","☃","★","☆",
+            "☞︎","❤","♚","♛","",""
     };
-    final static int EMOTICON = 0, RECENT = 1;
+    final static int EMOTICON = 0, RECENT = 1, LATIN = 2;
 
 //    final static int[] colors = new int[]{Colour.FUNCTION, Colour.reached, Colour.CANDIDATE_SELECTED};
-    final static EmojiKey[][] keys = new EmojiKey[][]{new EmojiKey[36], new EmojiKey[36]};
+    final static EmojiKey[][] keys = new EmojiKey[][]{new EmojiKey[36], new EmojiKey[36], new EmojiKey[36]};
     static int mode = EMOTICON;
     public static EmojiSelector emojiSelector;
 
@@ -66,14 +84,15 @@ public class EmojiKeyboard extends ViewGroup {
             EmojiKey k;
             switch (i) {
                 case 0:
-                    k = new EmojiKey("A");
+                    k = new EmojiKey(R.drawable.ic_mood_black_24dp);
+                    k.setBackgroundColor(Color.rgb(70,100,160));
                     k.setOnTouchListener((v, event) -> {
                         EmojiKey key = (EmojiKey) v;
                         switch (event.getActionMasked()) {
                             case MotionEvent.ACTION_DOWN:
                                 C.emojiKeyboard.removeAllViews();
                                 mode = EMOTICON;
-                                key.setBackgroundColor(Color.rgb(70,100,160));
+                                key.setBackgroundColor(Color.rgb(100,150,250));
                                 for (EmojiKey j : keys[mode])
                                     addView(j);
                                 layout(0, 0, 0, 0);
@@ -83,14 +102,33 @@ public class EmojiKeyboard extends ViewGroup {
                     });
                     break;
                 case 1:
-                    k = new EmojiKey("B");
+                    k = new EmojiKey("!?");
+                    k.setBackgroundColor(Color.rgb(70,100,160));
                     k.setOnTouchListener((v, event) -> {
                         EmojiKey key = (EmojiKey) v;
                         switch (event.getActionMasked()) {
                             case MotionEvent.ACTION_DOWN:
                                 C.emojiKeyboard.removeAllViews();
                                 mode = RECENT;
-                                key.setBackgroundColor(Color.rgb(70,100,160));
+                                key.setBackgroundColor(Color.rgb(100,150,250));
+                                for (EmojiKey j : keys[mode])
+                                    addView(j);
+                                layout(0, 0, 0, 0);
+                                return true;
+                        }
+                        return false;
+                    });
+                    break;
+                case 2:
+                    k = new EmojiKey("∑");
+                    k.setBackgroundColor(Color.rgb(70,100,160));
+                    k.setOnTouchListener((v, event) -> {
+                        EmojiKey key = (EmojiKey) v;
+                        switch (event.getActionMasked()) {
+                            case MotionEvent.ACTION_DOWN:
+                                C.emojiKeyboard.removeAllViews();
+                                mode = LATIN;
+                                key.setBackgroundColor(Color.rgb(100,150,250));
                                 for (EmojiKey j : keys[mode])
                                     addView(j);
                                 layout(0, 0, 0, 0);
@@ -145,10 +183,12 @@ public class EmojiKeyboard extends ViewGroup {
 
                     k = new EmojiKey(emoticon[i]);
                     keys[RECENT][i] = new EmojiKey(recent[i]);
+                    keys[LATIN][i] = new EmojiKey(latin[i]);
             }
             keys[EMOTICON][i] = k;
-            if (i == 0 || i ==1 || i == 34 || i == 35) {
+            if (i == 0 || i ==1 || i==2 || i == 34 || i == 35) {
                 keys[RECENT][i] = k;
+                keys[LATIN][i] = k;
             }
         }
         for (EmojiKey i : keys[mode])
@@ -179,6 +219,19 @@ public class EmojiKeyboard extends ViewGroup {
                 t += Size.HNumKey;
             }
         }
+    }
+
+    protected void onDraw(Canvas canvas) {
+        if (textLayout == null) return;
+        if (selectedIndex == index) {
+            canvas.drawRoundRect(rect, Size.u, Size.u, rectPaint);
+            canvas.drawRect(Size.WSentenceView - Size.u, 0,
+                    Size.WSentenceView, Size.HSentenceButton, rectPaint);
+        }
+        canvas.save();
+        canvas.translate(dx, dy);
+        textLayout.draw(canvas);
+        canvas.restore();
     }
 
 }
