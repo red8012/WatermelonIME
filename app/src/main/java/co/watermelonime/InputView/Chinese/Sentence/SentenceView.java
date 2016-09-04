@@ -62,6 +62,7 @@ public class SentenceView extends ViewGroup {
             for (int i = 0; i < 9; i++)
                 sentenceButtons[i].setText('\0');
             for (View i : children) addView(i);
+            layout(0, 0, 0, 0);
             return;
         }
         addSentenceButtons();
