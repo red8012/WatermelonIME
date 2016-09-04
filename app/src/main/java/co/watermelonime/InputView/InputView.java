@@ -4,8 +4,6 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 
-import com.orhanobut.logger.Logger;
-
 import co.watermelonime.C;
 import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Size;
@@ -55,8 +53,9 @@ public class InputView extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 //        Log.i("ChineseInputView", "onMeasure");
+        int height = C.isLandscape ? (Size.HInputView - Size.HSentenceView) : Size.HCandidateView;
         scrollView.measure(MeasureSpec.makeMeasureSpec(Size.WCandidateView, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(Size.HCandidateView, MeasureSpec.EXACTLY));
+                MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
 
         scrollViewRightForLandscape.measure(MeasureSpec.makeMeasureSpec(Size.WCandidateView, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(Size.HCandidateView, MeasureSpec.EXACTLY));
@@ -65,7 +64,6 @@ public class InputView extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-//        if (!changed) return;
         Log.i("ChineseInputView", "onLayout");
         l = 0;
         t = 0;
@@ -94,13 +92,12 @@ public class InputView extends ViewGroup {
                 case LanguageSelector.CHINESE:
                     C.sentenceView.layout(l, t, l + Size.WChineseLandscapeLeft, t + Size.HKey);
                     t += Size.HKey;
-                    scrollView.layout(l, t, l + Size.WChineseLandscapeLeft, t + Size.HCandidateView);
+                    scrollView.layout(l, t, l + Size.WChineseLandscapeLeft, t + Size.HInputView - Size.HSentenceView);
                     t += Size.HKey * 2;
                     C.landscapeLanguageSelectorBar.layout(l, t, l + Size.WChineseLandscapeLeft, t + Size.HKey);
 
                     l += Size.WChineseLandscapeLeft;
                     t = 0;
-                    Logger.d("height of R = %d", C.landscapeCandidateViewRight.getMeasuredHeight());
                     scrollViewRightForLandscape.layout(l, 0, l + Size.WKeyboard, t + Size.HInputView);
                     C.chineseKeyboard.layout(l, t, l + Size.WKeyboard, t + Size.HInputView);
                     break;

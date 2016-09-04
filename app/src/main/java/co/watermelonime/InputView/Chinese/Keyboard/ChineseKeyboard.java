@@ -3,8 +3,6 @@ package co.watermelonime.InputView.Chinese.Keyboard;
 import android.util.Log;
 import android.view.ViewGroup;
 
-import com.orhanobut.logger.Logger;
-
 import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
@@ -62,7 +60,6 @@ public class ChineseKeyboard extends ViewGroup {
     public void hide() {
         if (!visible) return;
         visible = false;
-        Logger.d("hide~~~~~~~~~~~~");
         if (C.isLandscape) C.landscapeLanguageSelectorBar.hide();
         animate().translationY(Size.HKeyboard).setDuration(250).setInterpolator(C.decelerate);
     }
@@ -70,7 +67,6 @@ public class ChineseKeyboard extends ViewGroup {
     public void show() {
         if (visible) return;
         visible = true;
-        Logger.d("show~~~~~~~~~~~~");
         if (C.isLandscape) C.landscapeLanguageSelectorBar.show();
         animate().translationY(0f).setDuration(250).setInterpolator(C.decelerate);
     }

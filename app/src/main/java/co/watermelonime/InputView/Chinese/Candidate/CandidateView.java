@@ -78,12 +78,30 @@ public class CandidateView extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (!isDictionaryMode)
-            height = Size.HCandidateVisible;
+        if (!isDictionaryMode) height = Size.HCandidateVisible;
+        else if (this == C.candidateView && C.isLandscape) {
+            final int end = getChildCount();
+            int l = 0, t = 0;
+            for (int i = 0; i < end; ++i) {
+                View v = getChildAt(i);
+                int w = v.getMeasuredWidth(), h = v.getMeasuredHeight();
+
+                if (l + w > Size.WKeyboard + Size.u) {
+                    l = 0;
+                    t += h;
+                }
+                if (w > Size.WKeyboard) {
+                    l = 0;
+                    t += h;
+                } else {
+                    l += w;
+                }
+            }
+            height = t + Size.HCandidateRow;
+        }
         setMeasuredDimension(
                 C.isLandscape ? Size.WChineseLandscapeLeft : Size.WCandidateView,
                 height);
-        Logger.d("candidate height: %d", height);
     }
 
     @Override
@@ -97,15 +115,14 @@ public class CandidateView extends ViewGroup {
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
             int w = v.getMeasuredWidth(), h = v.getMeasuredHeight();
-            try {
-                CharSequence cc = ((CandidateButton) v).text;
-                if (cc == null) cc = String.valueOf(((CharacterKey) v).character);
-                System.out.println(cc);
-            } catch (Exception e) {
-            }
+//            try {
+//                CharSequence cc = ((CandidateButton) v).text;
+//                if (cc == null) cc = String.valueOf(((CharacterKey) v).character);
+//                System.out.println(cc);
+//            } catch (Exception e) {
+//            }
             if (v.getClass() == PredictionArea.class) {
                 lastH = h;
-//                Logger.d("w: %d, h: %d, %s, l: %d, t: %d", w, h, "predictionArea", l, t);
             }
             if (v.getClass() == DictTitle.class) {
                 if (l > 0) t += lastH;
@@ -114,15 +131,12 @@ public class CandidateView extends ViewGroup {
             if (l + w > Size.WKeyboard + Size.u) {
                 l = 0;
                 t += lastH;
-                Logger.d("plus top %d", t);
             }
             if (w > Size.WKeyboard) {
                 v.layout(l, t, l + w, t + h);
                 l = 0;
                 t += lastH;
-                Logger.d("plus top %d", t);
             } else {
-//                Logger.d("%d %d %d %d", l, t, l + w, t + h);
                 v.layout(l, t, l + w, t + h);
                 l += w;
             }

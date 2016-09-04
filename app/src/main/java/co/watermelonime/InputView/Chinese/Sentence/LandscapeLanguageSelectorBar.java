@@ -9,14 +9,15 @@ import co.watermelonime.Common.Colour;
 import co.watermelonime.Common.Size;
 
 public class LandscapeLanguageSelectorBar extends ViewGroup {
+    public static boolean visible = true;
     static View[] children;
-    static boolean visible;
+
     public LandscapeLanguageSelectorBar() {
         super(C.mainService);
         children = LanguageSelector.keys;
         for (View i : children) addView(i);
         setBackgroundColor(Colour.SENTENCE);
-        setMeasuredDimension(300,300);
+        setMeasuredDimension(300, 300);
     }
 
     @Override
@@ -27,9 +28,8 @@ public class LandscapeLanguageSelectorBar extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        final int end = getChildCount();
         l = 0;
-        for (int i = getChildCount()-1; i >= 0; i--) {
+        for (int i = getChildCount() - 1; i >= 0; i--) {
             View v = getChildAt(i);
             int w = v.getMeasuredWidth();
             v.layout(l, 0, l + w, Size.HKey);
