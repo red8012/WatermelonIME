@@ -57,8 +57,9 @@ public class InputView extends ViewGroup {
         scrollView.measure(MeasureSpec.makeMeasureSpec(Size.WCandidateView, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
 
-        scrollViewRightForLandscape.measure(MeasureSpec.makeMeasureSpec(Size.WCandidateView, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(Size.HCandidateView, MeasureSpec.EXACTLY));
+        if (C.isLandscape)
+            scrollViewRightForLandscape.measure(MeasureSpec.makeMeasureSpec(Size.WCandidateView, MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(Size.HCandidateView, MeasureSpec.EXACTLY));
         setMeasuredDimension(Size.WInputView, Size.HInputView);
     }
 

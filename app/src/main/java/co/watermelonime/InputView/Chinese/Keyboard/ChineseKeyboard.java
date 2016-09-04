@@ -13,6 +13,7 @@ public class ChineseKeyboard extends ViewGroup {
 
     public ChineseKeyboard() {
         super(C.mainService);
+        visible = true;
         setMeasuredDimension(Size.WKeyboard, Size.HKeyboard);
         setKeys(Consonants.keys);
     }

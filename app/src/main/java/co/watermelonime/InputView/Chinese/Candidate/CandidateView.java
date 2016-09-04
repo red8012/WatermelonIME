@@ -20,10 +20,6 @@ public class CandidateView extends ViewGroup {
     public CandidateView() {
         super(C.mainService);
         setBackgroundColor(Colour.CANDIDATE);
-        setOnTouchListener(((v, event) -> {
-            Logger.d("onTouchCandidateView");
-            return false;
-        }));
     }
 
     public static CandidateView getCandidateViewForDict() {

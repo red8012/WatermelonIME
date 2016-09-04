@@ -24,6 +24,7 @@ import co.watermelonime.Common.Font;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
 import co.watermelonime.Core.BufferedSplitter;
+import co.watermelonime.Core.Controller;
 import co.watermelonime.Core.Engine;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateButton;
 import co.watermelonime.InputView.Chinese.Candidate.CandidateView;
@@ -170,6 +171,7 @@ public class MainService extends InputMethodService {
         try {
             v = inputViewFuture.get();
             f2.get();
+            Controller.displayCandidates();
         } catch (Exception e) {
             e.printStackTrace();
         }

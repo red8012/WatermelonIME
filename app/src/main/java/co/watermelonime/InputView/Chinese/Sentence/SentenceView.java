@@ -24,6 +24,7 @@ public class SentenceView extends ViewGroup {
         else children = sentenceButtons;
         for (View i : children)
             addView(i);
+        display();
     }
 
     public static void setSelected(int index) {
@@ -68,7 +69,6 @@ public class SentenceView extends ViewGroup {
         final int length = sentence.length();
 
         for (int i = 0; i < length; i++) {
-//            final String s = sentence.substring(i, i + 1);
             final SentenceButton sb = sentenceButtons[i];
             if (sb.text != null && sb.text.charAt(0) == sentence.charAt(i)) continue;
             sb.setText(sentence.charAt(i));

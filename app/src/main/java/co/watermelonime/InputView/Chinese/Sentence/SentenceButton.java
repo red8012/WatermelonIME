@@ -31,6 +31,7 @@ public class SentenceButton extends View {
     }
 
     public static void init() {
+        selectedIndex = -1;
         rectPaint.setColor(Colour.CANDIDATE);
         if (C.isLandscape)
             rect = new RectF(0, Size.u / 2, Size.WSentenceButton, Size.HSentenceButton);

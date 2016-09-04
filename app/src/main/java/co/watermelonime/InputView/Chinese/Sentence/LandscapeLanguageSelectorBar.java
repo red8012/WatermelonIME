@@ -14,6 +14,7 @@ public class LandscapeLanguageSelectorBar extends ViewGroup {
 
     public LandscapeLanguageSelectorBar() {
         super(C.mainService);
+        visible = true;
         children = LanguageSelector.keys;
         for (View i : children) addView(i);
         setBackgroundColor(Colour.SENTENCE);
