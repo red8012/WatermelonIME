@@ -78,7 +78,7 @@ public class Size {
         HSeparator = p ? (HCandidateRow * 4 / 5) : (HCandidateRow * 3 / 5);
         HInputView = p ? HKeyboard + HCandidateVisible : HKeyboard;
         HEnglishKey = p ? HInputView / 6 + 1 : HInputView / 5 + 1;
-        HNumKey = HInputView / 6;
+        HNumKey = p ? HInputView / 6 : HInputView / 4;
         HEmojiKey = HInputView / 8;
         HSentenceView = p ? HInputView : HKey;
         HCandidateView = HInputView;

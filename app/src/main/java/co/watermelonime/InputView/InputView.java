@@ -27,24 +27,28 @@ public class InputView extends ViewGroup {
 
     public void addChildren(int inputLanguage) {
         removeAllViews();
-        if (inputLanguage != LanguageSelector.ENGLISH)
+        if (inputLanguage != LanguageSelector.ENGLISH && !C.isLandscape)
             addView(C.sentenceView);
         switch (inputLanguage) {
             case LanguageSelector.CHINESE:
                 addView(InputView.scrollView);
-                if (C.isLandscape) addView(scrollViewRightForLandscape);
+                if (C.isLandscape) {
+                    addView(C.sentenceView);
+                    addView(scrollViewRightForLandscape);
+                    addView(C.landscapeLanguageSelectorBar);
+                }
                 addView(C.chineseKeyboard);
-                if (C.isLandscape) addView(C.landscapeLanguageSelectorBar);
-
                 break;
             case LanguageSelector.ENGLISH:
                 addView(C.englishKeyboard); // todo: possibly null
                 break;
             case LanguageSelector.NUMBER:
                 addView(C.numberKeyboard);
+                if (C.isLandscape) addView(C.landscapeLanguageSelectorBar);
                 break;
             case LanguageSelector.EMOJI:
                 addView(C.emojiKeyboard);
+                if (C.isLandscape) addView(C.landscapeLanguageSelectorBar);
                 break;
         }
         invalidate();
@@ -96,7 +100,6 @@ public class InputView extends ViewGroup {
                     scrollView.layout(l, t, l + Size.WChineseLandscapeLeft, t + Size.HInputView - Size.HSentenceView);
                     t += Size.HKey * 2;
                     C.landscapeLanguageSelectorBar.layout(l, t, l + Size.WChineseLandscapeLeft, t + Size.HKey);
-
                     l += Size.WChineseLandscapeLeft;
                     t = 0;
                     scrollViewRightForLandscape.layout(l, 0, l + Size.WKeyboard, t + Size.HInputView);
@@ -104,6 +107,12 @@ public class InputView extends ViewGroup {
                     break;
                 case LanguageSelector.ENGLISH:
                     C.englishKeyboard.layout(l, t, Size.WInputView, Size.HInputView);
+                    break;
+                case LanguageSelector.NUMBER:
+                    C.numberKeyboard.layout(l, t, l + Size.WInputView, t + Size.HInputView);
+                    break;
+                case LanguageSelector.EMOJI:
+                    C.emojiKeyboard.layout(l, t, l + Size.WInputView, t + Size.HInputView);
                     break;
             }
         }
