@@ -126,7 +126,7 @@ public class NumberKeyboard extends ViewGroup {
                 l = rowStart;
             }
             if ((i == 6 || i == 9) && C.isLandscape) l += Size.WKey * 3;
-            
+
             k.layout(l, t, l + Size.WKey, t + Size.HNumKey);
 
             l += Size.WKey;
