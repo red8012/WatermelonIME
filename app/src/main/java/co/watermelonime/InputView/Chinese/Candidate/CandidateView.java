@@ -111,15 +111,9 @@ public class CandidateView extends ViewGroup {
         for (int i = 0; i < end; ++i) {
             View v = getChildAt(i);
             int w = v.getMeasuredWidth(), h = v.getMeasuredHeight();
-//            try {
-//                CharSequence cc = ((CandidateButton) v).text;
-//                if (cc == null) cc = String.valueOf(((CharacterKey) v).character);
-//                System.out.println(cc);
-//            } catch (Exception e) {
-//            }
-            if (v.getClass() == PredictionArea.class) {
-                lastH = h;
-            }
+
+            if (lastH == 0) lastH = h;
+
             if (v.getClass() == DictTitle.class) {
                 if (l > 0) t += lastH;
                 l = 0;
@@ -130,13 +124,26 @@ public class CandidateView extends ViewGroup {
             }
             if (w > Size.WKeyboard) {
                 v.layout(l, t, l + w, t + h);
+//                try {
+//                    CharSequence cc = ((CandidateButton) v).text;
+//                    if (cc == null) cc = String.valueOf(((CharacterKey) v).character);
+//                    Logger.d("new line %s %d %d %d %d %d", cc, lastH, l, t, l + w, t + h);
+//                } catch (Exception e) {
+//                }
                 l = 0;
                 t += lastH;
             } else {
                 v.layout(l, t, l + w, t + h);
+//                try {
+//                    CharSequence cc = ((CandidateButton) v).text;
+//                    if (cc == null) cc = String.valueOf(((CharacterKey) v).character);
+//                    Logger.d("%s %d %d %d %d %d", cc, lastH, l, t, l + w, t + h);
+//                } catch (Exception e) {
+//                }
                 l += w;
             }
             lastH = h;
+
         }
     }
 

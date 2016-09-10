@@ -183,7 +183,11 @@ public class MainService extends InputMethodService {
     @Override
     public View onCreateInputView() {
         System.out.println("onCreateInputView");
-        if (C.isLandscape) LanguageSelector.setInputLanguage(LanguageSelector.ENGLISH);
+        if (C.isLandscape)
+            if (LanguageSelector.inputLanguage != LanguageSelector.CHINESE &&
+                    LanguageSelector.inputLanguage != LanguageSelector.ENGLISH){
+                LanguageSelector.setInputLanguage(LanguageSelector.ENGLISH);
+            }
         if (v == null) return C.inputView;
         else return v;
     }
@@ -207,8 +211,8 @@ public class MainService extends InputMethodService {
                     case InputType.TYPE_TEXT_VARIATION_URI:
                     case InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS:
                     case InputType.TYPE_TEXT_VARIATION_PASSWORD:
-                    case InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD:
                     case InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD:
+                        Logger.d("Switch to english: %d", C.inputType & InputType.TYPE_MASK_VARIATION);
                         LanguageSelector.setInputLanguage(LanguageSelector.ENGLISH, false);
                         C.englishKeyboard.changeMode(EnglishKeyboard.LOWER);
                         break;
@@ -218,8 +222,6 @@ public class MainService extends InputMethodService {
                 if (LanguageSelector.inputLanguage == LanguageSelector.ENGLISH && C.initialCapsMode > 0)
                     C.englishKeyboard.changeMode(EnglishKeyboard.UPPER);
         }
-
-
     }
 
     @Override

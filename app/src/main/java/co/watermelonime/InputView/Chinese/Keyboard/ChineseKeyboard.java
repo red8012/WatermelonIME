@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import co.watermelonime.C;
 import co.watermelonime.Common.Size;
 import co.watermelonime.Common.Timer;
+import co.watermelonime.Core.Engine;
 
 public class ChineseKeyboard extends ViewGroup {
     public static ChineseKey[] currentKeys;
@@ -16,6 +17,7 @@ public class ChineseKeyboard extends ViewGroup {
         visible = true;
         setMeasuredDimension(Size.WKeyboard, Size.HKeyboard);
         setKeys(Consonants.keys);
+        if (Engine.pinyin.length() % 2 == 1) Engine.delConsonant();
     }
 
     public void setKeys(ChineseKey[] k) {
