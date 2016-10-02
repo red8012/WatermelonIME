@@ -16,8 +16,8 @@ import co.watermelonime.InputView.InputView;
 import co.watermelonime.InputView.Number.NumberKeyboard;
 
 public class C {
-    public final static String DBFileName = "v8.db";
-    public final static int DBVersion = 8;
+    public final static String DBFileName = "db.db";
+    public final static int DBVersion = 10;
     public final static TimeInterpolator
             decelerate = new DecelerateInterpolator(2f);
     public static MainService mainService;

@@ -33,13 +33,14 @@ public class Engine {
             sentence = new StringBuilder(16);
     final static ArrayList<StringBuilder>[][] queryResult = new ArrayList[10][]; // [length][start at][i]
     final static String[][] resultPriority = new String[10][];
+    final static int[][] resultCost = new int[10][];
     final static ArrayList<StringBuilder>
             candidateLeft = new ArrayList<>(16),
             candidateRight = new ArrayList<>(16),
             wordsInDictRight = new ArrayList<>(24);
     final static String[] qs = {
             "select * from(", //0
-            "select group_concat(c),group_concat((o<1000)+abs(o%2<<1)+((o<0)<<2),'')from(select c,o from s", //1
+            "select group_concat(c),group_concat((o<1001)+abs(o%2<<1)+((o<0)<<2),''),min(o)from(select c,o from s", //1
             " where p in(", //2
             "and c glob'", //3
             "group by c order by o)union all ", //4
@@ -51,8 +52,8 @@ public class Engine {
             "select c,p,o from s",
             " where p glob'",
             "'and c glob'",
-            "'and o<1000 union all ",
-            "'and o<1000)group by c order by o,length(c) limit 3"
+            "'and o<1001 union all ",
+            "'and o<1001)group by c order by o,length(c) limit 3"
     };
     final static int pq0Length = pq[0].length();
     final static String[] predictionResults = new String[3];
@@ -104,6 +105,7 @@ public class Engine {
         for (int i = 1; i <= 9; i++) {
             queryResult[i] = new ArrayList[9 - i + 1];
             resultPriority[i] = new String[9 - i + 1];
+            resultCost[i] = new int[9 - i + 1];
         }
         // warm up engine
         final String[]
@@ -241,6 +243,7 @@ public class Engine {
             BufferedSplitter.releaseArrayList(list);
             queryResult[i][end - i] = result == null ? null : BufferedSplitter.split(result);
             resultPriority[i][end - i] = result == null ? null : cursor.getString(1);
+            resultCost[i][end - i] = result == null ? Integer.MAX_VALUE : cursor.getInt(2);
 //            Logger.d("S: %s, F: %s", result, cursor.getString(1));
 //            if (result != null) {
 //                for (CharSequence s : queryResult[i][end - i])
@@ -254,24 +257,29 @@ public class Engine {
 
     public static void makeSeparator() throws Exception {
         boolean found;
-        int counter;
+        int counter, cost;
+        int bestCost = Integer.MAX_VALUE;
         final int length = getLength();
         try {
             for (int[] a : separator[length - 1]) {
                 found = true;
                 counter = 0;
+                cost = 0;
                 for (int b : a) {
                     if (queryResult[b][counter] == null) {
                         found = false;
                         break;
                     }
+                    cost += resultCost[b][counter];
                     counter += b;
                 }
-                if (found) {
+                if (found && cost < bestCost) {
                     separatorAnswer = a;
-                    return;
+                    bestCost = cost;
+//                    return;
                 }
             }
+            if (bestCost < Integer.MAX_VALUE) return;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -355,12 +363,15 @@ public class Engine {
                 queryResult[i][j + popLength] = null;
                 resultPriority[i][j] = resultPriority[i][j + popLength];
                 resultPriority[i][j + popLength] = null;
+                resultCost[i][j] = resultCost[i][j + popLength];
+                resultCost[i][j + popLength] = Integer.MAX_VALUE;
             }
         for (int i = 1; i <= originalLength; i++)
             for (int j = Math.max(newLength - i + 1, 0); j <= originalLength - i; j++) {
                 BufferedSplitter.releaseArrayList(queryResult[i][j]);
                 queryResult[i][j] = null;
                 resultPriority[i][j] = null;
+                resultCost[i][j] = Integer.MAX_VALUE;
             }
 
         makeCandidateLeft();
